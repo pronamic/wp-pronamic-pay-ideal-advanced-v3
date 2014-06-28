@@ -1,0 +1,21 @@
+{
+	"name": "wp-pay-gateways/ideal-advanced-v3",
+	"description": "iDEAL Advanced v3 driver for the WordPress payment processing library.",
+	"keywords": ["wordpress", "wp", "pay", "ideal", "advanced", "v3", "gateway", "pronamic"],
+	"homepage": "https://github.com/wp-pay-gateways/ideal-advanced-v3",
+	"autoload": {
+		"classmap": ["src/"]
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/wp-pay/core"
+		}
+	],
+	"require": {
+		"wp-pay/core": "dev-develop"
+	},
+	"require-dev": {
+		"satooshi/php-coveralls": "dev-master"
+	}
+}
