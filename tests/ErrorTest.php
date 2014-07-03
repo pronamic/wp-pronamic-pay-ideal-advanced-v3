@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Title: iDEAL Advanced error test
+ * Title: iDEAL Advanced v3 error test
  * Description:
  * Copyright: Copyright (c) 2005 - 2014
  * Company: Pronamic

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<AcquirerErrorRes xmlns="http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1" version="3.3.1">
+	<createDateTimestamp>2008-11-14T09:30:47.0Z</createDateTimestamp>
+	<Error>
+		<errorCode>SO1100</errorCode>
+		<errorMessage>Issuer not available</errorMessage>
+		<errorDetail>System generating error: Rabobank</errorDetail>
+		<consumerMessage>De geselecteerde iDEAL bank is momenteel niet beschikbaar i.v.m. onderhoud tot naar verwachting 31-12-2010 03:30. Probeer het later nogmaals of betaal op een andere manier.</consumerMessage>
+	</Error>
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+			<SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+			<Reference URI="">
+				<Transforms>
+					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"
+				</Transforms>
+				<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+				<DigestValue>LGCQRlTT14Y5BPe0p0kKLof7+PxHJ49kJxVfOMIBsSw=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>FfZbFiOhLRiVZ6Kf7eGEEjFH9Wyr8t9WVcSYmKLUzwZZzvsLi5lSVwiBTUvQNHxnszYbjJXjRQ6Y8Xu2Mcj6bXA 9kFlVQzJH4NxqVS5g6DQXu/pTMQz8LaZu6VP83tXuW1UDHQmBUq3RgUlHPe4Xeio3jq++0H1I09+Zqx5klYc=</SignatureValue>
+		<KeyInfo>
+			<KeyName>7D665C81ABBE1A7D0E525BFC171F04D276F07BF2</KeyName>
+		</KeyInfo>
+	</Signature>
+</AcquirerErrorRes>
