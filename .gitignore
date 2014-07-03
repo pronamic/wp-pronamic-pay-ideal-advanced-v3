@@ -9,3 +9,6 @@ composer.lock
 .buildpath
 .project
 .settings
+
+# Node.js
+/node_modules
