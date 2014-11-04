@@ -10,3 +10,7 @@
 
 *	ING
 *	Rabobank
+
+## Documentation
+
+*	[iDEAL Merchant Integration Guide](http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf)
