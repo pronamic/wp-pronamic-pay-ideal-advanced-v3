@@ -86,7 +86,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::start()
 	 */
-	public function start( Pronamic_Pay_PaymentDataInterface $data, Pronamic_Pay_Payment $payment ) {
+	public function start( Pronamic_Pay_PaymentDataInterface $data, Pronamic_Pay_Payment $payment, $payment_method = null ) {
 		$transaction = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction();
 		$transaction->set_purchase_id( $data->get_order_id() );
 		$transaction->set_amount( $data->get_amount() );
