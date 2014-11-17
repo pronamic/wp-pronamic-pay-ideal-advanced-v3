@@ -15,7 +15,8 @@
 	"require": {
 		"php": ">=5.2.4",
 		"wp-pay/core": "dev-develop",
-		"wp-pay-gateways/ideal": "dev-develop"
+		"wp-pay-gateways/ideal": "dev-develop",
+		"wp-pay-gateways/ideal-advanced": "dev-develop"
 	},
 	"require-dev": {
 		"satooshi/php-coveralls": "dev-master"
