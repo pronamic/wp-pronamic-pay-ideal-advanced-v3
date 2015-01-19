@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Pay Gateway: iDEAL Advanced v3 rules">
+	<rule ref="WordPress">
+
+	</rule>
+</ruleset>
