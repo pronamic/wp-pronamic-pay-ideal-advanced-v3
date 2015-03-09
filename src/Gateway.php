@@ -87,8 +87,14 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 * @see Pronamic_WP_Pay_Gateway::start()
 	 */
 	public function start( Pronamic_Pay_PaymentDataInterface $data, Pronamic_Pay_Payment $payment, $payment_method = null ) {
+		// Purchase ID
+		$purchase_id = Pronamic_WP_Pay_Gateways_IDeal_Util::get_purchase_id( $this->config->purchase_id, $data, $payment );
+
+		$payment->set_meta( 'purchase_id', $purchase_id );
+
+		// Transaction
 		$transaction = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction();
-		$transaction->set_purchase_id( $data->get_order_id() );
+		$transaction->set_purchase_id( $purchase_id );
 		$transaction->set_amount( $data->get_amount() );
 		$transaction->set_currency( $data->get_currency() );
 		$transaction->set_expiration_period( 'PT3M30S' );
