@@ -14,6 +14,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_ConfigFactory extends Pronamic_WP
 
 		$config->merchant_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_merchant_id', true );
 		$config->sub_id      = get_post_meta( $post_id, '_pronamic_gateway_ideal_sub_id', true );
+		$config->purchase_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_purchase_id', true );
 
 		$config->private_key          = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
 		$config->private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
