@@ -157,7 +157,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 				if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 					$body = wp_remote_retrieve_body( $response );
 
-					$xml = Pronamic_WP_Util::simplexml_load_string( $body );
+					$xml = Pronamic_WP_Pay_Util::simplexml_load_string( $body );
 
 					if ( is_wp_error( $xml ) ) {
 						$this->error = $xml;
