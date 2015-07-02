@@ -21,15 +21,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser implements Prona
 		}
 
 		if ( $xml->issuerID ) {
-			$issuer->set_id( Pronamic_XML_Util::filter( $xml->issuerID ) );
+			$issuer->set_id( Pronamic_WP_Pay_XML_Security::filter( $xml->issuerID ) );
 		}
 
 		if ( $xml->issuerName ) {
-			$issuer->set_name( Pronamic_XML_Util::filter( $xml->issuerName ) );
+			$issuer->set_name( Pronamic_WP_Pay_XML_Security::filter( $xml->issuerName ) );
 		}
 
 		if ( $xml->issuerAuthenticationURL ) {
-			$issuer->set_authentication_url( Pronamic_XML_Util::filter( $xml->issuerAuthenticationURL ) );
+			$issuer->set_authentication_url( Pronamic_WP_Pay_XML_Security::filter( $xml->issuerAuthenticationURL ) );
 		}
 
 		return $issuer;
