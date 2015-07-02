@@ -2,7 +2,7 @@
 
 /**
  * Title: IDeal
- * Description: 
+ * Description:
  * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
@@ -11,7 +11,7 @@
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_IDeal {
 	/**
 	 * Format the price according to the documentation
-	 * 
+	 *
 	 * @param float $price
 	 * @return int
 	 */

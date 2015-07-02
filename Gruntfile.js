@@ -11,12 +11,15 @@ module.exports = function( grunt ) {
 		// PHP Code Sniffer
 		phpcs: {
 			application: {
-				dir: [ 'src' ],
+				src: [
+					'**/*.php',
+					'!node_modules/**',
+					'!vendor/**'
+				],
 			},
 			options: {
 				standard: 'phpcs.ruleset.xml',
-				extensions: 'php',
-				ignore: '<%= dirs.ignore %>'
+				showSniffCodes: true
 			}
 		},
 

@@ -2,7 +2,7 @@
 
 /**
  * Title: Directory
- * Description: 
+ * Description:
  * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
@@ -11,14 +11,14 @@
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Directory {
 	/**
 	 * The date the issuer list was modified
-	 * 
+	 *
 	 * @var string
 	 */
 	private $date;
 
 	/**
 	 * The countries in this directory
-	 * 
+	 *
 	 * @var array
 	 */
 	private $countries;
@@ -36,7 +36,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Directory {
 
 	/**
 	 * Set the specified date
-	 * 
+	 *
 	 * @param DateTime $date
 	 */
 	public function set_date( DateTime $date ) {
@@ -47,7 +47,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Directory {
 
 	/**
 	 * Add the specified country to this directory
-	 * 
+	 *
 	 * @param Country $country
 	 */
 	public function add_country( Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Country $country ) {
@@ -56,7 +56,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Directory {
 
 	/**
 	 * Get the countries within this directory
-	 * 
+	 *
 	 * @return array
 	 */
 	public function get_countries() {

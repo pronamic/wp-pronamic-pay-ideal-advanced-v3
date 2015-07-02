@@ -2,7 +2,7 @@
 
 /**
  * Title: Transaction XML parser
- * Description: 
+ * Description:
  * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
@@ -11,7 +11,7 @@
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionParser implements Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Parser {
 	/**
 	 * Parse the specified XML element into an iDEAL transaction object
-	 * 
+	 *
 	 * @param SimpleXMLElement $xml
 	 * @param Pronamic_Gateways_IDealAdvanced_Transaction $transaction
 	 */

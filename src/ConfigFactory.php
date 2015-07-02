@@ -2,7 +2,7 @@
 
 /**
  * Title: iDEAL Advanced v3 config factory
- * Description: 
+ * Description:
  * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
