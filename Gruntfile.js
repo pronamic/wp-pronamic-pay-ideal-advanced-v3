@@ -1,4 +1,6 @@
 module.exports = function( grunt ) {
+	require( 'load-grunt-tasks' )( grunt );
+
 	// Project
 	grunt.initConfig( {
 		// Package
@@ -52,11 +54,6 @@ module.exports = function( grunt ) {
 		    }
 		}
 	} );
-
-	grunt.loadNpmTasks( 'grunt-phpcs' );
-	grunt.loadNpmTasks( 'grunt-phplint' );
-	grunt.loadNpmTasks( 'grunt-phpmd' );
-	grunt.loadNpmTasks( 'grunt-phpunit' );
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'phplint', 'phpmd', 'phpcs', 'phpunit' ] );

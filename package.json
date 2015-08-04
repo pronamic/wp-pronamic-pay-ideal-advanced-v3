@@ -17,10 +17,11 @@
   },
   "homepage": "https://github.com/wp-pay-gateways/ideal-advanced-v3",
   "devDependencies": {
+    "grunt": "^0.4.5",
     "grunt-phpcs": "^0.4.0",
     "grunt-phplint": "0.0.5",
     "grunt-phpmd": "^0.1.1",
-    "grunt": "^0.4.5",
-    "grunt-phpunit": "^0.3.6"
+    "grunt-phpunit": "^0.3.6",
+    "load-grunt-tasks": "^3.2.0"
   }
 }
