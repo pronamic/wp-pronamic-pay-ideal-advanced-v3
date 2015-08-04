@@ -10,15 +10,6 @@
  */
 abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ResponseMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	/**
-	 * Constructs and initialize an response message
-	 */
-	public function __construct( $name ) {
-		parent::__construct( $name );
-	}
-
-	//////////////////////////////////////////////////
-
-	/**
 	 * Parse the specified XML into an directory response message object
 	 *
 	 * @param SimpleXMLElement $xml

@@ -67,7 +67,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionRequestMessage ext
 		self::add_elements( $document, $element, array(
 			'merchantID'        => $merchant->get_id(),
 			'subID'             => $merchant->get_sub_id(),
-			'merchantReturnURL' => $merchant->get_return_url()
+			'merchantReturnURL' => $merchant->get_return_url(),
 		) );
 
 		// Transaction
@@ -81,7 +81,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionRequestMessage ext
 			'expirationPeriod' => $transaction->get_expiration_period(),
 			'language'         => $transaction->get_language(),
 			'description'      => $transaction->get_description(),
-			'entranceCode'     => $transaction->get_entrance_code()
+			'entranceCode'     => $transaction->get_entrance_code(),
 		) );
 
 		// Return

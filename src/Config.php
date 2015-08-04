@@ -11,7 +11,7 @@
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config extends Pronamic_WP_Pay_GatewayConfig {
 	public $merchant_id;
 
-	public $sub_id;
+	public $sub_id = 0;
 
 	public $private_key_password;
 

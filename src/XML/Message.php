@@ -72,7 +72,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	/**
 	 * Get the name of this message
 	 *
-	 * return string
+	 * @return string
 	 */
 	public function get_name() {
 		return $this->name;
@@ -111,7 +111,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	public static function add_element( DOMDocument $document, DOMNode $parent, $name, $value = null ) {
 		$element = $document->createElement( $name );
 
-		if ( $value !== null ) {
+		if ( null !== $value ) {
 			$element->appendChild( new DOMText( $value ) );
 		}
 
@@ -131,7 +131,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 		foreach ( $elements as $name => $value ) {
 			$element = $document->createElement( $name );
 
-			if ( $value !== null ) {
+			if ( null !== $value ) {
 				$element->appendChild( new DOMText( $value ) );
 			}
 

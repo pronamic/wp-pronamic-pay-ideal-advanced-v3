@@ -18,7 +18,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_CountryParser implements Pron
 	public static function parse( SimpleXMLElement $xml ) {
 		$country = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Country();
 
-		$country->set_name( Pronamic_XML_Util::filter( $xml->countryNames ) );
+		$country->set_name( Pronamic_WP_Pay_XML_Security::filter( $xml->countryNames ) );
 
 		foreach ( $xml->Issuer as $element ) {
 			$issuer = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser::parse( $element );

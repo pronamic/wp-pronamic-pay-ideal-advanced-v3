@@ -17,7 +17,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParser {
 	public function parse( SimpleXMLElement $xml ) {
 		$error = null;
 
-		if ( 'Error' == $xml->getName() ) {
+		if ( 'Error' === $xml->getName() ) {
 			$error = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error();
 
 			$error->set_code( Pronamic_WP_Pay_XML_Security::filter( $xml->errorCode ) );

@@ -41,7 +41,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryRequestMessage exten
 		$element = self::add_element( $document, $document->documentElement, 'Merchant' );
 		self::add_elements( $document, $element, array(
 			'merchantID' => $merchant->get_id(),
-			'subID'      => $merchant->get_sub_id()
+			'subID'      => $merchant->get_sub_id(),
 		) );
 
 		// Return

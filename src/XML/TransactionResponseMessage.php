@@ -2,7 +2,7 @@
 
 /**
  * Title: iDEAL transaction response XML message
- * Description: 
+ * Description:
  * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
@@ -11,7 +11,7 @@
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ResponseMessage {
 	/**
 	 * The document element name
-	 * 
+	 *
 	 * @var string
 	 */
 	const NAME = 'AcquirerTrxRes';
@@ -29,7 +29,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage ex
 
 	/**
 	 * Parse the specified XML into an directory response message object
-	 * 
+	 *
 	 * @param SimpleXMLElement $xml
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
