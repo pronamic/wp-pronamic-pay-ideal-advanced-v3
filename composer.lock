@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f180b00331b20b8366dad8dcd4312c51",
+    "hash": "4644dcab8f9a847554a9d3f222e5a021",
     "packages": [
         {
             "name": "wp-pay-gateways/ideal",
@@ -47,22 +47,22 @@
         },
         {
             "name": "wp-pay-gateways/ideal-advanced",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay-gateways/ideal-advanced.git",
-                "reference": "8be7e41de3001552d72443d19d8799a91b982988"
+                "reference": "66e5272adbc30a9860a27945c118040d39fa839e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay-gateways/ideal-advanced/zipball/8be7e41de3001552d72443d19d8799a91b982988",
-                "reference": "8be7e41de3001552d72443d19d8799a91b982988",
+                "url": "https://api.github.com/repos/wp-pay-gateways/ideal-advanced/zipball/66e5272adbc30a9860a27945c118040d39fa839e",
+                "reference": "66e5272adbc30a9860a27945c118040d39fa839e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4",
                 "wp-pay-gateways/ideal": ">=1.1.0",
-                "wp-pay/core": ">=1.0.0"
+                "wp-pay/core": ">=1.2.1"
             },
             "require-dev": {
                 "satooshi/php-coveralls": "dev-master"
@@ -85,7 +85,7 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2015-03-09 07:59:34"
+            "time": "2015-08-04 08:58:10"
         },
         {
             "name": "wp-pay/core",
