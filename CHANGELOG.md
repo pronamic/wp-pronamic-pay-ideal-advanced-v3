@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
--
+- Added an gateway settings class.
 
 ## [1.1.1] - 2015-08-04
 - Make sure to use the wp-pay/core functions.
