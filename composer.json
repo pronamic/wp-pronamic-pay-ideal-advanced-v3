@@ -3,6 +3,26 @@
 	"description": "iDEAL Advanced v3 driver for the WordPress payment processing library.",
 	"keywords": ["wordpress", "wp", "pay", "ideal", "advanced", "v3", "gateway", "pronamic"],
 	"homepage": "https://github.com/wp-pay-gateways/ideal-advanced-v3",
+	"license": "GPL-3.0+",
+	"authors": [
+		{
+			"name": "Pronamic",
+			"email": "info@pronamic.eu",
+			"homepage": "http://www.pronamic.eu/",
+			"role": "Company"
+		},
+		{
+			"name": "Remco Tolsma",
+			"email": "info@remcotolsma.nl",
+			"homepage": "http://www.remcotolsma.nl/",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"email": "support@wp-pay.org",
+		"issues": "https://github.com/wp-pay-gateways/mollie/issues",
+		"source": "https://github.com/wp-pay-gateways/mollie"
+	},
 	"autoload": {
 		"classmap": ["src/"]
 	},
