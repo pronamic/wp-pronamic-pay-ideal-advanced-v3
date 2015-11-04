@@ -39,6 +39,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Private Key Password
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced',
 			'meta_key'    => '_pronamic_gateway_ideal_private_key_password',
 			'title'       => __( 'Private Key Password', 'pronamic_ideal' ),
@@ -48,6 +49,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Private Key
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced',
 			'meta_key'    => '_pronamic_gateway_ideal_private_key',
 			'title'       => __( 'Private Key', 'pronamic_ideal' ),
@@ -58,6 +60,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Private Certificate
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced',
 			'meta_key'    => '_pronamic_gateway_ideal_private_certificate',
 			'title'       => __( 'Private Certificate', 'pronamic_ideal' ),
@@ -72,6 +75,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Number Days Valid
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_number_days_valid',
 			'title'       => __( 'Number Days Valid', 'pronamic_ideal' ),
@@ -81,6 +85,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Country
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_country',
 			'title'       => __( 'Country', 'pronamic_ideal' ),
@@ -90,6 +95,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// State or Province
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_state_or_province',
 			'title'       => __( 'State or Province', 'pronamic_ideal' ),
@@ -99,6 +105,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Locality
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_locality',
 			'title'       => __( 'Locality', 'pronamic_ideal' ),
@@ -108,6 +115,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Organization
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_organization',
 			'title'       => __( 'Organization', 'pronamic_ideal' ),
@@ -117,6 +125,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Organization Unit
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_organization_unit',
 			'title'       => __( 'Organization Unit', 'pronamic_ideal' ),
@@ -126,6 +135,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Common Name
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_common_name',
 			'title'       => __( 'Common Name', 'pronamic_ideal' ),
@@ -138,6 +148,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 
 		// Email Address
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'ideal_advanced_private',
 			'meta_key'    => '_pronamic_gateway_email',
 			'title'       => __( 'Email Address', 'pronamic_ideal' ),
