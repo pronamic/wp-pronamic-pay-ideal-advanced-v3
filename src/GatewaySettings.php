@@ -11,8 +11,13 @@
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_WP_Pay_GatewaySettings {
 	public function __construct() {
+		// Filters
 		add_filter( 'pronamic_pay_gateway_sections', array( $this, 'sections' ) );
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );
+
+		// Actions
+		add_action( 'admin_init', array( $this, 'maybe_download_private_certificate' ) );
+		add_action( 'admin_init', array( $this, 'maybe_download_private_key' ) );
 	}
 
 	public function sections( array $sections ) {
@@ -220,5 +225,45 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_GatewaySettings extends Pronamic_
 		echo '<input type="file" name="_pronamic_gateway_ideal_private_certificate_file" />';
 
 		echo '</div>';
+	}
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Download private certificate
+	 */
+	public function maybe_download_private_certificate() {
+		if ( filter_has_var( INPUT_POST, 'download_private_certificate' ) ) {
+			$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
+
+			$filename = sprintf( 'ideal-private-certificate-%s.cer', $post_id );
+
+			header( 'Content-Description: File Transfer' );
+			header( 'Content-Disposition: attachment; filename=' . $filename );
+			header( 'Content-Type: application/x-x509-ca-cert; charset=' . get_option( 'blog_charset' ), true );
+
+			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true ); //xss ok
+
+			exit;
+		}
+	}
+
+	/**
+	 * Download private key
+	 */
+	public function maybe_download_private_key() {
+		if ( filter_has_var( INPUT_POST, 'download_private_key' ) ) {
+			$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
+
+			$filename = sprintf( 'ideal-private-key-%s.key', $post_id );
+
+			header( 'Content-Description: File Transfer' );
+			header( 'Content-Disposition: attachment; filename=' . $filename );
+			header( 'Content-Type: application/pgp-keys; charset=' . get_option( 'blog_charset' ), true );
+
+			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true ); //xss ok
+
+			exit;
+		}
 	}
 }
