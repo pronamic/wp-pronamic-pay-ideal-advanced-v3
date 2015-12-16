@@ -55,7 +55,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	 *
 	 * @var string
 	 */
-	private $expirationPeriod;
+	private $expiration_period;
 
 	/**
 	 * Language
@@ -77,7 +77,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	 *
 	 * @var string
 	 */
-	private $entranceCode;
+	private $entrance_code;
 
 	//////////////////////////////////////////////////
 
