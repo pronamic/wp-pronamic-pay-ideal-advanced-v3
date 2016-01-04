@@ -24,7 +24,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 
 		// Client
 		$client = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client();
-		$client->set_acquirer_url( $config->url );
+		$client->set_acquirer_url( $config->get_payment_server_url() );
 		$client->merchant_id          = $config->merchant_id;
 		$client->sub_id               = $config->sub_id;
 		$client->private_key          = $config->private_key;
@@ -71,7 +71,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 
 	public function get_issuer_field() {
 		if ( Pronamic_WP_Pay_PaymentMethods::IDEAL === $this->get_payment_method() ) {
-			return array (
+			return array(
 				'id'       => 'pronamic_ideal_issuer_id',
 				'name'     => 'pronamic_ideal_issuer_id',
 				'label'    => __( 'Choose your bank', 'pronamic_ideal' ),

@@ -39,7 +39,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Country {
 	 *
 	 * @return string
 	 */
-	public function get_name( ) {
+	public function get_name() {
 		return $this->name;
 	}
 
