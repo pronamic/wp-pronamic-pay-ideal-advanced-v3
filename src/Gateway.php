@@ -3,8 +3,9 @@
 /**
  * Title: iDEAL Advanced v3+ gateway
  * Description:
- * Copyright: Copyright (c) 2005 - 2015
+ * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
+ *
  * @author Remco Tolsma
  * @version 1.1.0
  * @since 1.0.0
@@ -24,7 +25,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 
 		// Client
 		$client = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client();
-		$client->set_acquirer_url( $config->url );
+		$client->set_acquirer_url( $config->get_payment_server_url() );
 		$client->merchant_id          = $config->merchant_id;
 		$client->sub_id               = $config->sub_id;
 		$client->private_key          = $config->private_key;
@@ -70,13 +71,39 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	/////////////////////////////////////////////////
 
 	public function get_issuer_field() {
+		if ( Pronamic_WP_Pay_PaymentMethods::IDEAL === $this->get_payment_method() ) {
+			return array(
+				'id'       => 'pronamic_ideal_issuer_id',
+				'name'     => 'pronamic_ideal_issuer_id',
+				'label'    => __( 'Choose your bank', 'pronamic_ideal' ),
+				'required' => true,
+				'type'     => 'select',
+				'choices'  => $this->get_transient_issuers(),
+			);
+		}
+	}
+
+	/////////////////////////////////////////////////
+
+	/**
+	 * Get payment methods
+	 *
+	 * @return mixed an array or null
+	 */
+	public function get_payment_methods() {
+		return Pronamic_WP_Pay_PaymentMethods::IDEAL;
+	}
+
+	/////////////////////////////////////////////////
+
+	/**
+	 * Get supported payment methods
+	 *
+	 * @see Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
+	 */
+	public function get_supported_payment_methods() {
 		return array(
-			'id'       => 'pronamic_ideal_issuer_id',
-			'name'     => 'pronamic_ideal_issuer_id',
-			'label'    => __( 'Choose your bank', 'pronamic_ideal' ),
-			'required' => true,
-			'type'     => 'select',
-			'choices'  => $this->get_transient_issuers(),
+			Pronamic_WP_Pay_PaymentMethods::IDEAL => Pronamic_WP_Pay_PaymentMethods::IDEAL,
 		);
 	}
 
@@ -98,14 +125,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 		$transaction->set_purchase_id( $purchase_id );
 		$transaction->set_amount( $data->get_amount() );
 		$transaction->set_currency( $data->get_currency() );
-		$transaction->set_expiration_period( 'PT3M30S' );
+		$transaction->set_expiration_period( 'PT30M' );
 		$transaction->set_language( $data->get_language() );
 		$transaction->set_description( $data->get_description() );
 		$transaction->set_entrance_code( $data->get_entrance_code() );
 
-		$return_url = add_query_arg( 'payment', $payment->get_id(), home_url( '/' ) );
-
-		$result = $this->client->create_transaction( $transaction, $return_url, $data->get_issuer_id() );
+		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $data->get_issuer_id() );
 
 		$error = $this->client->get_error();
 

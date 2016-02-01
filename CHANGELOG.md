@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.2] - 2016-02-01
+- Increase expiration period from PT3M30S to PT30M.
+- Added new gateway settings system.
+
 ## [1.1.1] - 2015-08-04
 - Make sure to use the wp-pay/core functions.
 

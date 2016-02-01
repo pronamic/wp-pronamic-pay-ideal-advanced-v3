@@ -3,8 +3,9 @@
 /**
  * Title: iDEAL Advanced config
  * Description:
- * Copyright: Copyright (c) 2005 - 2015
+ * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
+ *
  * @author Remco Tolsma
  * @version 1.0.0
  */
@@ -18,4 +19,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config extends Pronamic_WP_Pay_Ga
 	public $private_key;
 
 	public $private_certificate;
+
+	public function get_payment_server_url() {
+		return $this->payment_server_url;
+	}
+
+	public function get_certificates() {
+		return array();
+	}
 }
