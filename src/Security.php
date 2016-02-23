@@ -57,7 +57,10 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 
 		// The openssl_x509_read() function will throw an warning if the supplied
 		// parameter cannot be coerced into an X509 certificate
+		// @codingStandardsIgnoreStart
 		$resource = @openssl_x509_read( $certificate );
+		// @codingStandardsIgnoreEnd
+
 		if ( false !== $resource ) {
 			$output = null;
 
