@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Title: Transaction
+ * Title: Status
  * Description:
  * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
