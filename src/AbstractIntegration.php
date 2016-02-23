@@ -39,7 +39,7 @@ abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_AbstractIntegration exte
 	public function get_settings() {
 		$settings = parent::get_settings();
 
-		$settings[] = 'ideal-advanced';
+		$settings[] = 'ideal-advanced-v3';
 
 		return $settings;
 	}
