@@ -14,10 +14,6 @@ abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_AbstractIntegration exte
 		return 'Pronamic_WP_Pay_Gateways_IDealAdvancedV3_ConfigFactory';
 	}
 
-	public function get_config_class() {
-		return 'Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config';
-	}
-
 	public function get_settings_class() {
 		return array(
 			'Pronamic_WP_Pay_Gateways_IDeal_Settings',
