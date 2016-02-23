@@ -185,7 +185,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 		 */
 
 		/*
-		 * The function wp_schedule_single_event() uses the arguments array as an key for the event,
+		 * The function `wp_schedule_single_event` uses the arguments array as an key for the event,
 		 * that's why we also add the time to this array, besides that it's also much clearer on
 		 * the Cron View (http://wordpress.org/extend/plugins/cron-view/) page
 		 */
