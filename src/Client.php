@@ -7,7 +7,8 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.3
+ * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	/**
@@ -335,7 +336,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 				// certificate. The fingerprint must be calculated according
 				// to the following formula HEX(SHA-1(DER certificate)) (13)
 				// @see http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-				$fingerprint = Pronamic_WP_Pay_Gateways_IDealAdvanced_Security::getShaFingerprint( $this->private_certificate );
+				$fingerprint = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security::get_sha_fingerprint( $this->private_certificate );
 
 				$dsig->addKeyInfoAndName( $fingerprint );
 
