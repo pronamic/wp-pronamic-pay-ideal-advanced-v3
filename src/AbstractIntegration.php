@@ -7,7 +7,8 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.3
+ * @since 1.0.0
  */
 abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_AbstractIntegration extends Pronamic_WP_Pay_Gateways_IDeal_AbstractIntegration {
 	public function get_config_factory_class() {
