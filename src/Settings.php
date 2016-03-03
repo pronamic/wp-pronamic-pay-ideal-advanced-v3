@@ -170,7 +170,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			'type'        => 'text',
 			'classes'     => array( 'regular-text', 'code' ),
 			'default'     => $this->defaultPrivateKeyPassword,
-			'tooltip'     => __( 'A random password which will be used for the generation of the private key and certificate.', 'pronamic_ideal'),
+			'tooltip'     => __( 'A random password which will be used for the generation of the private key and certificate.', 'pronamic_ideal' ),
 		);
 
 		// Private Key
@@ -231,12 +231,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 			?>
 
-			<p><?php _e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
+			<p><?php esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
 			<input id="pronamic_ideal_openssl_command_key" name="pronamic_ideal_openssl_command_key" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly" />
 
 			<?php
 		} else {
-			printf( '<p><em>%s</em></p>', __( 'Leave empty and save the configuration to generate the private key or view the OpenSSL command.', 'pronamic_ideal' ) );
+			printf(
+				'<p><em>%s</em></p>',
+				esc_html__( 'Leave empty and save the configuration to generate the private key or view the OpenSSL command.', 'pronamic_ideal' )
+			);
 		}
 		?>
 
@@ -295,12 +298,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 			?>
 
-			<p><?php _e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
+			<p><?php esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
 			<input id="pronamic_ideal_openssl_command_certificate" name="pronamic_ideal_openssl_command_certificate" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly" />
 
 			<?php
 		} else {
-			printf( '<p><em>%s</em></p>', __( 'Leave empty and save the configuration to generate the certificate or view the OpenSSL command.', 'pronamic_ideal' ) );
+			printf(
+				'<p><em>%s</em></p>',
+				esc_html__( 'Leave empty and save the configuration to generate the certificate or view the OpenSSL command.', 'pronamic_ideal' )
+			);
 		}
 
 		if ( ! empty( $certificate ) ) {
@@ -331,7 +337,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 			echo '</dl>';
 		}
-
 
 		submit_button(
 			__( 'Download', 'pronamic_ideal' ),
