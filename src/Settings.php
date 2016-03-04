@@ -18,13 +18,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 	 */
 	var $defaultPrivateKeyPassword = '';
 
-	/**
-	 * Constant default number of valid days
-	 *
-	 * @var int
-	 */
-	const DEFAULT_NUMBER_DAYS_VALID = 1825;
-
 	public function __construct() {
 		$this->defaultPrivateKeyPassword = substr( str_shuffle( 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' ) , 0 , 20 );
 
@@ -155,7 +148,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			'meta_key'    => '_pronamic_gateway_number_days_valid',
 			'title'       => __( 'Number Days Valid', 'pronamic_ideal' ),
 			'type'        => 'text',
-			'default'     => $this::DEFAULT_NUMBER_DAYS_VALID,
+			'default'     => 1825,
 			'tooltip'     => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
 		);
 
