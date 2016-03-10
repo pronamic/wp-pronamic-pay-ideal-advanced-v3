@@ -188,7 +188,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		// Transaction feedback
 		$fields[] = array(
 			'section'     => 'ideal',
-			'methods'     => array( 'ideal_advanced_v3' ),
+			'methods'     => array( 'ideal-advanced-v3' ),
 			'title'       => __( 'Transaction feedback', 'pronamic_ideal' ),
 			'type'        => 'description',
 			'html'        => sprintf(
