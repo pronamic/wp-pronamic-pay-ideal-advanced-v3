@@ -16,8 +16,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );
 
 		// Actions
-		add_action( 'admin_init', array( $this, 'maybe_download_private_certificate' ) );
-		add_action( 'admin_init', array( $this, 'maybe_download_private_key' ) );
+		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
+		add_action( 'current_screen', array( $this, 'maybe_download_private_key' ) );
 	}
 
 	public function fields( array $fields ) {
