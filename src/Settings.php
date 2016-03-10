@@ -389,15 +389,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		);
 
 		foreach ( $files as $name => $meta_key ) {
-			if ( isset( $_FILES[ $name ] ) && UPLOAD_ERR_OK === $_FILES[ $name ][ 'error' ] ) {
-				$value = file_get_contents( $_FILES[ $name ][ 'tmp_name' ] );
+			if ( isset( $_FILES[ $name ] ) && UPLOAD_ERR_OK === $_FILES[ $name ]['error'] ) {
+				$value = file_get_contents( $_FILES[ $name ]['tmp_name'] );
 
 				$data[ $meta_key ] = $value;
 			}
 		}
 
 		// Generate private key and certificate
-		if ( ! empty( $data[ '_pronamic_gateway_ideal_private_key_password' ] ) ) {
+		if ( ! empty( $data['_pronamic_gateway_ideal_private_key_password'] ) ) {
 			$cipher_methods = openssl_get_cipher_methods();
 
 			$cipher_method = 'aes-128-cbc';
@@ -415,38 +415,37 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				);
 
 				// Private key
-				if ( empty( $data[ '_pronamic_gateway_ideal_private_key' ] ) ) {
+				if ( empty( $data['_pronamic_gateway_ideal_private_key'] ) ) {
 					$pkey = openssl_pkey_new( $args );
 
-					openssl_pkey_export( $pkey, $private_key, $data[ '_pronamic_gateway_ideal_private_key_password' ], $args );
+					openssl_pkey_export( $pkey, $private_key, $data['_pronamic_gateway_ideal_private_key_password'], $args );
 
-					$data[ '_pronamic_gateway_ideal_private_key' ] = $private_key;
+					$data['_pronamic_gateway_ideal_private_key'] = $private_key;
 				} else {
-					$pkey = $data[ '_pronamic_gateway_ideal_private_key' ];
+					$pkey = $data['_pronamic_gateway_ideal_private_key'];
 				}
 
 				// Certificate
-				if ( empty( $data[ '_pronamic_gateway_ideal_private_certificate' ] ) && ! empty( $pkey ) ) {
+				if ( empty( $data['_pronamic_gateway_ideal_private_certificate'] ) && ! empty( $pkey ) ) {
 					$distinguished_name = array(
-						'countryName'            => $data[ '_pronamic_gateway_country' ],
-						'stateOrProvinceName'    => $data[ '_pronamic_gateway_state_or_province' ],
-						'localityName'           => $data[ '_pronamic_gateway_locality' ],
-						'organizationName'       => $data[ '_pronamic_gateway_organization' ],
-						'organizationalUnitName' => $data[ '_pronamic_gateway_organization_unit' ],
-						'commonName'             => $data[ '_pronamic_gateway_organization' ],
-						'emailAddress'           => $data[ '_pronamic_gateway_email' ],
+						'countryName'            => $data['_pronamic_gateway_country'],
+						'stateOrProvinceName'    => $data['_pronamic_gateway_state_or_province'],
+						'localityName'           => $data['_pronamic_gateway_locality'],
+						'organizationName'       => $data['_pronamic_gateway_organization'],
+						'organizationalUnitName' => $data['_pronamic_gateway_organization_unit'],
+						'commonName'             => $data['_pronamic_gateway_organization'],
+						'emailAddress'           => $data['_pronamic_gateway_email'],
 					);
 
 					// If distinguished_name does not contain empty elements, create the certificate
 					if ( ! in_array( '', $distinguished_name, true ) ) {
 						$csr = openssl_csr_new( $distinguished_name, $pkey );
 
-						$eargs = array( 'authorityKeyIdentifier' => 'authorityKeyIdentifier=keyid:always,issuer:always' );
-						$cert  = openssl_csr_sign( $csr, null, $pkey, $data[ '_pronamic_gateway_number_days_valid' ], $args, time() );
+						$cert  = openssl_csr_sign( $csr, null, $pkey, $data['_pronamic_gateway_number_days_valid'], $args, time() );
 
 						openssl_x509_export( $cert, $certificate );
 
-						$data[ '_pronamic_gateway_ideal_private_certificate' ] = $certificate;
+						$data['_pronamic_gateway_ideal_private_certificate'] = $certificate;
 					}
 				}
 			}
