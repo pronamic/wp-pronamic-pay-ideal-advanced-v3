@@ -32,7 +32,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			'title'       => __( 'Private key and certificate', 'pronamic_ideal' ),
 			'type'        => 'description',
 			'html'        => sprintf(
-				'<div class="pk-cert-error"><span class="dashicons dashicons-no pronamic-pay-no"></span> %s</div> <div class="pk-cert-ok"><span class="dashicons dashicons-yes pronamic-pay-yes"></span> %s</div>',
+				'<div class="pk-cert-error"><span class="dashicons dashicons-no"></span> %s</div> <div class="pk-cert-ok"><span class="dashicons dashicons-yes"></span> %s</div>',
 				__( '<span>The private key and certificate have not yet been configured.</span><p>A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.</p>', 'pronamic_ideal' ),
 				sprintf(
 					__( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.<br>%s <a href="#" id="pk-cert-fields-toggle">Show details...</a>', 'pronamic_ideal' ),
@@ -192,7 +192,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			'title'       => __( 'Transaction feedback', 'pronamic_ideal' ),
 			'type'        => 'description',
 			'html'        => sprintf(
-				'<span class="dashicons dashicons-yes pronamic-pay-yes"></span> %s',
+				'<span class="dashicons dashicons-yes"></span> %s',
 				__( 'Payment status updates will be processed without any additional configuration.', 'pronamic_ideal' )
 			),
 		);
