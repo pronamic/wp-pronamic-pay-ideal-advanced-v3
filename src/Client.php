@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.3
+ * @version 1.1.4
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
@@ -199,9 +199,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage::NAME :
 				$message = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage::parse( $document );
 
-				$ideal_error = $message->error;
-
-				$this->error = new WP_Error( 'ideal_advanced_v3_error', $ideal_error->get_message(), $ideal_error );
+				$this->error = new WP_Error(
+					'ideal_advanced_v3_error',
+					sprintf( '%s. %s', $message->error->get_message(), $message->error->get_detail() ),
+					$message->error
+				);
 
 				return $message;
 			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryResponseMessage::NAME :

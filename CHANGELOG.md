@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.4] - 2016-03-22
+- Updated gateway settings, including private key and certificate generation.
+- Added error details to error message.
+
 ## [1.1.3] - 2016-03-02
 - Copied Security class from the wp-pay-gateways/ideal-advanced library.
 - No longer use the wp-pay-gateways/ideal-advanced library.
@@ -33,7 +37,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.3...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.4...HEAD
+[1.1.4]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.0...1.1.1
