@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.3
+ * @version 1.1.4
  * @since 1.1.2
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_GatewaySettings {
@@ -389,8 +389,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		);
 
 		foreach ( $files as $name => $meta_key ) {
-			if ( isset( $_FILES[ $name ] ) && UPLOAD_ERR_OK === $_FILES[ $name ]['error'] ) {
-				$value = file_get_contents( $_FILES[ $name ]['tmp_name'] );
+			if ( isset( $_FILES[ $name ] ) && UPLOAD_ERR_OK === $_FILES[ $name ]['error'] ) { // WPCS: input var okay.
+				$value = file_get_contents( $_FILES[ $name ]['tmp_name'] ); // WPCS: input var okay. // WPCS: sanitization ok.
 
 				$data[ $meta_key ] = $value;
 			}
