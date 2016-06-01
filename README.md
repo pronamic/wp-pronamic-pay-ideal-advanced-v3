@@ -19,8 +19,10 @@
 
 | Title                                               | Language | Version | Date    |
 | --------------------------------------------------- | -------- | ------- | ------- |
+| [iDEAL Merchant Integration Guide][doc-en-feb-2015] | EN       | `3.3.1` | 2015-02 |
 | [iDEAL Merchant Integratie Gids][doc-nl-feb-2015]   | NL       | `3.3.1` | 2015-02 |
 | [iDEAL Merchant Integration Guide][doc-en-nov-2012] | EN       | `3.3.1` | 2012-11 |
 
+[doc-en-feb-2015]: https://www.pronamic.eu/wp-content/uploads/sites/2/2016/06/Merchant-Integration-Guide-v3-3-1-ENG-February-2015.pdf
 [doc-nl-feb-2015]: https://www.pronamic.eu/wp-content/uploads/sites/2/2016/06/iDEAL-Merchant-Integratie-Gids-v3-3-1-NL-Februari-2015.pdf
 [doc-en-nov-2012]: https://www.pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf
