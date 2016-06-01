@@ -70,12 +70,12 @@ platforms (e.g. Python, Ruby).
 
 For information about creating the public and private key pair please refer to paragraph 8.4. 
 
-<sup>4</sup> http://www.w3.org/TR/xmldsig-core/
-<sup>5</sup> XML Signature reference to the signed info URI is left blank, see example messages in Appendix B
-<sup>6</sup> http://www.w3.org/TR/2001/REC-xml-c14n-20010315
-<sup>7</sup> http://www.w3.org/2001/10/xml-exc-c14n
-<sup>8</sup> http://www.w3.org/TR/xmldsig-core/#sec-EnvelopedSignature
-<sup>9</sup> http://www.w3.org/2001/04/xmlenc#sha256
-<sup>10</sup> http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/#sec-SHA256
-<sup>11</sup> See example messages in Appendix B
-<sup>12</sup> http://tools.ietf.org/html/rfc2045#section-6.8
+<sup>4</sup> http://www.w3.org/TR/xmldsig-core/  
+<sup>5</sup> XML Signature reference to the signed info URI is left blank, see example messages in Appendix B  
+<sup>6</sup> http://www.w3.org/TR/2001/REC-xml-c14n-20010315  
+<sup>7</sup> http://www.w3.org/2001/10/xml-exc-c14n  
+<sup>8</sup> http://www.w3.org/TR/xmldsig-core/#sec-EnvelopedSignature  
+<sup>9</sup> http://www.w3.org/2001/04/xmlenc#sha256  
+<sup>10</sup> http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/#sec-SHA256  
+<sup>11</sup> See example messages in Appendix B  
+<sup>12</sup> http://tools.ietf.org/html/rfc2045#section-6.8  
