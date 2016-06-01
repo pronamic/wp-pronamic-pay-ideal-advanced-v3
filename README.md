@@ -35,15 +35,21 @@ signed in accordance with the "XML Signature Syntax and Processing (2<sup>nd</su
 Recommendation” of 10 June 2008<sup>4</sup>, with the following settings and restrictions applied:
 
 1.	The entire XML message<sup>5</sup> must be signed.
+
 2.	For the purpose of generating the digest of the main message, the inclusive canonicalization algorithm must be used<sup>6</sup>. This method of canonicalization of the main message is not (always) explicitly indicated in the
 iDEAL XML messages. For this reason this transform has not been included in the example
 messages in this document. Merchants are not required to explicitly indicate this transform in
 their messages.
+
 3.	For the purpose of generating the signature value, the exclusive<sup>7</sup> canonicalization algorithm must be used.
+
 4.	The syntax for an enveloped<sup>8</sup> signature must be used. The signature itself must be removed
 	from the XML message using the default transformation prescribed for this purpose.
+
 5.	For hashing purposes the SHA-256<sup>9</sup> algorithm must be used.
+
 6.	For signature purposes the RSAWithSHA256<sup>10</sup> algorithm must be used. RSA keys must be 2,048 bits long.
+
 7.	The public key must be referenced using a fingerprint of an X.509 certificate. The fingerprint
 	must be calculated according to the following formula HEX(SHA-1(DER certificate)) <sup>11</sup>.
 
