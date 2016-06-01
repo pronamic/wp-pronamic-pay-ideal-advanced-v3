@@ -34,17 +34,16 @@ TransactionRequest and StatusRequest) have to be signed by the Merchant. Message
 signed in accordance with the "XML Signature Syntax and Processing (2<sup>nd</sup> Edition) W3C
 Recommendation” of 10 June 2008<sup>4</sup>, with the following settings and restrictions applied:
 
-1.	The entire XML message5 must be signed.
+1.	The entire XML message<sup>5</sup> must be signed.
 2.	For the purpose of generating the digest of the main message, the inclusive canonicalization algorithm must be used<sup>6</sup>. This method of canonicalization of the main message is not (always) explicitly indicated in the
 iDEAL XML messages. For this reason this transform has not been included in the example
 messages in this document. Merchants are not required to explicitly indicate this transform in
 their messages.
-3.	For the purpose of generating the signature value, the exclusive7 canonicalization algorithm must be used.
+3.	For the purpose of generating the signature value, the exclusive<sup>7</sup> canonicalization algorithm must be used.
 4.	The syntax for an enveloped<sup>8</sup> signature must be used. The signature itself must be removed
 	from the XML message using the default transformation prescribed for this purpose.
-5.	For hashing purposes the SHA-2569 algorithm must be used.
-6.	For signature purposes the RSAWithSHA25610 algorithm must be used. RSA keys must be
-	2,048 bits long.
+5.	For hashing purposes the SHA-256<sup>9</sup> algorithm must be used.
+6.	For signature purposes the RSAWithSHA256<sup>10</sup> algorithm must be used. RSA keys must be 2,048 bits long.
 7.	The public key must be referenced using a fingerprint of an X.509 certificate. The fingerprint
 	must be calculated according to the following formula HEX(SHA-1(DER certificate)) <sup>11</sup>.
 
@@ -64,3 +63,13 @@ This functionality may also be available in earlier versions of these platforms 
 platforms (e.g. Python, Ruby).
 
 For information about creating the public and private key pair please refer to paragraph 8.4. 
+
+<sup>4</sup> http://www.w3.org/TR/xmldsig-core/
+<sup>5</sup> XML Signature reference to the signed info URI is left blank, see example messages in Appendix B
+<sup>6</sup> http://www.w3.org/TR/2001/REC-xml-c14n-20010315
+<sup>7</sup> http://www.w3.org/2001/10/xml-exc-c14n
+<sup>8</sup> http://www.w3.org/TR/xmldsig-core/#sec-EnvelopedSignature
+<sup>9</sup> http://www.w3.org/2001/04/xmlenc#sha256
+<sup>10</sup> http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/#sec-SHA256
+<sup>11</sup> See example messages in Appendix B
+<sup>12</sup> http://tools.ietf.org/html/rfc2045#section-6.8
