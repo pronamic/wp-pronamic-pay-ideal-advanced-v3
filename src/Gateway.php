@@ -110,6 +110,17 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	/////////////////////////////////////////////////
 
 	/**
+	 * Is payment method required to start transaction?
+	 *
+	 * @see Pronamic_WP_Pay_Gateway::payment_method_is_required()
+	 */
+	public function payment_method_is_required() {
+		return true;
+	}
+
+	/////////////////////////////////////////////////
+
+	/**
 	 * Start
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::start()

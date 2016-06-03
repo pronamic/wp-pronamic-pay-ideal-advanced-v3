@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
--
+- Add payment method requirement
 
 ## [1.1.4] - 2016-03-22
 - Updated gateway settings, including private key and certificate generation.
