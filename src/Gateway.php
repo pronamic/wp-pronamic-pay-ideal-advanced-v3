@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.0
+ * @version 1.1.5
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_Gateway {
@@ -113,6 +113,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 * Is payment method required to start transaction?
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::payment_method_is_required()
+	 * @since 1.1.5
 	 */
 	public function payment_method_is_required() {
 		return true;

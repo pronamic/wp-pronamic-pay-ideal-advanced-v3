@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c9b874137c34eda272b5ce3dd6b5ab9a",
-    "content-hash": "a722aec64a7a3bb6f86f95b77392fd2e",
+    "hash": "d04fe0a0d76822b5c446ed947332e261",
+    "content-hash": "da110d57385bd357cb4c7971badccf77",
     "packages": [
         {
             "name": "wp-pay-gateways/common",
@@ -71,21 +71,21 @@
         },
         {
             "name": "wp-pay-gateways/ideal",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay-gateways/ideal.git",
-                "reference": "88dae99557cfe06c7f935ac688bd26dcecba2bf4"
+                "reference": "67480a2d5a89bb3aa4cf997390d565ca0c260fc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay-gateways/ideal/zipball/88dae99557cfe06c7f935ac688bd26dcecba2bf4",
-                "reference": "88dae99557cfe06c7f935ac688bd26dcecba2bf4",
+                "url": "https://api.github.com/repos/wp-pay-gateways/ideal/zipball/67480a2d5a89bb3aa4cf997390d565ca0c260fc1",
+                "reference": "67480a2d5a89bb3aa4cf997390d565ca0c260fc1",
                 "shasum": ""
             },
             "require": {
                 "wp-pay-gateways/common": "^1.0.2",
-                "wp-pay/core": "^1.3.5"
+                "wp-pay/core": "^1.3.7"
             },
             "require-dev": {
                 "satooshi/php-coveralls": "dev-master"
@@ -107,20 +107,20 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2016-03-22 13:25:25"
+            "time": "2016-06-08 08:03:41"
         },
         {
             "name": "wp-pay/core",
-            "version": "1.3.6",
+            "version": "1.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "99c95cf8ed4de00eaf067b66ea7b6c5cc54abb19"
+                "reference": "e811cbad1a81d45bb7d69dfddf1a8053bd309e85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/99c95cf8ed4de00eaf067b66ea7b6c5cc54abb19",
-                "reference": "99c95cf8ed4de00eaf067b66ea7b6c5cc54abb19",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/e811cbad1a81d45bb7d69dfddf1a8053bd309e85",
+                "reference": "e811cbad1a81d45bb7d69dfddf1a8053bd309e85",
                 "shasum": ""
             },
             "require": {
@@ -183,7 +183,7 @@
                 "issues": "https://github.com/wp-pay/core/issues",
                 "source": "https://github.com/wp-pay/core"
             },
-            "time": "2016-04-29 11:49:09"
+            "time": "2016-06-08 07:53:02"
         },
         {
             "name": "xrstf/composer-php52",
@@ -1014,16 +1014,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.6",
+            "version": "v2.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "a158f13992a3147d466af7a23b564ac719a4ddd8"
+                "reference": "2a6b8713f8bdb582058cfda463527f195b066110"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a158f13992a3147d466af7a23b564ac719a4ddd8",
-                "reference": "a158f13992a3147d466af7a23b564ac719a4ddd8",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/2a6b8713f8bdb582058cfda463527f195b066110",
+                "reference": "2a6b8713f8bdb582058cfda463527f195b066110",
                 "shasum": ""
             },
             "require": {
@@ -1070,7 +1070,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-05-03 18:59:18"
+            "time": "2016-06-06 11:11:27"
         },
         {
             "name": "symfony/filesystem",
@@ -1123,16 +1123,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v2.8.6",
+            "version": "v2.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "ca24cf2cd4e3826f571e0067e535758e73807aa1"
+                "reference": "3ec095fab1800222732ca522a95dce8fa124007b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/ca24cf2cd4e3826f571e0067e535758e73807aa1",
-                "reference": "ca24cf2cd4e3826f571e0067e535758e73807aa1",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/3ec095fab1800222732ca522a95dce8fa124007b",
+                "reference": "3ec095fab1800222732ca522a95dce8fa124007b",
                 "shasum": ""
             },
             "require": {
@@ -1168,7 +1168,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-10 10:53:53"
+            "time": "2016-06-06 11:11:27"
         },
         {
             "name": "symfony/polyfill-mbstring",
