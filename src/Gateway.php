@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.0
+ * @version 1.1.5
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_Gateway {
@@ -110,27 +110,39 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	/////////////////////////////////////////////////
 
 	/**
+	 * Is payment method required to start transaction?
+	 *
+	 * @see Pronamic_WP_Pay_Gateway::payment_method_is_required()
+	 * @since 1.1.5
+	 */
+	public function payment_method_is_required() {
+		return true;
+	}
+
+	/////////////////////////////////////////////////
+
+	/**
 	 * Start
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::start()
 	 */
-	public function start( Pronamic_Pay_PaymentDataInterface $data, Pronamic_Pay_Payment $payment, $payment_method = null ) {
+	public function start( Pronamic_Pay_Payment $payment ) {
 		// Purchase ID
-		$purchase_id = Pronamic_WP_Pay_Gateways_IDeal_Util::get_purchase_id( $this->config->purchase_id, $data, $payment );
+		$purchase_id = Pronamic_WP_Pay_Gateways_IDeal_Util::get_purchase_id( $this->config->purchase_id, $payment );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
 		// Transaction
 		$transaction = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction();
 		$transaction->set_purchase_id( $purchase_id );
-		$transaction->set_amount( $data->get_amount() );
-		$transaction->set_currency( $data->get_currency() );
+		$transaction->set_amount( $payment->get_amount() );
+		$transaction->set_currency( $payment->get_currency() );
 		$transaction->set_expiration_period( 'PT30M' );
-		$transaction->set_language( $data->get_language() );
-		$transaction->set_description( $data->get_description() );
-		$transaction->set_entrance_code( $data->get_entrance_code() );
+		$transaction->set_language( $payment->get_language() );
+		$transaction->set_description( $payment->get_description() );
+		$transaction->set_entrance_code( $payment->get_entrance_code() );
 
-		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $data->get_issuer_id() );
+		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $payment->get_issuer() );
 
 		$error = $this->client->get_error();
 
