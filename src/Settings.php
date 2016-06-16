@@ -204,13 +204,13 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 	public function field_private_key( $field ) {
 		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
 		$number_days_valid    = get_post_meta( get_the_ID(), '_pronamic_gateway_number_days_valid', true );
-		$filename = __( 'ideal', 'pronamic_ideal' );
+		$filename = __( 'ideal.key', 'pronamic_ideal' );
 
 		if ( ! empty( $private_key_password ) && ! empty( $number_days_valid ) ) {
 			$command = sprintf(
-				'openssl genrsa -aes128 -out %s.key -passout pass:%s 2048',
-				$filename,
-				$private_key_password
+				'openssl genrsa -aes128 -out %s -passout pass:%s 2048',
+				escapeshellarg( $filename ),
+				escapeshellarg( $private_key_password )
 			);
 
 			?>
@@ -250,7 +250,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
 		$number_days_valid    = get_post_meta( get_the_ID(), '_pronamic_gateway_number_days_valid', true );
-		$filename = __( 'ideal', 'pronamic_ideal' );
+		$filename_key = __( 'ideal.key', 'pronamic_ideal' );
+		$filename_cer = __( 'ideal.cer', 'pronamic_ideal' );
 
 		// @see http://www.openssl.org/docs/apps/req.html
 		$subj_args = array(
@@ -272,12 +273,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 		if ( ! empty( $subj ) ) {
 			$command = trim( sprintf(
-				'openssl req -x509 -sha256 -new -key %s.key -passin pass:%s -days %d -out %s.cer %s',
-				$filename,
-				$private_key_password,
-				$number_days_valid,
-				$filename,
-				empty( $subj ) ? '' : sprintf( "-subj '%s'", $subj )
+				'openssl req -x509 -sha256 -new -key %s -passin pass:%s -days %d -out %s %s',
+				escapeshellarg( $filename_key ),
+				escapeshellarg( $private_key_password ),
+				escapeshellarg( $number_days_valid ),
+				escapeshellarg( $filename_cer ),
+				empty( $subj ) ? '' : sprintf( "-subj '%s'", escapeshellarg( $subj ) )
 			) );
 
 			?>
@@ -397,69 +398,83 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		}
 
 		// Generate private key and certificate
-		if ( ! empty( $data['_pronamic_gateway_ideal_private_key_password'] ) ) {
-			$cipher_methods = openssl_get_cipher_methods();
+		if ( empty( $data['_pronamic_gateway_ideal_private_key_password'] ) ) {
+			// Without private key password we can't create private key and certifiate.
+			return $data;
+		}
 
-			$cipher_method = 'aes-128-cbc';
+		if ( ! in_array( 'aes-128-cbc', openssl_get_cipher_methods(), true ) ) {
+			// Without AES-128-CBC ciphter method we can't create private key and certificate.
+			return $data;
+		}
 
-			if ( array_search( $cipher_method, $cipher_methods ) ) {
-				$args = array(
-					'digest_alg'             => 'SHA256',
-					'private_key_bits'       => 2048,
-					'private_key_type'       => OPENSSL_KEYTYPE_RSA,
-					'encrypt_key'            => true,
-					'encrypt_key_cipher'     => OPENSSL_CIPHER_AES_128_CBC,
-					'subjectKeyIdentifier'   => 'hash',
-					'authorityKeyIdentifier' => 'keyid:always,issuer:always',
-					'basicConstraints'       => 'CA:true',
-				);
+		// Private key
+		$pkey = openssl_pkey_get_private( $data['_pronamic_gateway_ideal_private_key'], $data['_pronamic_gateway_ideal_private_key_password'] );
 
-				// Private key
-				$pkey = $data['_pronamic_gateway_ideal_private_key'];
+		if ( false === $pkey ) {
+			// If we can't open the private key we will create a new private key and certificate.
+			$args = array(
+				'digest_alg'             => 'SHA256',
+				'private_key_bits'       => 2048,
+				'private_key_type'       => OPENSSL_KEYTYPE_RSA,
+				'encrypt_key'            => true,
+				'encrypt_key_cipher'     => OPENSSL_CIPHER_AES_128_CBC,
+				'subjectKeyIdentifier'   => 'hash',
+				'authorityKeyIdentifier' => 'keyid:always,issuer:always',
+				'basicConstraints'       => 'CA:true',
+			);
 
-				if ( empty( $data['_pronamic_gateway_ideal_private_key'] ) ) {
-					$pkey = openssl_pkey_new( $args );
+			$pkey = openssl_pkey_new( $args );
 
-					openssl_pkey_export( $pkey, $private_key, $data['_pronamic_gateway_ideal_private_key_password'], $args );
+			if ( false === $pkey ) {
+				return $data;
+			}
 
-					$data['_pronamic_gateway_ideal_private_key'] = $private_key;
-				}
+			// Export key
+			$result = openssl_pkey_export( $pkey, $private_key, $data['_pronamic_gateway_ideal_private_key_password'], $args );
 
-				// Certificate
-				if ( empty( $data['_pronamic_gateway_ideal_private_certificate'] ) && ! empty( $pkey ) ) {
-					$required_keys = array(
-						'countryName',
-						'stateOrProvinceName',
-						'localityName',
-						'organizationName',
-						'commonName',
-						'emailAddress',
-					);
+			if ( false === $result ) {
+				return $data;
+			}
 
-					$distinguished_name = array(
-						'countryName'            => $data['_pronamic_gateway_country'],
-						'stateOrProvinceName'    => $data['_pronamic_gateway_state_or_province'],
-						'localityName'           => $data['_pronamic_gateway_locality'],
-						'organizationName'       => $data['_pronamic_gateway_organization'],
-						'organizationalUnitName' => $data['_pronamic_gateway_organization_unit'],
-						'commonName'             => $data['_pronamic_gateway_organization'],
-						'emailAddress'           => $data['_pronamic_gateway_email'],
-					);
+			$data['_pronamic_gateway_ideal_private_key']         = $private_key;
+			// Delete private certificate since this is no longer valid.
+			$data['_pronamic_gateway_ideal_private_certificate'] = null;
+		}
 
-					$distinguished_name = array_filter( $distinguished_name );
+		// Certificate
+		if ( empty( $data['_pronamic_gateway_ideal_private_certificate'] ) ) {
+			$required_keys = array(
+				'countryName',
+				'stateOrProvinceName',
+				'localityName',
+				'organizationName',
+				'commonName',
+				'emailAddress',
+			);
 
-					// Create certificate only if distinguished name contains all required elements
-					// @see http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
-					if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
-						$csr = openssl_csr_new( $distinguished_name, $pkey );
+			$distinguished_name = array(
+				'countryName'            => $data['_pronamic_gateway_country'],
+				'stateOrProvinceName'    => $data['_pronamic_gateway_state_or_province'],
+				'localityName'           => $data['_pronamic_gateway_locality'],
+				'organizationName'       => $data['_pronamic_gateway_organization'],
+				'organizationalUnitName' => $data['_pronamic_gateway_organization_unit'],
+				'commonName'             => $data['_pronamic_gateway_organization'],
+				'emailAddress'           => $data['_pronamic_gateway_email'],
+			);
 
-						$cert  = openssl_csr_sign( $csr, null, $pkey, $data['_pronamic_gateway_number_days_valid'], $args, time() );
+			$distinguished_name = array_filter( $distinguished_name );
 
-						openssl_x509_export( $cert, $certificate );
+			// Create certificate only if distinguished name contains all required elements
+			// @see http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
+			if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
+				$csr = openssl_csr_new( $distinguished_name, $pkey );
 
-						$data['_pronamic_gateway_ideal_private_certificate'] = $certificate;
-					}
-				}
+				$cert  = openssl_csr_sign( $csr, null, $pkey, $data['_pronamic_gateway_number_days_valid'], $args, time() );
+
+				openssl_x509_export( $cert, $certificate );
+
+				$data['_pronamic_gateway_ideal_private_certificate'] = $certificate;
 			}
 		}
 
