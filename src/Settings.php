@@ -427,6 +427,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 				// Certificate
 				if ( empty( $data['_pronamic_gateway_ideal_private_certificate'] ) && ! empty( $pkey ) ) {
+					$required_keys = array(
+						'countryName',
+						'stateOrProvinceName',
+						'localityName',
+						'organizationName',
+						'commonName',
+						'emailAddress',
+					);
+
 					$distinguished_name = array(
 						'countryName'            => $data['_pronamic_gateway_country'],
 						'stateOrProvinceName'    => $data['_pronamic_gateway_state_or_province'],
@@ -437,8 +446,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 						'emailAddress'           => $data['_pronamic_gateway_email'],
 					);
 
-					// If distinguished_name does not contain empty elements, create the certificate
-					if ( ! in_array( '', $distinguished_name, true ) ) {
+					$distinguished_name = array_filter( $distinguished_name );
+
+					// Create certificate only if distinguished name contains all required alements create the certificate
+					// @see http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
+					if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
 						$csr = openssl_csr_new( $distinguished_name, $pkey );
 
 						$cert  = openssl_csr_sign( $csr, null, $pkey, $data['_pronamic_gateway_number_days_valid'], $args, time() );
