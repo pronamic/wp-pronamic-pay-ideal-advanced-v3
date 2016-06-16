@@ -415,14 +415,14 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				);
 
 				// Private key
+				$pkey = $data['_pronamic_gateway_ideal_private_key'];
+
 				if ( empty( $data['_pronamic_gateway_ideal_private_key'] ) ) {
 					$pkey = openssl_pkey_new( $args );
 
 					openssl_pkey_export( $pkey, $private_key, $data['_pronamic_gateway_ideal_private_key_password'], $args );
 
 					$data['_pronamic_gateway_ideal_private_key'] = $private_key;
-				} else {
-					$pkey = $data['_pronamic_gateway_ideal_private_key'];
 				}
 
 				// Certificate
@@ -448,7 +448,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 					$distinguished_name = array_filter( $distinguished_name );
 
-					// Create certificate only if distinguished name contains all required alements create the certificate
+					// Create certificate only if distinguished name contains all required elements
 					// @see http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
 					if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
 						$csr = openssl_csr_new( $distinguished_name, $pkey );
