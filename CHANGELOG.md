@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 - 
 
+## [1.1.6] - 2016-07-06
+- Adjusted check on required distinguished name keys/values.
+- Added some early returns + escapeshellarg calls.
+
 ## [1.1.5] - 2016-06-08
 - Added payment method requirement.
 - Simplified the gateay payment start function.
