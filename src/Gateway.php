@@ -44,25 +44,27 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 * @return array
 	 */
 	public function get_issuers() {
-		$groups = array();
-
 		$directory = $this->client->get_directory();
 
-		if ( $directory ) {
-			foreach ( $directory->get_countries() as $country ) {
-				$issuers = array();
-
-				foreach ( $country->get_issuers() as $issuer ) {
-					$issuers[ $issuer->get_id() ] = $issuer->get_name();
-				}
-
-				$groups[] = array(
-					'name'    => $country->get_name(),
-					'options' => $issuers,
-				);
-			}
-		} else {
+		if ( ! $directory ) {
 			$this->error = $this->client->get_error();
+
+			return array();
+		}
+
+		$groups = array();
+
+		foreach ( $directory->get_countries() as $country ) {
+			$issuers = array();
+
+			foreach ( $country->get_issuers() as $issuer ) {
+				$issuers[ $issuer->get_id() ] = $issuer->get_name();
+			}
+
+			$groups[] = array(
+				'name'    => $country->get_name(),
+				'options' => $issuers,
+			);
 		}
 
 		return $groups;
@@ -148,12 +150,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 
 		if ( is_wp_error( $error ) ) {
 			$this->set_error( $error );
-		} else {
-			$issuer = $result->issuer;
 
-			$payment->set_action_url( $result->issuer->get_authentication_url() );
-			$payment->set_transaction_id( $result->transaction->get_id() );
+			return;
 		}
+
+		$payment->set_action_url( $result->issuer->get_authentication_url() );
+		$payment->set_transaction_id( $result->transaction->get_id() );
 	}
 
 	/////////////////////////////////////////////////
