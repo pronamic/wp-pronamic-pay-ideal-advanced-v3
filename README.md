@@ -8,7 +8,7 @@
 [![Total Downloads](https://poser.pugx.org/wp-pay-gateways/ideal-advanced-v3/downloads.svg)](https://packagist.org/packages/wp-pay-gateways/ideal-advanced-v3)
 [![Latest Unstable Version](https://poser.pugx.org/wp-pay-gateways/ideal-advanced-v3/v/unstable.svg)](https://packagist.org/packages/wp-pay-gateways/ideal-advanced-v3)
 [![License](https://poser.pugx.org/wp-pay-gateways/ideal-advanced-v3/license.svg)](https://packagist.org/packages/wp-pay-gateways/ideal-advanced-v3)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 
 ## Providers
 
