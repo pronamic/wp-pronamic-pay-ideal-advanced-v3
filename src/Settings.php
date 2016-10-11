@@ -323,11 +323,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			echo '</dl>';
 		}
 
-		submit_button(
-			__( 'Download', 'pronamic_ideal' ),
-			'secondary' , 'download_private_certificate',
-			false
-		);
+		submit_button( __( 'Download', 'pronamic_ideal' ), 'secondary' , 'download_private_certificate', false );
 
 		?>
 
