@@ -181,34 +181,4 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 			$payment->set_consumer_bic( $transaction->get_consumer_bic() );
 		}
 	}
-
-	/////////////////////////////////////////////////
-
-	public function payment( Pronamic_Pay_Payment $payment ) {
-		/*
-		 * Schedule status requests
-		 * http://pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf (page 19)
-		 *
-		 * @todo
-		 * Considering the number of status requests per transaction:
-		 * - Maximum of five times per transaction;
-		 * - Maximum of two times during the expirationPeriod;
-		 * - After the expirationPeriod not more often than once per 60 minutes;
-		 * - No status request after a final status has been received for a transaction;
-		 * - No status request for transactions older than 7 days.
-		 */
-
-		/*
-		 * The function `wp_schedule_single_event` uses the arguments array as an key for the event,
-		 * that's why we also add the time to this array, besides that it's also much clearer on
-		 * the Cron View (http://wordpress.org/extend/plugins/cron-view/) page
-		 */
-
-		$time = time();
-
-		// Examples of possible times when a status request can be executed:
-
-		// 30 seconds after a transaction request is sent
-		wp_schedule_single_event( $time + 30, 'pronamic_ideal_check_transaction_status', array( 'payment_id' => $payment->get_id(), 'seconds' => 30 ) );
-	}
 }
