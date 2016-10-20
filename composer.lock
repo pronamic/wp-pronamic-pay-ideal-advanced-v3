@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d2f2bf0f58ceca92df7a3a3fcd6bef56",
-    "content-hash": "9b321ae72eb9a8132ffdd6c6d44ce2f5",
+    "hash": "a1f4c488b884d157cf3867823ca920d7",
+    "content-hash": "e34b6a9ef7a7bbf6442a26d00b3b6d76",
     "packages": [
         {
             "name": "wp-pay-gateways/common",
@@ -71,24 +71,26 @@
         },
         {
             "name": "wp-pay-gateways/ideal",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay-gateways/ideal.git",
-                "reference": "67480a2d5a89bb3aa4cf997390d565ca0c260fc1"
+                "reference": "744f81360667a8396cc6e0ce3e2d218b45b15c3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay-gateways/ideal/zipball/67480a2d5a89bb3aa4cf997390d565ca0c260fc1",
-                "reference": "67480a2d5a89bb3aa4cf997390d565ca0c260fc1",
+                "url": "https://api.github.com/repos/wp-pay-gateways/ideal/zipball/744f81360667a8396cc6e0ce3e2d218b45b15c3f",
+                "reference": "744f81360667a8396cc6e0ce3e2d218b45b15c3f",
                 "shasum": ""
             },
             "require": {
                 "wp-pay-gateways/common": "^1.0.2",
-                "wp-pay/core": "^1.3.7"
+                "wp-pay/core": "^1.3"
             },
             "require-dev": {
-                "satooshi/php-coveralls": "dev-master"
+                "satooshi/php-coveralls": "dev-master",
+                "squizlabs/php_codesniffer": "^2.7",
+                "wp-coding-standards/wpcs": "^0.10.0"
             },
             "type": "library",
             "autoload": {
@@ -107,20 +109,20 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2016-06-08 08:03:41"
+            "time": "2016-10-20 09:50:01"
         },
         {
             "name": "wp-pay/core",
-            "version": "1.3.8",
+            "version": "1.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "a4a9b9e07da0a5d68b75f01748fc9de1928723da"
+                "reference": "3378c22e267d00e43a8b8658532ac6a2012c1e19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/a4a9b9e07da0a5d68b75f01748fc9de1928723da",
-                "reference": "a4a9b9e07da0a5d68b75f01748fc9de1928723da",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/3378c22e267d00e43a8b8658532ac6a2012c1e19",
+                "reference": "3378c22e267d00e43a8b8658532ac6a2012c1e19",
                 "shasum": ""
             },
             "require": {
@@ -130,8 +132,8 @@
             "require-dev": {
                 "phpmd/phpmd": "^2.4",
                 "satooshi/php-coveralls": "^1.0",
-                "squizlabs/php_codesniffer": "^2.6",
-                "wp-coding-standards/wpcs": "0.9.0"
+                "squizlabs/php_codesniffer": "^2.7",
+                "wp-coding-standards/wpcs": "0.10.0"
             },
             "type": "library",
             "autoload": {
@@ -183,7 +185,7 @@
                 "issues": "https://github.com/wp-pay/core/issues",
                 "source": "https://github.com/wp-pay/core"
             },
-            "time": "2016-07-06 12:32:50"
+            "time": "2016-10-20 09:02:38"
         },
         {
             "name": "xrstf/composer-php52",
