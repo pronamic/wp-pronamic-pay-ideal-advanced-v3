@@ -19,6 +19,10 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	public function __construct( Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config $config ) {
 		parent::__construct( $config );
 
+		$this->supports = array(
+			'payment_status_request',
+		);
+
 		$this->set_method( Pronamic_WP_Pay_Gateway::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
@@ -44,25 +48,27 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 * @return array
 	 */
 	public function get_issuers() {
-		$groups = array();
-
 		$directory = $this->client->get_directory();
 
-		if ( $directory ) {
-			foreach ( $directory->get_countries() as $country ) {
-				$issuers = array();
-
-				foreach ( $country->get_issuers() as $issuer ) {
-					$issuers[ $issuer->get_id() ] = $issuer->get_name();
-				}
-
-				$groups[] = array(
-					'name'    => $country->get_name(),
-					'options' => $issuers,
-				);
-			}
-		} else {
+		if ( ! $directory ) {
 			$this->error = $this->client->get_error();
+
+			return array();
+		}
+
+		$groups = array();
+
+		foreach ( $directory->get_countries() as $country ) {
+			$issuers = array();
+
+			foreach ( $country->get_issuers() as $issuer ) {
+				$issuers[ $issuer->get_id() ] = $issuer->get_name();
+			}
+
+			$groups[] = array(
+				'name'    => $country->get_name(),
+				'options' => $issuers,
+			);
 		}
 
 		return $groups;
@@ -103,7 +109,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			Pronamic_WP_Pay_PaymentMethods::IDEAL => Pronamic_WP_Pay_PaymentMethods::IDEAL,
+			Pronamic_WP_Pay_PaymentMethods::IDEAL,
 		);
 	}
 
@@ -128,7 +134,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 */
 	public function start( Pronamic_Pay_Payment $payment ) {
 		// Purchase ID
-		$purchase_id = Pronamic_WP_Pay_Gateways_IDeal_Util::get_purchase_id( $this->config->purchase_id, $payment );
+		$purchase_id = $payment->format_string( $this->config->purchase_id );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
@@ -148,12 +154,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 
 		if ( is_wp_error( $error ) ) {
 			$this->set_error( $error );
-		} else {
-			$issuer = $result->issuer;
 
-			$payment->set_action_url( $result->issuer->get_authentication_url() );
-			$payment->set_transaction_id( $result->transaction->get_id() );
+			return;
 		}
+
+		$payment->set_action_url( $result->issuer->get_authentication_url() );
+		$payment->set_transaction_id( $result->transaction->get_id() );
 	}
 
 	/////////////////////////////////////////////////
@@ -178,35 +184,5 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 			$payment->set_consumer_iban( $transaction->get_consumer_iban() );
 			$payment->set_consumer_bic( $transaction->get_consumer_bic() );
 		}
-	}
-
-	/////////////////////////////////////////////////
-
-	public function payment( Pronamic_Pay_Payment $payment ) {
-		/*
-		 * Schedule status requests
-		 * http://pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf (page 19)
-		 *
-		 * @todo
-		 * Considering the number of status requests per transaction:
-		 * - Maximum of five times per transaction;
-		 * - Maximum of two times during the expirationPeriod;
-		 * - After the expirationPeriod not more often than once per 60 minutes;
-		 * - No status request after a final status has been received for a transaction;
-		 * - No status request for transactions older than 7 days.
-		 */
-
-		/*
-		 * The function `wp_schedule_single_event` uses the arguments array as an key for the event,
-		 * that's why we also add the time to this array, besides that it's also much clearer on
-		 * the Cron View (http://wordpress.org/extend/plugins/cron-view/) page
-		 */
-
-		$time = time();
-
-		// Examples of possible times when a status request can be executed:
-
-		// 30 seconds after a transaction request is sent
-		wp_schedule_single_event( $time + 30, 'pronamic_ideal_check_transaction_status', array( 'payment_id' => $payment->get_id(), 'seconds' => 30 ) );
 	}
 }
