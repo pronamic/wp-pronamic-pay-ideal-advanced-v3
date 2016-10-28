@@ -273,7 +273,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 		if ( ! empty( $subj ) ) {
 			$command = trim( sprintf(
-				'openssl req -x509 -sha256 -new -key %s -passin pass:%s -days %d -out %s %s',
+				'openssl req -x509 -sha256 -new -key %s -passin pass:%s -days %s -out %s %s',
 				escapeshellarg( $filename_key ),
 				escapeshellarg( $private_key_password ),
 				escapeshellarg( $number_days_valid ),

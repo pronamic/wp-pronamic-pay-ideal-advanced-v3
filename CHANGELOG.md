@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
 ## [Unreleased][unreleased]
-- 
+- Fix zero days private certificate validity in OpenSSL command.
 
 ## [1.1.7] - 2016-10-20
 - Added `payment_status_request` feature support.
