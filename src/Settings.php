@@ -202,8 +202,10 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 	}
 
 	public function field_private_key( $field ) {
+		$private_key          = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key', true );
 		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
 		$number_days_valid    = get_post_meta( get_the_ID(), '_pronamic_gateway_number_days_valid', true );
+
 		$filename = __( 'ideal.key', 'pronamic_ideal' );
 
 		if ( ! empty( $private_key_password ) && ! empty( $number_days_valid ) ) {
@@ -225,24 +227,28 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				esc_html__( 'Leave empty and save the configuration to generate the private key or view the OpenSSL command.', 'pronamic_ideal' )
 			);
 		}
+
+		echo '<p>';
+
+		if ( ! empty( $private_key ) ) {
+			submit_button(
+				__( 'Download', 'pronamic_ideal' ),
+				'secondary',
+				'download_private_key',
+				false
+			);
+		}
+
 		?>
 
-		<?php
-
-		submit_button(
-			__( 'Download', 'pronamic_ideal' ),
-			'secondary' , 'download_private_key',
-			false
-		);
-
-		?>
-
-		<div class="input-file-wrapper button">
+		<span class="input-file-wrapper button">
 			<?php esc_html_e( 'Upload', 'pronamic_ideal' ); ?>
 			<input type="file" name="_pronamic_gateway_ideal_private_key_file" />
-		</div>
+		</span>
 
 		<?php
+
+		echo '</p>';
 	}
 
 	public function field_private_certificate( $field ) {
@@ -323,7 +329,16 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			echo '</dl>';
 		}
 
-		submit_button( __( 'Download', 'pronamic_ideal' ), 'secondary' , 'download_private_certificate', false );
+		echo '<p>';
+
+		if ( ! empty( $certificate ) ) {
+			submit_button(
+				__( 'Download', 'pronamic_ideal' ),
+				'secondary',
+				'download_private_certificate',
+				false
+			);
+		}
 
 		?>
 
@@ -333,6 +348,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		</div>
 
 		<?php
+
+		echo '</p>';
 	}
 
 	//////////////////////////////////////////////////
