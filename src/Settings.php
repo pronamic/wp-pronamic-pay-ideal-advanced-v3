@@ -237,16 +237,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				'download_private_key',
 				false
 			);
+
+			echo ' ';
 		}
 
-		?>
-
-		<span class="input-file-wrapper button">
-			<?php esc_html_e( 'Upload', 'pronamic_ideal' ); ?>
-			<input type="file" name="_pronamic_gateway_ideal_private_key_file" />
-		</span>
-
-		<?php
+		printf(
+			'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
+			esc_html__( 'Upload', 'pronamic_ideal' ),
+			'_pronamic_gateway_ideal_private_key_file'
+		);
 
 		echo '</p>';
 	}
@@ -338,16 +337,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				'download_private_certificate',
 				false
 			);
+
+			echo ' ';
 		}
 
-		?>
-
-		<div class="input-file-wrapper button">
-			<?php esc_html_e( 'Upload', 'pronamic_ideal' ); ?>
-			<input type="file" name="_pronamic_gateway_ideal_private_certificate_file" />
-		</div>
-
-		<?php
+		printf(
+			'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
+			esc_html__( 'Upload', 'pronamic_ideal' ),
+			'_pronamic_gateway_ideal_private_certificate_file'
+		);
 
 		echo '</p>';
 	}
