@@ -228,26 +228,30 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			);
 		}
 
-		echo '<p>';
+		?>
+		<p>
+			<?php
 
-		if ( ! empty( $private_key ) ) {
-			submit_button(
-				__( 'Download', 'pronamic_ideal' ),
-				'secondary',
-				'download_private_key',
-				false
+			if ( ! empty( $private_key ) ) {
+				submit_button(
+					__( 'Download', 'pronamic_ideal' ),
+					'secondary',
+					'download_private_key',
+					false
+				);
+
+				echo ' ';
+			}
+
+			printf(
+				'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
+				esc_html__( 'Upload', 'pronamic_ideal' ),
+				'_pronamic_gateway_ideal_private_key_file'
 			);
 
-			echo ' ';
-		}
-
-		printf(
-			'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
-			esc_html__( 'Upload', 'pronamic_ideal' ),
-			'_pronamic_gateway_ideal_private_key_file'
-		);
-
-		echo '</p>';
+			?>
+		</p>
+		<?php
 	}
 
 	public function field_private_certificate( $field ) {
@@ -328,26 +332,30 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			echo '</dl>';
 		}
 
-		echo '<p>';
+		?>
+		<p>
+			<?php
 
-		if ( ! empty( $certificate ) ) {
-			submit_button(
-				__( 'Download', 'pronamic_ideal' ),
-				'secondary',
-				'download_private_certificate',
-				false
+			if ( ! empty( $certificate ) ) {
+				submit_button(
+					__( 'Download', 'pronamic_ideal' ),
+					'secondary',
+					'download_private_certificate',
+					false
+				);
+
+				echo ' ';
+			}
+
+			printf(
+				'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
+				esc_html__( 'Upload', 'pronamic_ideal' ),
+				'_pronamic_gateway_ideal_private_certificate_file'
 			);
 
-			echo ' ';
-		}
-
-		printf(
-			'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
-			esc_html__( 'Upload', 'pronamic_ideal' ),
-			'_pronamic_gateway_ideal_private_certificate_file'
-		);
-
-		echo '</p>';
+			?>
+		</p>
+		<?php
 	}
 
 	//////////////////////////////////////////////////
