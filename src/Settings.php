@@ -31,14 +31,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			'methods'     => array( 'ideal-advanced-v3' ),
 			'title'       => __( 'Private key and certificate', 'pronamic_ideal' ),
 			'type'        => 'description',
-			'html'        => sprintf(
-				'<div class="pk-cert-error"><span class="dashicons dashicons-no"></span> %s</div> <div class="pk-cert-ok"><span class="dashicons dashicons-yes"></span> %s</div>',
-				__( '<span>The private key and certificate have not yet been configured.</span><p>A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.</p>', 'pronamic_ideal' ),
-				sprintf(
-					__( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.<br>%s <a href="#" id="pk-cert-fields-toggle">Show details...</a>', 'pronamic_ideal' ),
-					get_submit_button( __( 'Download certificate', 'pronamic_ideal' ), 'secondary' , 'download_private_certificate', false )
-				)
-			),
+			'callback'    => array( $this, 'field_security' ),
 		);
 
 		// Organization
@@ -199,6 +192,48 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 		// Return
 		return $fields;
+	}
+
+	/**
+	 * Field security
+	 *
+	 * @param array $field
+	 */
+	public function field_security( $field ) {
+		$certificate = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_certificate', true );
+
+		?>
+		<p>
+			<?php if ( empty( $certificate ) ) : ?>
+
+				<span class="dashicons dashicons-no"></span> The private key and certificate have not yet been configured.<br />
+
+				<br />
+
+				A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.
+
+			<?php else : ?>
+		
+				<span class="dashicons dashicons-yes"></span> A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.<br />
+
+				<br />
+
+				<?php
+
+				submit_button(
+					__( 'Download certificate', 'pronamic_ideal' ),
+					'secondary',
+					'download_private_certificate',
+					false
+				);
+
+				?>
+
+				<a class="pronamic-pay-btn-link" href="#" id="pk-cert-fields-toggle">Show details...</a>
+
+			<?php endif; ?>
+		</p>
+		<?php
 	}
 
 	public function field_private_key( $field ) {
