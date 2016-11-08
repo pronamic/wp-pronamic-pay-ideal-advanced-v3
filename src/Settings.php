@@ -206,15 +206,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		<p>
 			<?php if ( empty( $certificate ) ) : ?>
 
-				<span class="dashicons dashicons-no"></span> The private key and certificate have not yet been configured.<br />
+				<span class="dashicons dashicons-no"></span> <?php esc_html_e( 'The private key and certificate have not yet been configured.', 'pronamic_ideal' ); ?><br />
 
 				<br />
 
-				A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.
+				<?php esc_html_e( 'A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.', 'pronamic_ideal' ); ?>
 
 			<?php else : ?>
 		
-				<span class="dashicons dashicons-yes"></span> A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.<br />
+				<span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.', 'pronamic_ideal' ); ?><br />
 
 				<br />
 
@@ -229,7 +229,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 				?>
 
-				<a class="pronamic-pay-btn-link" href="#" id="pk-cert-fields-toggle">Show details...</a>
+				<a class="pronamic-pay-btn-link" href="#" id="pk-cert-fields-toggle"><?php esc_html_e( 'Show details…', 'pronamic_ideal' ); ?></a>
 
 			<?php endif; ?>
 		</p>
