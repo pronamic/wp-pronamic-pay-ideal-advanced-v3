@@ -258,7 +258,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			<?php
 		} else {
 			printf(
-				'<p><em>%s</em></p>',
+				'<p class="pronamic-pay-description description">%s</p>',
 				esc_html__( 'Leave empty and save the configuration to generate the private key or view the OpenSSL command.', 'pronamic_ideal' )
 			);
 		}
@@ -333,7 +333,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			<?php
 		} else {
 			printf(
-				'<p><em>%s</em></p>',
+				'<p class="pronamic-pay-description description">%s</p>',
 				esc_html__( 'Leave empty and save the configuration to generate the certificate or view the OpenSSL command.', 'pronamic_ideal' )
 			);
 		}
