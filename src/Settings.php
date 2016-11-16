@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.8
+ * @version 1.1.9
  * @since 1.1.2
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_GatewaySettings {
@@ -31,14 +31,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			'methods'     => array( 'ideal-advanced-v3' ),
 			'title'       => __( 'Private key and certificate', 'pronamic_ideal' ),
 			'type'        => 'description',
-			'html'        => sprintf(
-				'<div class="pk-cert-error"><span class="dashicons dashicons-no"></span> %s</div> <div class="pk-cert-ok"><span class="dashicons dashicons-yes"></span> %s</div>',
-				__( '<span>The private key and certificate have not yet been configured.</span><p>A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.</p>', 'pronamic_ideal' ),
-				sprintf(
-					__( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.<br>%s <a href="#" id="pk-cert-fields-toggle">Show details...</a>', 'pronamic_ideal' ),
-					get_submit_button( __( 'Download certificate', 'pronamic_ideal' ), 'secondary' , 'download_private_certificate', false )
-				)
-			),
+			'callback'    => array( $this, 'field_security' ),
 		);
 
 		// Organization
@@ -201,9 +194,53 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 		return $fields;
 	}
 
+	/**
+	 * Field security
+	 *
+	 * @param array $field
+	 */
+	public function field_security( $field ) {
+		$certificate = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_certificate', true );
+
+		?>
+		<p>
+			<?php if ( empty( $certificate ) ) : ?>
+
+				<span class="dashicons dashicons-no"></span> <?php esc_html_e( 'The private key and certificate have not yet been configured.', 'pronamic_ideal' ); ?><br />
+
+				<br />
+
+				<?php esc_html_e( 'A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.', 'pronamic_ideal' ); ?>
+
+			<?php else : ?>
+		
+				<span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.', 'pronamic_ideal' ); ?><br />
+
+				<br />
+
+				<?php
+
+				submit_button(
+					__( 'Download certificate', 'pronamic_ideal' ),
+					'secondary',
+					'download_private_certificate',
+					false
+				);
+
+				?>
+
+				<a class="pronamic-pay-btn-link" href="#" id="pk-cert-fields-toggle"><?php esc_html_e( 'Show details…', 'pronamic_ideal' ); ?></a>
+
+			<?php endif; ?>
+		</p>
+		<?php
+	}
+
 	public function field_private_key( $field ) {
+		$private_key          = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key', true );
 		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
 		$number_days_valid    = get_post_meta( get_the_ID(), '_pronamic_gateway_number_days_valid', true );
+
 		$filename = __( 'ideal.key', 'pronamic_ideal' );
 
 		if ( ! empty( $private_key_password ) && ! empty( $number_days_valid ) ) {
@@ -221,27 +258,34 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			<?php
 		} else {
 			printf(
-				'<p><em>%s</em></p>',
+				'<p class="pronamic-pay-description description">%s</p>',
 				esc_html__( 'Leave empty and save the configuration to generate the private key or view the OpenSSL command.', 'pronamic_ideal' )
 			);
 		}
-		?>
-
-		<?php
-
-		submit_button(
-			__( 'Download', 'pronamic_ideal' ),
-			'secondary' , 'download_private_key',
-			false
-		);
 
 		?>
+		<p>
+			<?php
 
-		<div class="input-file-wrapper button">
-			<?php esc_html_e( 'Upload', 'pronamic_ideal' ); ?>
-			<input type="file" name="_pronamic_gateway_ideal_private_key_file" />
-		</div>
+			if ( ! empty( $private_key ) ) {
+				submit_button(
+					__( 'Download', 'pronamic_ideal' ),
+					'secondary',
+					'download_private_key',
+					false
+				);
 
+				echo ' ';
+			}
+
+			printf(
+				'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
+				esc_html__( 'Upload', 'pronamic_ideal' ),
+				'_pronamic_gateway_ideal_private_key_file'
+			);
+
+			?>
+		</p>
 		<?php
 	}
 
@@ -289,7 +333,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			<?php
 		} else {
 			printf(
-				'<p><em>%s</em></p>',
+				'<p class="pronamic-pay-description description">%s</p>',
 				esc_html__( 'Leave empty and save the configuration to generate the certificate or view the OpenSSL command.', 'pronamic_ideal' )
 			);
 		}
@@ -323,15 +367,29 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			echo '</dl>';
 		}
 
-		submit_button( __( 'Download', 'pronamic_ideal' ), 'secondary' , 'download_private_certificate', false );
-
 		?>
+		<p>
+			<?php
 
-		<div class="input-file-wrapper button">
-			<?php esc_html_e( 'Upload', 'pronamic_ideal' ); ?>
-			<input type="file" name="_pronamic_gateway_ideal_private_certificate_file" />
-		</div>
+			if ( ! empty( $certificate ) ) {
+				submit_button(
+					__( 'Download', 'pronamic_ideal' ),
+					'secondary',
+					'download_private_certificate',
+					false
+				);
 
+				echo ' ';
+			}
+
+			printf(
+				'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
+				esc_html__( 'Upload', 'pronamic_ideal' ),
+				'_pronamic_gateway_ideal_private_certificate_file'
+			);
+
+			?>
+		</p>
 		<?php
 	}
 
