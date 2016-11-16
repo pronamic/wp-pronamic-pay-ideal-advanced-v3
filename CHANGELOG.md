@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.9] - 2016-11-16
+- Simplified settings fields.
+
 ## [1.1.8] - 2016-10-28
 - Fixed zero days private certificate validity in OpenSSL command.
 
@@ -52,7 +55,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.8...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.9...HEAD
+[1.1.9]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.8...1.1.9
 [1.1.8]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.7...1.1.8
 [1.1.7]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.6...1.1.7
 [1.1.6]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.5...1.1.6
