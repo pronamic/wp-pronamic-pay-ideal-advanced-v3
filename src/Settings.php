@@ -322,7 +322,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				escapeshellarg( $private_key_password ),
 				escapeshellarg( $number_days_valid ),
 				escapeshellarg( $filename_cer ),
-				empty( $subj ) ? '' : sprintf( "-subj '%s'", escapeshellarg( $subj ) )
+				empty( $subj ) ? '' : sprintf( "-subj %s", escapeshellarg( $subj ) )
 			) );
 
 			?>
