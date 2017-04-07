@@ -1,6 +1,6 @@
 {
   "name": "ideal-advanced-v3",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "iDEAL Advanced v3 driver for the WordPress payment processing library.",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-phpcs": "^0.4.0",
-    "grunt-phplint": "0.0.8",
+    "grunt-phplint": "0.1.0",
     "grunt-phpmd": "^0.1.1",
     "grunt-phpunit": "^0.3.6",
     "load-grunt-tasks": "^3.5.2"

@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.10] - 2017-04-07
+- Removed surrounding quotes from subject, these are already added by `escapeshellarg()`.
+
 ## [1.1.9] - 2016-11-16
 - Simplified settings fields.
 
@@ -55,7 +58,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.9...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.10...HEAD
+[1.1.10]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.9...1.1.10
 [1.1.9]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.8...1.1.9
 [1.1.8]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.7...1.1.8
 [1.1.7]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.6...1.1.7
