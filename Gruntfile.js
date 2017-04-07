@@ -28,12 +28,10 @@ module.exports = function( grunt ) {
 
 		// PHPLint
 		phplint: {
-			application: [ 'src/**/*.php', 'test/**/*.php' ],
-			options: {
-				phpArgs: {
-					'-lf': null
-				}
-			}
+			application: [
+				'src/**/*.php',
+				'test/**/*.php'
+			]
 		},
 
 		// PHP Mess Detector
@@ -50,9 +48,12 @@ module.exports = function( grunt ) {
 
 		// PHPUnit
 		phpunit: {
+			options: {
+				bin: 'vendor/bin/phpunit'
+			},
 			application: {
-		        
-		    }
+				
+			}
 		}
 	} );
 
