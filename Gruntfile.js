@@ -52,8 +52,8 @@ module.exports = function( grunt ) {
 				bin: 'vendor/bin/phpunit'
 			},
 			application: {
-		        
-		    }
+				
+			}
 		}
 	} );
 
