@@ -84,6 +84,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 			$fingerprint = hash( $hash, $fingerprint );
 		}
 
+		/*
+		 * Uppercase
+		 *
+		 * Cannot find private certificate file with fingerprint: b4845cb5cbcee3e1e0afef2662552a2365960e72
+		 * (Note: Some acquirers only accept fingerprints in uppercase. Make the value of "KeyName" in your XML data uppercase.).
+		 * https://www.ideal-checkout.nl/simulator/
+		 */
+		$fingerprint = strtoupper( $fingerprint );
+
 		return $fingerprint;
 	}
 }
