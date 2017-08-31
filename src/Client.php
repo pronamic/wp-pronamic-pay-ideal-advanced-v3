@@ -145,6 +145,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 			// Stringify
 			$data = $document->saveXML();
 
+			// Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
+			if ( 'https://www.ideal-checkout.nl/simulator/' === $url ) {
+				$data = $document->C14N( true, false );
+			}
+
 			// Remote post
 			$response = wp_remote_post( $url, array(
 				'method'    => 'POST',
