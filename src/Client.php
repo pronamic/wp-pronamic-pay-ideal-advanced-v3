@@ -3,11 +3,11 @@
 /**
  * Title: iDEAL client
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2017
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.4
+ * @version 1.1.11
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
@@ -145,7 +145,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 			// Stringify
 			$data = $document->saveXML();
 
-			// Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
+			/*
+			 * Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
+			 *
+			 * @since 1.1.11
+			 */
 			if ( 'https://www.ideal-checkout.nl/simulator/' === $url ) {
 				$data = $document->C14N( true, false );
 			}

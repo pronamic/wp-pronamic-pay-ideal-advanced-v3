@@ -3,11 +3,12 @@
 /**
  * Title: Security
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2017
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.11
+ * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 	/**
@@ -90,6 +91,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 		 * Cannot find private certificate file with fingerprint: b4845cb5cbcee3e1e0afef2662552a2365960e72
 		 * (Note: Some acquirers only accept fingerprints in uppercase. Make the value of "KeyName" in your XML data uppercase.).
 		 * https://www.ideal-checkout.nl/simulator/
+		 *
+		 * @since 1.1.11
 		 */
 		$fingerprint = strtoupper( $fingerprint );
 
