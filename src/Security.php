@@ -61,23 +61,28 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 		$resource = @openssl_x509_read( $certificate );
 		// @codingStandardsIgnoreEnd
 
-		if ( false !== $resource ) {
-			$output = null;
+		if ( false === $resource ) {
+			return false;
+		}
 
-			$result = openssl_x509_export( $resource, $output );
-			if ( false !== $result ) {
-				$output = str_replace( self::CERTIFICATE_BEGIN, '', $output );
-				$output = str_replace( self::CERTIFICATE_END, '', $output );
+		$output = null;
 
-				// Base64 decode
-				$fingerprint = base64_decode( $output );
+		$result = openssl_x509_export( $resource, $output );
 
-				// Hash
-				if ( null !== $hash ) {
-					$fingerprint = hash( $hash, $fingerprint );
-				}
-			} // @todo else what to do?
-		} // @todo else what to do?
+		if ( false === $result ) {
+			return false;
+		}
+
+		$output = str_replace( self::CERTIFICATE_BEGIN, '', $output );
+		$output = str_replace( self::CERTIFICATE_END, '', $output );
+
+		// Base64 decode
+		$fingerprint = base64_decode( $output );
+
+		// Hash
+		if ( null !== $hash ) {
+			$fingerprint = hash( $hash, $fingerprint );
+		}
 
 		return $fingerprint;
 	}
