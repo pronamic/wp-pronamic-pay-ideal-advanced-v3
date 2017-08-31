@@ -117,6 +117,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			'meta_key'    => '_pronamic_gateway_email',
 			'title'       => __( 'E-mail address', 'pronamic_ideal' ),
 			'tooltip'     => sprintf(
+				/* translators: %s: admin email */
 				__( 'E-mail address, e.g. %s', 'pronamic_ideal' ),
 				get_option( 'admin_email' )
 			),
