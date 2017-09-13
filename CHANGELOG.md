@@ -7,6 +7,11 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.11] - 2017-09-13
+- Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
+- Some acquirers only accept fingerprints in uppercase.
+- Updated WordPress Coding Standards.
+
 ## [1.1.10] - 2017-04-07
 - Removed surrounding quotes from subject, these are already added by `escapeshellarg()`.
 
@@ -58,7 +63,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.10...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.11...HEAD
+[1.1.11]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.10...1.1.11
 [1.1.10]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.9...1.1.10
 [1.1.9]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.8...1.1.9
 [1.1.8]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.7...1.1.8

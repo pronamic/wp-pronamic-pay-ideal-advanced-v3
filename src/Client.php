@@ -3,11 +3,11 @@
 /**
  * Title: iDEAL client
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2017
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.4
+ * @version 1.1.11
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
@@ -145,6 +145,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 			// Stringify
 			$data = $document->saveXML();
 
+			/*
+			 * Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
+			 *
+			 * @since 1.1.11
+			 */
+			if ( 'https://www.ideal-checkout.nl/simulator/' === $url ) {
+				$data = $document->C14N( true, false );
+			}
+
 			// Remote post
 			$response = wp_remote_post( $url, array(
 				'method'    => 'POST',
@@ -173,7 +182,14 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 						}
 					}
 				} else {
-					$this->error = new WP_Error( 'wrong_response_code', __( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ) );
+					$this->error = new WP_Error(
+						'wrong_response_code',
+						sprintf(
+							/* translators: %s: response code */
+							__( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ),
+							wp_remote_retrieve_response_code( $response )
+						)
+					);
 				}
 			} else {
 				$this->error = $response;
@@ -196,7 +212,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 		$name = $document->getName();
 
 		switch ( $name ) {
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage::NAME:
 				$message = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage::parse( $document );
 
 				$this->error = new WP_Error(
@@ -206,15 +222,16 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 				);
 
 				return $message;
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryResponseMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryResponseMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryResponseMessage::parse( $document );
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage::parse( $document );
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusResMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusResMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusResMessage::parse( $document );
 			default:
 				return new WP_Error(
 					'ideal_advanced_v3_error',
+					/* translators: %s: XML document element name */
 					sprintf( __( 'Unknwon iDEAL message (%s)', 'pronamic_ideal' ), $name )
 				);
 		}
@@ -317,12 +334,16 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 				$document,
 				XMLSecurityDSig::SHA256,
 				array( 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' ),
-				array( 'force_uri' => true )
+				array(
+					'force_uri' => true,
+				)
 			);
 
 			// For signature purposes the RSAWithSHA 256 (12) algorithm must be used.
 			// @see http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-			$key = new XMLSecurityKey( XMLSecurityKey::RSA_SHA256, array( 'type' => 'private' ) );
+			$key = new XMLSecurityKey( XMLSecurityKey::RSA_SHA256, array(
+				'type' => 'private',
+			) );
 			$key->passphrase = $this->private_key_password;
 			$key->loadKey( $this->private_key );
 

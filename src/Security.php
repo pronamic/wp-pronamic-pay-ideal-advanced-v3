@@ -3,11 +3,12 @@
 /**
  * Title: Security
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2017
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.11
+ * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 	/**
@@ -61,23 +62,39 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 		$resource = @openssl_x509_read( $certificate );
 		// @codingStandardsIgnoreEnd
 
-		if ( false !== $resource ) {
-			$output = null;
+		if ( false === $resource ) {
+			return false;
+		}
 
-			$result = openssl_x509_export( $resource, $output );
-			if ( false !== $result ) {
-				$output = str_replace( self::CERTIFICATE_BEGIN, '', $output );
-				$output = str_replace( self::CERTIFICATE_END, '', $output );
+		$output = null;
 
-				// Base64 decode
-				$fingerprint = base64_decode( $output );
+		$result = openssl_x509_export( $resource, $output );
 
-				// Hash
-				if ( null !== $hash ) {
-					$fingerprint = hash( $hash, $fingerprint );
-				}
-			} // @todo else what to do?
-		} // @todo else what to do?
+		if ( false === $result ) {
+			return false;
+		}
+
+		$output = str_replace( self::CERTIFICATE_BEGIN, '', $output );
+		$output = str_replace( self::CERTIFICATE_END, '', $output );
+
+		// Base64 decode
+		$fingerprint = base64_decode( $output );
+
+		// Hash
+		if ( null !== $hash ) {
+			$fingerprint = hash( $hash, $fingerprint );
+		}
+
+		/*
+		 * Uppercase
+		 *
+		 * Cannot find private certificate file with fingerprint: b4845cb5cbcee3e1e0afef2662552a2365960e72
+		 * (Note: Some acquirers only accept fingerprints in uppercase. Make the value of "KeyName" in your XML data uppercase.).
+		 * https://www.ideal-checkout.nl/simulator/
+		 *
+		 * @since 1.1.11
+		 */
+		$fingerprint = strtoupper( $fingerprint );
 
 		return $fingerprint;
 	}
