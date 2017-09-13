@@ -7,7 +7,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
-## [1.1.11] - 2017-09-01
+## [1.1.11] - 2017-09-13
 - Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
 - Some acquirers only accept fingerprints in uppercase.
 - Updated WordPress Coding Standards.
