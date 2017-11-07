@@ -106,7 +106,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	private $consumer_iban;
 
 	/**
-	 * Consumer IBAN
+	 * Consumer BIC
 	 *
 	 * @var string
 	 */
@@ -358,7 +358,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	//////////////////////////////////////////////////
 
 	/**
-	 * Get the consumer IBAN number
+	 * Get the consumer BIC number
 	 *
 	 * @return string
 	 */
