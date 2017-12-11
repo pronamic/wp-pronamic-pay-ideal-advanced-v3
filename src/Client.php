@@ -117,7 +117,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	 * @param string $url
 	 */
 	public function set_acquirer_url( $url ) {
-		$this->acquirer_url            = $url;
+		$this->acquirer_url = $url;
 
 		$this->directory_request_url   = $url;
 		$this->transaction_request_url = $url;
@@ -156,11 +156,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 
 			// Remote post
 			$response = wp_remote_post( $url, array(
-				'method'    => 'POST',
-				'headers'   => array(
+				'method'  => 'POST',
+				'headers' => array(
 					'Content-Type' => 'text/xml; charset=' . Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message::XML_ENCODING,
 				),
-				'body'      => $data,
+				'body'    => $data,
 			) );
 
 			// Handle response
@@ -344,7 +344,9 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 			$key = new XMLSecurityKey( XMLSecurityKey::RSA_SHA256, array(
 				'type' => 'private',
 			) );
+
 			$key->passphrase = $this->private_key_password;
+
 			$key->loadKey( $this->private_key );
 
 			// Test if we can get an private key object, to prefent the following errors:

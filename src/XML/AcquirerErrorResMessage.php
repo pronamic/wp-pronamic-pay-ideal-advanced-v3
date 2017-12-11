@@ -46,6 +46,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage exten
 		$message = self::parse_create_date( $xml, new self() );
 
 		$parser = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParser();
+
 		$message->error = $parser->parse( $xml->Error );
 
 		return $message;

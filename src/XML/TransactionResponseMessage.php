@@ -36,7 +36,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage ex
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = self::parse_create_date( $xml, new self() );
 
-		$message->issuer = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser::parse( $xml->Issuer );
+		$message->issuer      = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser::parse( $xml->Issuer );
 		$message->transaction = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionParser::parse( $xml->Transaction );
 
 		return $message;

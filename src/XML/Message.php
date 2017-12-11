@@ -64,7 +64,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	 * Constructs and initialize an message
 	 */
 	public function __construct( $name ) {
-		$this->name = $name;
+		$this->name        = $name;
 		$this->create_date = new DateTime( null, new DateTimeZone( Pronamic_IDeal_IDeal::TIMEZONE ) );
 	}
 
