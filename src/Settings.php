@@ -27,59 +27,59 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 		// Private key and certificate information
 		$fields[] = array(
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'title'       => __( 'Private key and certificate', 'pronamic_ideal' ),
-			'type'        => 'description',
-			'callback'    => array( $this, 'field_security' ),
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'title'    => __( 'Private key and certificate', 'pronamic_ideal' ),
+			'type'     => 'description',
+			'callback' => array( $this, 'field_security' ),
 		);
 
 		// Organization
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_organization',
-			'title'       => __( 'Organization', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'tooltip'     => __( 'Organization name, e.g. Pronamic', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_organization',
+			'title'    => __( 'Organization', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'tooltip'  => __( 'Organization name, e.g. Pronamic', 'pronamic_ideal' ),
 		);
 
 		// Organization Unit
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_organization_unit',
-			'title'       => __( 'Organization Unit', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'tooltip'     => __( 'Organization unit, e.g. Administration', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_organization_unit',
+			'title'    => __( 'Organization Unit', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'tooltip'  => __( 'Organization unit, e.g. Administration', 'pronamic_ideal' ),
 		);
 
 		// Locality
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_locality',
-			'title'       => __( 'City', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'tooltip'     => __( 'City, e.g. Amsterdam', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_locality',
+			'title'    => __( 'City', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'tooltip'  => __( 'City, e.g. Amsterdam', 'pronamic_ideal' ),
 		);
 
 		// State or Province
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_state_or_province',
-			'title'       => __( 'State / province', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'tooltip'     => __( 'State or province, e.g. Friesland', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_state_or_province',
+			'title'    => __( 'State / province', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'tooltip'  => __( 'State or province, e.g. Friesland', 'pronamic_ideal' ),
 		);
 
 		// Country
@@ -110,82 +110,82 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 		// Email Address
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_email',
-			'title'       => __( 'E-mail address', 'pronamic_ideal' ),
-			'tooltip'     => sprintf(
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_email',
+			'title'    => __( 'E-mail address', 'pronamic_ideal' ),
+			'tooltip'  => sprintf(
 				/* translators: %s: admin email */
 				__( 'E-mail address, e.g. %s', 'pronamic_ideal' ),
 				get_option( 'admin_email' )
 			),
-			'type'        => 'text',
+			'type'     => 'text',
 		);
 
 		// Number Days Valid
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_NUMBER_INT,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_number_days_valid',
-			'title'       => __( 'Number Days Valid', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'default'     => 1825,
-			'tooltip'     => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_NUMBER_INT,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_number_days_valid',
+			'title'    => __( 'Number Days Valid', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'default'  => 1825,
+			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
 		);
 
 		// Private Key Password
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_ideal_private_key_password',
-			'title'       => __( 'Private Key Password', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'classes'     => array( 'regular-text', 'code' ),
-			'default'     => wp_generate_password(),
-			'tooltip'     => __( 'A random password which will be used for the generation of the private key and certificate.', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_ideal_private_key_password',
+			'title'    => __( 'Private Key Password', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'regular-text', 'code' ),
+			'default'  => wp_generate_password(),
+			'tooltip'  => __( 'A random password which will be used for the generation of the private key and certificate.', 'pronamic_ideal' ),
 		);
 
 		// Private Key
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_ideal_private_key',
-			'title'       => __( 'Private Key', 'pronamic_ideal' ),
-			'type'        => 'textarea',
-			'callback'    => array( $this, 'field_private_key' ),
-			'classes'     => array( 'code' ),
-			'tooltip'     => __( 'The private key is used for secure communication with the payment provider. If left empty, the private key will be generated using the given private key password.', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_ideal_private_key',
+			'title'    => __( 'Private Key', 'pronamic_ideal' ),
+			'type'     => 'textarea',
+			'callback' => array( $this, 'field_private_key' ),
+			'classes'  => array( 'code' ),
+			'tooltip'  => __( 'The private key is used for secure communication with the payment provider. If left empty, the private key will be generated using the given private key password.', 'pronamic_ideal' ),
 		);
 
 		// Private Certificate
 		$fields[] = array(
-			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'group'       => 'pk-cert',
-			'meta_key'    => '_pronamic_gateway_ideal_private_certificate',
-			'title'       => __( 'Private Certificate', 'pronamic_ideal' ),
-			'type'        => 'textarea',
-			'callback'    => array( $this, 'field_private_certificate' ),
-			'classes'     => array( 'code' ),
-			'tooltip'     => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the private key and given organization details.', 'pronamic_ideal' ),
+			'filter'   => FILTER_SANITIZE_STRING,
+			'section'  => 'ideal',
+			'methods'  => array( 'ideal-advanced-v3' ),
+			'group'    => 'pk-cert',
+			'meta_key' => '_pronamic_gateway_ideal_private_certificate',
+			'title'    => __( 'Private Certificate', 'pronamic_ideal' ),
+			'type'     => 'textarea',
+			'callback' => array( $this, 'field_private_certificate' ),
+			'classes'  => array( 'code' ),
+			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the private key and given organization details.', 'pronamic_ideal' ),
 		);
 
 		// Transaction feedback
 		$fields[] = array(
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
-			'title'       => __( 'Transaction feedback', 'pronamic_ideal' ),
-			'type'        => 'description',
-			'html'        => sprintf(
+			'section' => 'ideal',
+			'methods' => array( 'ideal-advanced-v3' ),
+			'title'   => __( 'Transaction feedback', 'pronamic_ideal' ),
+			'type'    => 'description',
+			'html'    => sprintf(
 				'<span class="dashicons dashicons-yes"></span> %s',
 				__( 'Payment status updates will be processed without any additional configuration.', 'pronamic_ideal' )
 			),
@@ -214,7 +214,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				<?php esc_html_e( 'A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.', 'pronamic_ideal' ); ?>
 
 			<?php else : ?>
-		
+
 				<span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.', 'pronamic_ideal' ); ?><br />
 
 				<br />
@@ -295,6 +295,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 
 		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
 		$number_days_valid    = get_post_meta( get_the_ID(), '_pronamic_gateway_number_days_valid', true );
+
 		$filename_key = __( 'ideal.key', 'pronamic_ideal' );
 		$filename_cer = __( 'ideal.cer', 'pronamic_ideal' );
 
@@ -440,7 +441,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 	public function save_post( $data ) {
 		// Files
 		$files = array(
-			'_pronamic_gateway_ideal_private_key_file'         => '_pronamic_gateway_ideal_private_key',
+			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
 			'_pronamic_gateway_ideal_private_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
 		);
 
@@ -492,7 +493,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 				return $data;
 			}
 
-			$data['_pronamic_gateway_ideal_private_key']         = $private_key;
+			$data['_pronamic_gateway_ideal_private_key'] = $private_key;
 			// Delete private certificate since this is no longer valid.
 			$data['_pronamic_gateway_ideal_private_certificate'] = null;
 		}
@@ -525,7 +526,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_
 			if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
 				$csr = openssl_csr_new( $distinguished_name, $pkey );
 
-				$cert  = openssl_csr_sign( $csr, null, $pkey, $data['_pronamic_gateway_number_days_valid'], $args, time() );
+				$cert = openssl_csr_sign( $csr, null, $pkey, $data['_pronamic_gateway_number_days_valid'], $args, time() );
 
 				openssl_x509_export( $cert, $certificate );
 
