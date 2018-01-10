@@ -20,18 +20,12 @@
 	],
 	"support": {
 		"email": "support@wp-pay.org",
-		"issues": "https://github.com/wp-pay-gateways/mollie/issues",
-		"source": "https://github.com/wp-pay-gateways/mollie"
+		"issues": "https://github.com/wp-pay-gateways/ideal-advanced-v3/issues",
+		"source": "https://github.com/wp-pay-gateways/ideal-advanced-v3"
 	},
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/wp-pay/core"
-		}
-	],
 	"config": {
 		"platform": {
 			"php": "5.3.3"

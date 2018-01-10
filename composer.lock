@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ac90b4b149122b2bc0658e1025dc545",
+    "content-hash": "85f9bb7b43d4a508ee63016a41f2dee7",
     "packages": [
         {
             "name": "wp-pay-gateways/common",
@@ -112,37 +112,33 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "1.3.13",
+            "version": "1.3.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "da2142766d4635556280fc5e3ac89060e64adeb2"
+                "reference": "3330ae7993c1d79e1f1c8a498d8410cfc674f0d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/da2142766d4635556280fc5e3ac89060e64adeb2",
-                "reference": "da2142766d4635556280fc5e3ac89060e64adeb2",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/3330ae7993c1d79e1f1c8a498d8410cfc674f0d6",
+                "reference": "3330ae7993c1d79e1f1c8a498d8410cfc674f0d6",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3"
             },
             "require-dev": {
+                "php-coveralls/php-coveralls": "^1.0",
                 "phpmd/phpmd": "^2.4",
                 "phpunit/phpunit": "^4.5",
-                "satooshi/php-coveralls": "^1.0",
                 "squizlabs/php_codesniffer": "^2.7",
-                "wp-coding-standards/wpcs": "0.10.0"
+                "wimg/php-compatibility": "^8.0",
+                "wp-coding-standards/wpcs": "^0.14.0"
             },
             "type": "library",
             "autoload": {
                 "classmap": [
                     "src/"
-                ]
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "if [ -d vendor/wp-coding-standards/wpcs ]; then vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs; fi"
                 ]
             },
             "license": [
@@ -177,7 +173,7 @@
                 "issues": "https://github.com/wp-pay/core/issues",
                 "source": "https://github.com/wp-pay/core"
             },
-            "time": "2017-09-14T09:00:42+00:00"
+            "time": "2017-12-12T12:40:02+00:00"
         },
         {
             "name": "xrstf/composer-php52",
@@ -359,6 +355,7 @@
                 "rest",
                 "web service"
             ],
+            "abandoned": "guzzlehttp/guzzle",
             "time": "2015-03-18T18:23:50+00:00"
         },
         {
@@ -1894,16 +1891,16 @@
         },
         {
             "name": "wimg/php-compatibility",
-            "version": "8.0.1",
+            "version": "8.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wimg/PHPCompatibility.git",
-                "reference": "4c4385fb891dff0501009670f988d4fe36785249"
+                "reference": "4ac01e4fe8faaa4f8d3b3cd06ea92e5418ce472e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/4c4385fb891dff0501009670f988d4fe36785249",
-                "reference": "4c4385fb891dff0501009670f988d4fe36785249",
+                "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/4ac01e4fe8faaa4f8d3b3cd06ea92e5418ce472e",
+                "reference": "4ac01e4fe8faaa4f8d3b3cd06ea92e5418ce472e",
                 "shasum": ""
             },
             "require": {
@@ -1917,7 +1914,7 @@
                 "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
             },
             "suggest": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1"
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3"
             },
             "type": "phpcodesniffer-standard",
             "autoload": {
@@ -1942,7 +1939,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-08-07T19:39:05+00:00"
+            "time": "2017-12-27T21:58:38+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
