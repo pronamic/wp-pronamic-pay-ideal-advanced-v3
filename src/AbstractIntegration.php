@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Gateways\IDeal\AbstractIntegration;
 
 /**
  * Title: iDEAL Advanced v3 abstract integration
@@ -10,14 +11,14 @@
  * @version 1.1.3
  * @since 1.0.0
  */
-abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_AbstractIntegration extends Pronamic_WP_Pay_Gateways_IDeal_AbstractIntegration {
+abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_AbstractIntegration extends AbstractIntegration {
 	public function get_config_factory_class() {
 		return 'Pronamic_WP_Pay_Gateways_IDealAdvancedV3_ConfigFactory';
 	}
 
 	public function get_settings_class() {
 		return array(
-			'Pronamic_WP_Pay_Gateways_IDeal_Settings',
+			'Pronamic\WordPress\Pay\Gateways\IDeal\Settings',
 			'Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings',
 		);
 	}

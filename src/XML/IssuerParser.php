@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: Issuer XML parser
@@ -22,15 +23,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser implements Prona
 		}
 
 		if ( $xml->issuerID ) {
-			$issuer->set_id( Pronamic_WP_Pay_XML_Security::filter( $xml->issuerID ) );
+			$issuer->set_id( Security::filter( $xml->issuerID ) );
 		}
 
 		if ( $xml->issuerName ) {
-			$issuer->set_name( Pronamic_WP_Pay_XML_Security::filter( $xml->issuerName ) );
+			$issuer->set_name( Security::filter( $xml->issuerName ) );
 		}
 
 		if ( $xml->issuerAuthenticationURL ) {
-			$issuer->set_authentication_url( Pronamic_WP_Pay_XML_Security::filter( $xml->issuerAuthenticationURL ) );
+			$issuer->set_authentication_url( Security::filter( $xml->issuerAuthenticationURL ) );
 		}
 
 		return $issuer;

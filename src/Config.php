@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
  * Title: iDEAL Advanced config
@@ -10,7 +11,7 @@
  * @version 1.1.3
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config extends Pronamic_WP_Pay_GatewayConfig {
+class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config extends GatewayConfig {
 	public $merchant_id;
 
 	public $sub_id = 0;

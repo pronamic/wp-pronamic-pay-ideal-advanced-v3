@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: Transaction XML parser
@@ -22,27 +23,27 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionParser implements 
 		}
 
 		if ( $xml->transactionID ) {
-			$transaction->set_id( Pronamic_WP_Pay_XML_Security::filter( $xml->transactionID ) );
+			$transaction->set_id( Security::filter( $xml->transactionID ) );
 		}
 
 		if ( $xml->purchaseID ) {
-			$transaction->set_purchase_id( Pronamic_WP_Pay_XML_Security::filter( $xml->purchaseID ) );
+			$transaction->set_purchase_id( Security::filter( $xml->purchaseID ) );
 		}
 
 		if ( $xml->status ) {
-			$transaction->set_status( Pronamic_WP_Pay_XML_Security::filter( $xml->status ) );
+			$transaction->set_status( Security::filter( $xml->status ) );
 		}
 
 		if ( $xml->consumerName ) {
-			$transaction->set_consumer_name( Pronamic_WP_Pay_XML_Security::filter( $xml->consumerName ) );
+			$transaction->set_consumer_name( Security::filter( $xml->consumerName ) );
 		}
 
 		if ( $xml->consumerIBAN ) {
-			$transaction->set_consumer_iban( Pronamic_WP_Pay_XML_Security::filter( $xml->consumerIBAN ) );
+			$transaction->set_consumer_iban( Security::filter( $xml->consumerIBAN ) );
 		}
 
 		if ( $xml->consumerBIC ) {
-			$transaction->set_consumer_bic( Pronamic_WP_Pay_XML_Security::filter( $xml->consumerBIC ) );
+			$transaction->set_consumer_bic( Security::filter( $xml->consumerBIC ) );
 		}
 
 		return $transaction;

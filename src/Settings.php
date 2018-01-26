@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\GatewaySettings;
 
 /**
  * Title: iDEAL Advanced v3 gateway settings
@@ -10,7 +11,7 @@
  * @version 1.1.10
  * @since 1.1.2
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends Pronamic_WP_Pay_GatewaySettings {
+class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends GatewaySettings {
 	public function __construct() {
 		// Filters
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );

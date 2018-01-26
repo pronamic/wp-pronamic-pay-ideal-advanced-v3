@@ -1,4 +1,6 @@
 <?php
+use Pronamic\WordPress\Pay\Core\Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
  * Title: iDEAL Advanced v3+ gateway
@@ -10,7 +12,7 @@
  * @version 1.1.5
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_Gateway {
+class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Gateway {
 	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
@@ -23,7 +25,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 			'payment_status_request',
 		);
 
-		$this->set_method( Pronamic_WP_Pay_Gateway::METHOD_HTTP_REDIRECT );
+		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
 
@@ -77,7 +79,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	/////////////////////////////////////////////////
 
 	public function get_issuer_field() {
-		if ( Pronamic_WP_Pay_PaymentMethods::IDEAL === $this->get_payment_method() ) {
+		if ( PaymentMethods::IDEAL === $this->get_payment_method() ) {
 			return array(
 				'id'       => 'pronamic_ideal_issuer_id',
 				'name'     => 'pronamic_ideal_issuer_id',
@@ -97,7 +99,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 * @return mixed an array or null
 	 */
 	public function get_payment_methods() {
-		return Pronamic_WP_Pay_PaymentMethods::IDEAL;
+		return PaymentMethods::IDEAL;
 	}
 
 	/////////////////////////////////////////////////
@@ -109,7 +111,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			Pronamic_WP_Pay_PaymentMethods::IDEAL,
+			PaymentMethods::IDEAL,
 		);
 	}
 

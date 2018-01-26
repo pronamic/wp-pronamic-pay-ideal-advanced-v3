@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: iDEAL Advanced v3 error parser
@@ -21,11 +22,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParser {
 		if ( 'Error' === $xml->getName() ) {
 			$error = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error();
 
-			$error->set_code( Pronamic_WP_Pay_XML_Security::filter( $xml->errorCode ) );
-			$error->set_message( Pronamic_WP_Pay_XML_Security::filter( $xml->errorMessage ) );
-			$error->set_detail( Pronamic_WP_Pay_XML_Security::filter( $xml->errorDetail ) );
-			$error->set_suggested_action( Pronamic_WP_Pay_XML_Security::filter( $xml->suggestedAction ) );
-			$error->set_consumer_message( Pronamic_WP_Pay_XML_Security::filter( $xml->consumerMessage ) );
+			$error->set_code( Security::filter( $xml->errorCode ) );
+			$error->set_message( Security::filter( $xml->errorMessage ) );
+			$error->set_detail( Security::filter( $xml->errorDetail ) );
+			$error->set_suggested_action( Security::filter( $xml->suggestedAction ) );
+			$error->set_consumer_message( Security::filter( $xml->consumerMessage ) );
 		}
 
 		return $error;
