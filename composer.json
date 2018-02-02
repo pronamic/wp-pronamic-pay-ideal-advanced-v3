@@ -24,7 +24,9 @@
 		"source": "https://github.com/wp-pay-gateways/ideal-advanced-v3"
 	},
 	"autoload": {
-		"classmap": ["src/"]
+		"psr-4": {
+			"Pronamic\\WordPress\\Pay\\Gateways\\IDeal_Advanced_V3\\": "src/"
+		}
 	},
 	"config": {
 		"platform": {

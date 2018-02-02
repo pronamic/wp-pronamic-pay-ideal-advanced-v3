@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
 /**
  * Title: Issuer
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer {
+class Issuer {
 	/**
 	 * ID of the issuer
 	 *
@@ -94,7 +96,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer {
 	/**
 	 * Set the name of this issuer
 	 *
-	 * @param string $name
+	 * @param string $authentication_url
 	 */
 	public function set_authentication_url( $authentication_url ) {
 		$this->authentication_url = $authentication_url;

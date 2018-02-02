@@ -1,4 +1,7 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
 use Pronamic\WordPress\Pay\Core\GatewaySettings;
 
 /**
@@ -7,11 +10,11 @@ use Pronamic\WordPress\Pay\Core\GatewaySettings;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.1.10
- * @since 1.1.2
+ * @since   1.1.2
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends GatewaySettings {
+class Settings extends GatewaySettings {
 	public function __construct() {
 		// Filters
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );
@@ -208,17 +211,21 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends GatewaySettings 
 		<p>
 			<?php if ( empty( $certificate ) ) : ?>
 
-				<span class="dashicons dashicons-no"></span> <?php esc_html_e( 'The private key and certificate have not yet been configured.', 'pronamic_ideal' ); ?><br />
+				<span
+					class="dashicons dashicons-no"></span> <?php esc_html_e( 'The private key and certificate have not yet been configured.', 'pronamic_ideal' ); ?>
+				<br/>
 
-				<br />
+				<br/>
 
 				<?php esc_html_e( 'A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.', 'pronamic_ideal' ); ?>
 
 			<?php else : ?>
 
-				<span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.', 'pronamic_ideal' ); ?><br />
+				<span
+					class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.', 'pronamic_ideal' ); ?>
+				<br/>
 
-				<br />
+				<br/>
 
 				<?php
 
@@ -255,7 +262,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends GatewaySettings 
 			?>
 
 			<p><?php esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
-			<input id="pronamic_ideal_openssl_command_key" name="pronamic_ideal_openssl_command_key" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly" />
+			<input id="pronamic_ideal_openssl_command_key" name="pronamic_ideal_openssl_command_key" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly"/>
 
 			<?php
 		} else {
@@ -331,7 +338,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends GatewaySettings 
 			?>
 
 			<p><?php esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
-			<input id="pronamic_ideal_openssl_command_certificate" name="pronamic_ideal_openssl_command_certificate" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly" />
+			<input id="pronamic_ideal_openssl_command_certificate" name="pronamic_ideal_openssl_command_certificate" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly"/>
 
 			<?php
 		} else {
@@ -342,7 +349,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends GatewaySettings 
 		}
 
 		if ( ! empty( $certificate ) ) {
-			$fingerprint = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security::get_sha_fingerprint( $certificate );
+			$fingerprint = Security::get_sha_fingerprint( $certificate );
 			$fingerprint = str_split( $fingerprint, 2 );
 			$fingerprint = implode( ':', $fingerprint );
 
@@ -442,7 +449,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Settings extends GatewaySettings 
 	public function save_post( $data ) {
 		// Files
 		$files = array(
-			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
+			'_pronamic_gateway_ideal_private_key_file'         => '_pronamic_gateway_ideal_private_key',
 			'_pronamic_gateway_ideal_private_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
 		);
 

@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
 /**
  * Title: iDEAL directory request XML message
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryRequestMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage {
+class DirectoryRequestMessage extends RequestMessage {
 	/**
 	 * The document element name
 	 *

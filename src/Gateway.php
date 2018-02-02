@@ -1,6 +1,10 @@
 <?php
-use Pronamic\WordPress\Pay\Core\Gateway;
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
+use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: iDEAL Advanced v3+ gateway
@@ -8,17 +12,17 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.1.5
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Gateway {
+class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
-	 * @param Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config $config
+	 * @param Config $config
 	 */
-	public function __construct( Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config $config ) {
+	public function __construct( Config $config ) {
 		parent::__construct( $config );
 
 		$this->supports = array(
@@ -30,8 +34,10 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Gateway {
 		$this->set_amount_minimum( 0.01 );
 
 		// Client
-		$client = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client();
+		$client = new Client();
+
 		$client->set_acquirer_url( $config->get_payment_server_url() );
+
 		$client->merchant_id          = $config->merchant_id;
 		$client->sub_id               = $config->sub_id;
 		$client->private_key          = $config->private_key;
@@ -46,7 +52,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Gateway {
 	/**
 	 * Get issuers
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::get_issuers()
+	 * @see Core_Gateway::get_issuers()
+	 *
 	 * @return array
 	 */
 	public function get_issuers() {
@@ -120,7 +127,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Gateway {
 	/**
 	 * Is payment method required to start transaction?
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::payment_method_is_required()
+	 * @see   Core_Gateway::payment_method_is_required()
 	 * @since 1.1.5
 	 */
 	public function payment_method_is_required() {
@@ -134,14 +141,14 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Gateway {
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::start()
 	 */
-	public function start( Pronamic_Pay_Payment $payment ) {
+	public function start( Payment $payment ) {
 		// Purchase ID
 		$purchase_id = $payment->format_string( $this->config->purchase_id );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
 		// Transaction
-		$transaction = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction();
+		$transaction = new Transaction();
 		$transaction->set_purchase_id( $purchase_id );
 		$transaction->set_amount( $payment->get_amount() );
 		$transaction->set_currency( $payment->get_currency() );
@@ -169,9 +176,9 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Gateway {
 	/**
 	 * Update status of the specified payment
 	 *
-	 * @param Pronamic_Pay_Payment $payment
+	 * @param Payment $payment
 	 */
-	public function update_status( Pronamic_Pay_Payment $payment ) {
+	public function update_status( Payment $payment ) {
 		$result = $this->client->get_status( $payment->get_transaction_id() );
 
 		$error = $this->client->get_error();

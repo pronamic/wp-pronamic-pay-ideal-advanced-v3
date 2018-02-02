@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
 /**
  * Title: Status
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Status {
+class Status {
 	/**
 	 * Status indicator for success
 	 *

@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
 /**
  * Title: iDEAL Advanced v3 error
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
+class IDeal_Error {
 	/**
 	 * Code
 	 *
@@ -88,7 +90,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 	/**
 	 * Set the message error
 	 *
-	 * @param string $code
+	 * @param string $message
 	 */
 	public function set_message( $message ) {
 		$this->message = $message;
@@ -128,7 +130,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 	/**
 	 * Set the consumer message
 	 *
-	 * @param string $detail
+	 * @param string $suggested_action
 	 */
 	public function set_suggested_action( $suggested_action ) {
 		$this->suggested_action = $suggested_action;
@@ -148,7 +150,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 	/**
 	 * Set the consumer message
 	 *
-	 * @param string $detail
+	 * @param string $consumer_message
 	 */
 	public function set_consumer_message( $consumer_message ) {
 		$this->consumer_message = $consumer_message;

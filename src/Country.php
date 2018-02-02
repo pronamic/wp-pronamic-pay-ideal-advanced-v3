@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
 /**
  * Title: Country
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Country {
+class Country {
 	/**
 	 * The date the issuer list was modified
 	 *
@@ -58,9 +60,9 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Country {
 	/**
 	 * Add the specified issuer to this country
 	 *
-	 * @param Country $country
+	 * @param Issuer $issuer
 	 */
-	public function add_issuer( Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer $issuer ) {
+	public function add_issuer( Issuer $issuer ) {
 		$this->issuers[] = $issuer;
 	}
 

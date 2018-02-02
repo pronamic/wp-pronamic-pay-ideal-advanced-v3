@@ -1,5 +1,10 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\IDeal_Error;
 use Pronamic\WordPress\Pay\Core\XML\Security;
+use SimpleXMLElement;
 
 /**
  * Title: iDEAL Advanced v3 error parser
@@ -7,20 +12,22 @@ use Pronamic\WordPress\Pay\Core\XML\Security;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParser {
+class ErrorParser {
 	/**
 	 * Parse the specified XML element into an acquirer error response
 	 *
 	 * @param SimpleXMLElement $xml
+	 *
+	 * @return IDeal_Error|null
 	 */
 	public function parse( SimpleXMLElement $xml ) {
 		$error = null;
 
 		if ( 'Error' === $xml->getName() ) {
-			$error = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error();
+			$error = new IDeal_Error();
 
 			$error->set_code( Security::filter( $xml->errorCode ) );
 			$error->set_message( Security::filter( $xml->errorMessage ) );

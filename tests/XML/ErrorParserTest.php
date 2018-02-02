@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\ErrorParser;
 
 /**
  * Title: iDEAL Advanced v3 XML error parser test
@@ -11,7 +12,7 @@
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParserTest extends PHPUnit_Framework_TestCase {
 	public function testParser() {
-		$parser = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParser();
+		$parser = new ErrorParser();
 
 		$xml = simplexml_load_file( dirname( __FILE__ ) . '/../Mock/Error.xml' );
 

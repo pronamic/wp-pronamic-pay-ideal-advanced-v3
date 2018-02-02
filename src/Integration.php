@@ -1,15 +1,16 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
 /**
  * Title: iDEAL Advanced v3 integration
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version unreleased
- * @since unreleased
+ * @since   unreleased
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Integration extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_AbstractIntegration {
-
+class Integration extends AbstractIntegration {
 }

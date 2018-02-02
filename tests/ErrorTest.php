@@ -1,5 +1,7 @@
 <?php
 
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\IDeal_Error;
+
 /**
  * Title: iDEAL Advanced v3 error test
  * Description:
@@ -11,7 +13,7 @@
  */
 class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_ErrorTest extends PHPUnit_Framework_TestCase {
 	public function testToStringError() {
-		$error = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error();
+		$error = new IDeal_Error();
 		$error->set_code( '1' );
 		$error->set_message( 'Error' );
 

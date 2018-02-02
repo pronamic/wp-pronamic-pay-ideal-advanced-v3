@@ -1,4 +1,12 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
+use DateTime;
+use DateTimeZone;
+use DOMDocument;
+use DOMNode;
+use DOMText;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
@@ -7,10 +15,10 @@ use Pronamic\WordPress\Pay\Plugin;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
+class Message {
 	/**
 	 * The XML version of the iDEAL messages
 	 *
@@ -106,9 +114,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	 * Create and add an element with the specified name and value to the specified parent
 	 *
 	 * @param DOMDocument $document
-	 * @param DOMNode $parent
-	 * @param string $name
-	 * @param string $value
+	 * @param DOMNode     $parent
+	 * @param string      $name
+	 * @param string      $value
+	 *
+	 * @return \DOMElement
 	 */
 	public static function add_element( DOMDocument $document, DOMNode $parent, $name, $value = null ) {
 		$element = $document->createElement( $name );
@@ -126,8 +136,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	 * Add the specified elements to the parent node
 	 *
 	 * @param DOMDocument $document
-	 * @param DOMNode $parent
-	 * @param array $elements
+	 * @param DOMNode     $parent
+	 * @param array       $elements
 	 */
 	public static function add_elements( DOMDocument $document, DOMNode $parent, array $elements = array() ) {
 		foreach ( $elements as $name => $value ) {

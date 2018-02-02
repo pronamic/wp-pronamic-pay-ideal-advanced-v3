@@ -1,28 +1,23 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
 /**
  * Title: Transaction
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
+class Transaction {
 	/**
 	 * Transaction ID
 	 *
 	 * @var string
 	 */
 	private $id;
-
-	/**
-	 * Create date
-	 *
-	 * @var unknown_type
-	 */
-	private $create_date;
 
 	/**
 	 * Purchase ID
@@ -199,7 +194,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	/**
 	 * Set the currency of this transaction
 	 *
-	 * @param string $amount
+	 * @param string $currency
 	 */
 	public function set_currency( $currency ) {
 		$this->currency = $currency;
@@ -329,7 +324,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	/**
 	 * Set the consumer name
 	 *
-	 * @param string $status
+	 * @param $name
 	 */
 	public function set_consumer_name( $name ) {
 		$this->consumer_name = $name;

@@ -1,5 +1,24 @@
 <?php
-use Pronamic\WordPress\Pay\Core\Util;
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+
+use DOMDocument;
+use Exception;
+use Pronamic\WordPress\Pay\Core\Util as Core_Util;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\AcquirerErrorResMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\AcquirerStatusReqMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\AcquirerStatusResMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\DirectoryRequestMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\DirectoryResponseMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\Message;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\RequestMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\ResponseMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\TransactionRequestMessage;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\TransactionResponseMessage;
+use SimpleXMLElement;
+use WP_Error;
+use XMLSecurityDSig;
+use XMLSecurityKey;
 
 /**
  * Title: iDEAL client
@@ -7,11 +26,11 @@ use Pronamic\WordPress\Pay\Core\Util;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.1.11
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
+class Client {
 	/**
 	 * Acquirer URL
 	 *
@@ -77,7 +96,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	/**
 	 * Private key password
 	 *
-	 * @var unknown_type
+	 * @var string
 	 */
 	public $private_key_password;
 
@@ -130,12 +149,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	/**
 	 * Send an specific request message to an specific URL
 	 *
-	 * @param string $url
-	 * @param Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage $message
+	 * @param string         $url
+	 * @param RequestMessage $message
 	 *
-	 * @return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ResponseMessage
+	 * @return ResponseMessage
 	 */
-	private function send_message( $url, Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage $message ) {
+	private function send_message( $url, RequestMessage $message ) {
 		$result = false;
 
 		// Sign
@@ -159,7 +178,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 			$response = wp_remote_post( $url, array(
 				'method'  => 'POST',
 				'headers' => array(
-					'Content-Type' => 'text/xml; charset=' . Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message::XML_ENCODING,
+					'Content-Type' => 'text/xml; charset=' . Message::XML_ENCODING,
 				),
 				'body'    => $data,
 			) );
@@ -169,7 +188,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 				if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 					$body = wp_remote_retrieve_body( $response );
 
-					$xml = Util::simplexml_load_string( $body );
+					$xml = Core_Util::simplexml_load_string( $body );
 
 					if ( is_wp_error( $xml ) ) {
 						$this->error = $xml;
@@ -206,6 +225,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	 * Parse the specified document and return parsed result
 	 *
 	 * @param SimpleXMLElement $document
+	 *
+	 * @return ResponseMessage|WP_Error
 	 */
 	private function parse_document( SimpleXMLElement $document ) {
 		$this->error = null;
@@ -213,8 +234,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 		$name = $document->getName();
 
 		switch ( $name ) {
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage::NAME:
-				$message = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage::parse( $document );
+			case AcquirerErrorResMessage::NAME:
+				$message = AcquirerErrorResMessage::parse( $document );
 
 				$this->error = new WP_Error(
 					'ideal_advanced_v3_error',
@@ -223,12 +244,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 				);
 
 				return $message;
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryResponseMessage::NAME:
-				return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryResponseMessage::parse( $document );
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage::NAME:
-				return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage::parse( $document );
-			case Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusResMessage::NAME:
-				return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusResMessage::parse( $document );
+			case DirectoryResponseMessage::NAME:
+				return DirectoryResponseMessage::parse( $document );
+			case TransactionResponseMessage::NAME:
+				return TransactionResponseMessage::parse( $document );
+			case AcquirerStatusResMessage::NAME:
+				return AcquirerStatusResMessage::parse( $document );
 			default:
 				return new WP_Error(
 					'ideal_advanced_v3_error',
@@ -243,12 +264,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	/**
 	 * Get directory of issuers
 	 *
-	 * @return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Directory
+	 * @return Directory
 	 */
 	public function get_directory() {
 		$directory = false;
 
-		$request_dir_message = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryRequestMessage();
+		$request_dir_message = new DirectoryRequestMessage();
 
 		$merchant = $request_dir_message->get_merchant();
 		$merchant->set_id( $this->merchant_id );
@@ -256,7 +277,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 
 		$response_dir_message = $this->send_message( $this->directory_request_url, $request_dir_message );
 
-		if ( $response_dir_message instanceof Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_DirectoryResponseMessage ) {
+		if ( $response_dir_message instanceof DirectoryResponseMessage ) {
 			$directory = $response_dir_message->get_directory();
 		}
 
@@ -268,19 +289,20 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	/**
 	 * Create transaction
 	 *
-	 * @param Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction $transaction
-	 * @param string $issuer_id
-	 * @return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage
+	 * @param Transaction $transaction
+	 * @param string      $issuer_id
+	 *
+	 * @return TransactionResponseMessage
 	 */
-	public function create_transaction( Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction $transaction, $return_url, $issuer_id ) {
-		$message = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionRequestMessage();
+	public function create_transaction( Transaction $transaction, $return_url, $issuer_id ) {
+		$message = new TransactionRequestMessage();
 
 		$merchant = $message->get_merchant();
 		$merchant->set_id( $this->merchant_id );
 		$merchant->set_sub_id( $this->sub_id );
 		$merchant->set_return_url( $return_url );
 
-		$message->issuer = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer();
+		$message->issuer = new Issuer();
 		$message->issuer->set_id( $issuer_id );
 
 		$message->transaction = $transaction;
@@ -294,16 +316,17 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	 * Get the status of the specified transaction ID
 	 *
 	 * @param string $transaction_id
-	 * @return Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage
+	 *
+	 * @return TransactionResponseMessage
 	 */
 	public function get_status( $transaction_id ) {
-		$message = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusReqMessage();
+		$message = new AcquirerStatusReqMessage();
 
 		$merchant = $message->get_merchant();
 		$merchant->set_id( $this->merchant_id );
 		$merchant->set_sub_id( $this->sub_id );
 
-		$message->transaction = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction();
+		$message->transaction = new Transaction();
 		$message->transaction->set_id( $transaction_id );
 
 		return $this->send_message( $this->status_request_url, $message );
@@ -317,6 +340,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 	 * @see https://github.com/Maks3w/xmlseclibs/blob/v1.3.0/tests/xml-sign.phpt
 	 *
 	 * @param DOMDocument $document
+	 *
 	 * @return DOMDocument
 	 */
 	private function sign_document( DOMDocument $document ) {
@@ -362,7 +386,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client {
 				// certificate. The fingerprint must be calculated according
 				// to the following formula HEX(SHA-1(DER certificate)) (13)
 				// @see http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-				$fingerprint = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security::get_sha_fingerprint( $this->private_certificate );
+				$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
 
 				$dsig->addKeyInfoAndName( $fingerprint );
 

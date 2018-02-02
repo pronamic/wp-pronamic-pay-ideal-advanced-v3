@@ -1,5 +1,10 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
 use Pronamic\WordPress\Pay\Core\XML\Security;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Transaction;
+use SimpleXMLElement;
 
 /**
  * Title: Transaction XML parser
@@ -7,19 +12,21 @@ use Pronamic\WordPress\Pay\Core\XML\Security;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionParser implements Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Parser {
+class TransactionParser implements Parser {
 	/**
 	 * Parse the specified XML element into an iDEAL transaction object
 	 *
 	 * @param SimpleXMLElement $xml
-	 * @param Pronamic_Gateways_IDealAdvanced_Transaction $transaction
+	 * @param Transaction      $transaction
+	 *
+	 * @return Transaction
 	 */
-	public static function parse( SimpleXMLElement $xml, $transaction = null ) {
-		if ( ! $transaction instanceof Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction ) {
-			$transaction = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction();
+	public static function parse( SimpleXMLElement $xml, Transaction $transaction = null ) {
+		if ( ! $transaction instanceof Transaction ) {
+			$transaction = new Transaction();
 		}
 
 		if ( $xml->transactionID ) {

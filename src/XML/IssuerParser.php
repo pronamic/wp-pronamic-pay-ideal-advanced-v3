@@ -1,5 +1,10 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
 use Pronamic\WordPress\Pay\Core\XML\Security;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Issuer;
+use SimpleXMLElement;
 
 /**
  * Title: Issuer XML parser
@@ -7,19 +12,21 @@ use Pronamic\WordPress\Pay\Core\XML\Security;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser implements Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Parser {
+class IssuerParser implements Parser {
 	/**
 	 * Parse
 	 *
 	 * @param SimpleXMLElement $xml
-	 * @param Pronamic_Gateways_IDealAdvanced_Issuer $issuer
+	 * @param Issuer           $issuer
+	 *
+	 * @return Issuer
 	 */
 	public static function parse( SimpleXMLElement $xml, $issuer = null ) {
-		if ( ! $issuer instanceof Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer ) {
-			$issuer = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer();
+		if ( ! $issuer instanceof Issuer ) {
+			$issuer = new Issuer();
 		}
 
 		if ( $xml->issuerID ) {

@@ -1,15 +1,20 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
+use DOMDocument;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Transaction;
+
 /**
  * Title: iDEAL status request XML message
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusReqMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage {
+class AcquirerStatusReqMessage extends RequestMessage {
 	/**
 	 * The document element name
 	 *
@@ -22,7 +27,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusReqMessage exte
 	/**
 	 * Transaction
 	 *
-	 * @var Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction
+	 * @var Transaction
 	 */
 	public $transaction;
 
@@ -44,9 +49,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerStatusReqMessage exte
 	 */
 	public function get_document() {
 		$document = parent::get_document();
-
-		// Root
-		$root = $document->documentElement;
 
 		// Merchant
 		$merchant = $this->get_merchant();

@@ -1,15 +1,20 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
+use Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error;
+use SimpleXMLElement;
+
 /**
  * Title: iDEAL error response XML message
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ResponseMessage {
+class AcquirerErrorResMessage extends ResponseMessage {
 	/**
 	 * The document element name
 	 *
@@ -41,11 +46,13 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_AcquirerErrorResMessage exten
 	 * Parse the specified XML into an directory response message object
 	 *
 	 * @param SimpleXMLElement $xml
+	 *
+	 * @return ResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = self::parse_create_date( $xml, new self() );
 
-		$parser = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParser();
+		$parser = new ErrorParser();
 
 		$message->error = $parser->parse( $xml->Error );
 
