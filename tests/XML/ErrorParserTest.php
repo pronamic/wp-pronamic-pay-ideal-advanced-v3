@@ -1,5 +1,8 @@
 <?php
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\ErrorParser;
+
+namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+
+use PHPUnit_Framework_TestCase;
 
 /**
  * Title: iDEAL Advanced v3 XML error parser test
@@ -10,7 +13,7 @@ use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\ErrorParser;
  * @author Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParserTest extends PHPUnit_Framework_TestCase {
+class ErrorParserTest extends PHPUnit_Framework_TestCase {
 	public function testParser() {
 		$parser = new ErrorParser();
 
@@ -20,7 +23,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ErrorParserTest extends PHPUn
 
 		$string = (string) $error;
 
-		$this->assertInstanceOf( 'Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error', $error );
+		$this->assertInstanceOf( '\Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\IDeal_Error', $error );
 		$this->assertSame( 'SO1100', $error->get_code() );
 		$this->assertSame( 'Issuer not available', $error->get_message() );
 		$this->assertSame( 'System generating error: Rabobank', $error->get_detail() );

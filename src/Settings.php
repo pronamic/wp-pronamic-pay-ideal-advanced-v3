@@ -449,7 +449,7 @@ class Settings extends GatewaySettings {
 	public function save_post( $data ) {
 		// Files
 		$files = array(
-			'_pronamic_gateway_ideal_private_key_file'         => '_pronamic_gateway_ideal_private_key',
+			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
 			'_pronamic_gateway_ideal_private_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
 		);
 
