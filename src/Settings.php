@@ -475,12 +475,23 @@ class Settings extends GatewaySettings {
 
 		if ( false === $pkey ) {
 			// If we can't open the private key we will create a new private key and certificate.
+
+			if ( defined( 'OPENSSL_CIPHER_AES_128_CBC' ) ) {
+				$cipher = OPENSSL_CIPHER_AES_128_CBC;
+			} elseif ( defined( 'OPENSSL_CIPHER_3DES' ) ) {
+				// @see https://www.pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf
+				$cipher = OPENSSL_CIPHER_3DES;
+			} else {
+				// Unable to create private key without cipher.
+				return $data;
+			}
+
 			$args = array(
 				'digest_alg'             => 'SHA256',
 				'private_key_bits'       => 2048,
 				'private_key_type'       => OPENSSL_KEYTYPE_RSA,
 				'encrypt_key'            => true,
-				'encrypt_key_cipher'     => OPENSSL_CIPHER_AES_128_CBC,
+				'encrypt_key_cipher'     => $cipher,
 				'subjectKeyIdentifier'   => 'hash',
 				'authorityKeyIdentifier' => 'keyid:always,issuer:always',
 				'basicConstraints'       => 'CA:true',
