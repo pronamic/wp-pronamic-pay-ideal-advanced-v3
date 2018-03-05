@@ -47,16 +47,12 @@ class IDeal_Error {
 	 */
 	private $consumer_message;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an error
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the code of this error
@@ -76,8 +72,6 @@ class IDeal_Error {
 		$this->code = $code;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the message of this error
 	 *
@@ -95,8 +89,6 @@ class IDeal_Error {
 	public function set_message( $message ) {
 		$this->message = $message;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the detail of this error
@@ -116,8 +108,6 @@ class IDeal_Error {
 		$this->detail = $detail;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the consumer message
 	 *
@@ -136,8 +126,6 @@ class IDeal_Error {
 		$this->suggested_action = $suggested_action;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the consumer message
 	 *
@@ -155,8 +143,6 @@ class IDeal_Error {
 	public function set_consumer_message( $consumer_message ) {
 		$this->consumer_message = $consumer_message;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Create an string representation of this object

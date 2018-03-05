@@ -38,8 +38,6 @@ class Client {
 	 */
 	public $acquirer_url;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Directory request URL
 	 *
@@ -61,8 +59,6 @@ class Client {
 	 */
 	public $status_request_url;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Merchant ID
 	 *
@@ -76,8 +72,6 @@ class Client {
 	 * @var string
 	 */
 	public $sub_id;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Private certificate
@@ -100,8 +94,6 @@ class Client {
 	 */
 	public $private_key_password;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Error
 	 *
@@ -109,16 +101,12 @@ class Client {
 	 */
 	private $error;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialzies an iDEAL Advanced v3 client object
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the latest error
@@ -128,8 +116,6 @@ class Client {
 	public function get_error() {
 		return $this->error;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Set the acquirer URL
@@ -143,8 +129,6 @@ class Client {
 		$this->transaction_request_url = $url;
 		$this->status_request_url      = $url;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Send an specific request message to an specific URL
@@ -219,8 +203,6 @@ class Client {
 		return $result;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Parse the specified document and return parsed result
 	 *
@@ -259,8 +241,6 @@ class Client {
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get directory of issuers
 	 *
@@ -283,8 +263,6 @@ class Client {
 
 		return $directory;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Create transaction
@@ -310,8 +288,6 @@ class Client {
 		return $this->send_message( $this->transaction_request_url, $message );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the status of the specified transaction ID
 	 *
@@ -331,8 +307,6 @@ class Client {
 
 		return $this->send_message( $this->status_request_url, $message );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Sign the specified DOMDocument

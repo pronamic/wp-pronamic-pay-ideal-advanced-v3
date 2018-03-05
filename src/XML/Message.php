@@ -40,16 +40,12 @@ class Message {
 	 */
 	const XML_NAMESPACE = 'http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The version of the iDEAL messages
 	 *
 	 * @var string
 	 */
 	const VERSION = '3.3.1';
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * The name of this message
@@ -58,16 +54,12 @@ class Message {
 	 */
 	private $name;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The create date of this message
 	 *
 	 * @var DateTime
 	 */
 	private $create_date;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initialize an message
@@ -77,8 +69,6 @@ class Message {
 		$this->create_date = new DateTime( null, new DateTimeZone( Plugin::TIMEZONE ) );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the name of this message
 	 *
@@ -87,8 +77,6 @@ class Message {
 	public function get_name() {
 		return $this->name;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the create date
@@ -107,8 +95,6 @@ class Message {
 	public function set_create_date( DateTime $create_date ) {
 		$this->create_date = $create_date;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Create and add an element with the specified name and value to the specified parent

@@ -75,16 +75,12 @@ class Transaction {
 	 */
 	private $entrance_code;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The status of this transaction
 	 *
 	 * @var string
 	 */
 	private $status;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * The consumer name
@@ -107,16 +103,12 @@ class Transaction {
 	 */
 	private $consumer_bic;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an transaction
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the ID of this transaction
@@ -135,8 +127,6 @@ class Transaction {
 	public function set_id( $id ) {
 		$this->id = $id;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the purchase ID of this transaction
@@ -160,8 +150,6 @@ class Transaction {
 		$this->purchase_id = $id;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the amount of this transaction
 	 *
@@ -179,8 +167,6 @@ class Transaction {
 	public function set_amount( $amount ) {
 		$this->amount = $amount;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the currency of this transaction
@@ -200,8 +186,6 @@ class Transaction {
 		$this->currency = $currency;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the expiration period of this transaction
 	 *
@@ -219,8 +203,6 @@ class Transaction {
 	public function set_expiration_period( $expiration_period ) {
 		$this->expiration_period = $expiration_period;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the language of this transaction
@@ -240,8 +222,6 @@ class Transaction {
 		$this->language = $language;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the description of this transaction
 	 *
@@ -260,8 +240,6 @@ class Transaction {
 	public function set_description( $description ) {
 		$this->description = substr( $description, 0, 32 );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the entrance code of this transaction
@@ -290,8 +268,6 @@ class Transaction {
 		$this->entrance_code = substr( $entrance_code, 0, 40 );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the status of this transaction
 	 *
@@ -309,8 +285,6 @@ class Transaction {
 	public function set_status( $status ) {
 		$this->status = $status;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the consumer name
@@ -330,8 +304,6 @@ class Transaction {
 		$this->consumer_name = $name;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the consumer IBAN number
 	 *
@@ -349,8 +321,6 @@ class Transaction {
 	public function set_consumer_iban( $iban ) {
 		$this->consumer_iban = $iban;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the consumer BIC number

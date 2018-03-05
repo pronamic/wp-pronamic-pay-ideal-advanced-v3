@@ -33,16 +33,12 @@ class Merchant {
 	 */
 	private $return_url;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an issuer
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the ID of this merchant
@@ -62,8 +58,6 @@ class Merchant {
 		$this->id = $id;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the ID of this merchant
 	 *
@@ -81,8 +75,6 @@ class Merchant {
 	public function set_sub_id( $sub_id ) {
 		$this->sub_id = $sub_id;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the return URL of this merchant

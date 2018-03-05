@@ -22,8 +22,6 @@ abstract class RequestMessage extends Message {
 	 */
 	private $merchant;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an request message
 	 *
@@ -35,8 +33,6 @@ abstract class RequestMessage extends Message {
 		$this->merchant = new Merchant();
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the merchant
 	 *
@@ -45,8 +41,6 @@ abstract class RequestMessage extends Message {
 	public function get_merchant() {
 		return $this->merchant;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the DOM document
@@ -76,8 +70,6 @@ abstract class RequestMessage extends Message {
 
 		return $document;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Create a string representation

@@ -26,16 +26,12 @@ class Country {
 	 */
 	private $issuers;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an country
 	 */
 	public function __construct() {
 		$this->issuers = array();
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the name
@@ -54,8 +50,6 @@ class Country {
 	public function set_name( $name ) {
 		$this->name = $name;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Add the specified issuer to this country

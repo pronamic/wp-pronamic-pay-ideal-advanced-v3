@@ -403,8 +403,6 @@ class Settings extends GatewaySettings {
 		<?php
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Download private certificate
 	 */

@@ -22,8 +22,6 @@ class AcquirerErrorResMessage extends ResponseMessage {
 	 */
 	const NAME = 'AcquirerErrorRes';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The error within this response message
 	 *
@@ -31,16 +29,12 @@ class AcquirerErrorResMessage extends ResponseMessage {
 	 */
 	public $error;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an error response message
 	 */
 	public function __construct() {
 		parent::__construct( self::NAME );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Parse the specified XML into an directory response message object

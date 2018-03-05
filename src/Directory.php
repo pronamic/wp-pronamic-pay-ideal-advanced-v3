@@ -28,16 +28,12 @@ class Directory {
 	 */
 	private $countries;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an directory
 	 */
 	public function __construct() {
 		$this->countries = array();
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Set the specified date
@@ -47,8 +43,6 @@ class Directory {
 	public function set_date( DateTime $date ) {
 		$this->date = $date;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Add the specified country to this directory

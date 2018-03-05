@@ -47,8 +47,6 @@ class Gateway extends Core_Gateway {
 		$this->client = $client;
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get issuers
 	 *
@@ -83,8 +81,6 @@ class Gateway extends Core_Gateway {
 		return $groups;
 	}
 
-	/////////////////////////////////////////////////
-
 	public function get_issuer_field() {
 		if ( PaymentMethods::IDEAL === $this->get_payment_method() ) {
 			return array(
@@ -98,8 +94,6 @@ class Gateway extends Core_Gateway {
 		}
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get payment methods
 	 *
@@ -108,8 +102,6 @@ class Gateway extends Core_Gateway {
 	public function get_payment_methods() {
 		return PaymentMethods::IDEAL;
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Get supported payment methods
@@ -122,8 +114,6 @@ class Gateway extends Core_Gateway {
 		);
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Is payment method required to start transaction?
 	 *
@@ -133,8 +123,6 @@ class Gateway extends Core_Gateway {
 	public function payment_method_is_required() {
 		return true;
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Start
@@ -170,8 +158,6 @@ class Gateway extends Core_Gateway {
 		$payment->set_action_url( $result->issuer->get_authentication_url() );
 		$payment->set_transaction_id( $result->transaction->get_id() );
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Update status of the specified payment

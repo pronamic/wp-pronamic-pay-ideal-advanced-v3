@@ -22,8 +22,6 @@ class AcquirerStatusReqMessage extends RequestMessage {
 	 */
 	const NAME = 'AcquirerStatusReq';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Transaction
 	 *
@@ -31,16 +29,12 @@ class AcquirerStatusReqMessage extends RequestMessage {
 	 */
 	public $transaction;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an status request message
 	 */
 	public function __construct() {
 		parent::__construct( self::NAME );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

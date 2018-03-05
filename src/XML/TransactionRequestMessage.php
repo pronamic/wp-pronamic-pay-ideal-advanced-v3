@@ -23,8 +23,6 @@ class TransactionRequestMessage extends RequestMessage {
 	 */
 	const NAME = 'AcquirerTrxReq';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Issuer
 	 *
@@ -39,16 +37,12 @@ class TransactionRequestMessage extends RequestMessage {
 	 */
 	public $transaction;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an transaction request message
 	 */
 	public function __construct() {
 		parent::__construct( self::NAME );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

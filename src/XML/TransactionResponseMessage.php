@@ -21,16 +21,12 @@ class TransactionResponseMessage extends ResponseMessage {
 	 */
 	const NAME = 'AcquirerTrxRes';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an directory response message
 	 */
 	public function __construct() {
 		parent::__construct( self::NAME );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Parse the specified XML into an directory response message object

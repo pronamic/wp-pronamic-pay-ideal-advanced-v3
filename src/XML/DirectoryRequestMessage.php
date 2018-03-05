@@ -19,16 +19,12 @@ class DirectoryRequestMessage extends RequestMessage {
 	 */
 	const NAME = 'DirectoryReq';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize a directory request message
 	 */
 	public function __construct() {
 		parent::__construct( self::NAME );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

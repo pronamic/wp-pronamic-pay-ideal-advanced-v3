@@ -33,16 +33,12 @@ class Issuer {
 	 */
 	private $authentication_url;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an issuer
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the ID of this issuer
@@ -62,8 +58,6 @@ class Issuer {
 		$this->id = $id;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the name of this issuer
 	 *
@@ -81,8 +75,6 @@ class Issuer {
 	public function set_name( $name ) {
 		$this->name = $name;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the name of this issuer

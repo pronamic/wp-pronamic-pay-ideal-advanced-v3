@@ -22,8 +22,6 @@ class AcquirerStatusResMessage extends ResponseMessage {
 	 */
 	const NAME = 'AcquirerStatusRes';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Transaction
 	 *
@@ -31,16 +29,12 @@ class AcquirerStatusResMessage extends ResponseMessage {
 	 */
 	public $transaction;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an status response message
 	 */
 	public function __construct() {
 		parent::__construct( self::NAME );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Parse the specified XML into an directory response message object

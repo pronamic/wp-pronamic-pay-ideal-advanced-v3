@@ -27,8 +27,6 @@ class Security {
 	 */
 	const CERTIFICATE_END = '-----END CERTIFICATE-----';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the sha1 fingerprint from the specified certificate
 	 *

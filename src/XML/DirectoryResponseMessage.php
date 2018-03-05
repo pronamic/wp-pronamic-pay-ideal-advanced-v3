@@ -22,8 +22,6 @@ class DirectoryResponseMessage extends ResponseMessage {
 	 */
 	const NAME = 'DirectoryRes';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The directory
 	 *
@@ -31,16 +29,12 @@ class DirectoryResponseMessage extends ResponseMessage {
 	 */
 	public $directory;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an directory response message
 	 */
 	public function __construct() {
 		parent::__construct( self::NAME );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the directory
@@ -50,8 +44,6 @@ class DirectoryResponseMessage extends ResponseMessage {
 	public function get_directory() {
 		return $this->directory;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Parse the specified XML into an directory response message object
