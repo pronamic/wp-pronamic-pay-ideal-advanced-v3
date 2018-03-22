@@ -15,7 +15,7 @@ use PHPUnit_Framework_TestCase;
  */
 class ErrorTest extends PHPUnit_Framework_TestCase {
 	public function testToStringError() {
-		$error = new IDeal_Error();
+		$error = new Error();
 		$error->set_code( '1' );
 		$error->set_message( 'Error' );
 

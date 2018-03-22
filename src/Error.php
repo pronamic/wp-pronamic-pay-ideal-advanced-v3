@@ -11,7 +11,7 @@ namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
  * @author  Remco Tolsma
  * @version 1.0.0
  */
-class IDeal_Error {
+class Error {
 	/**
 	 * Code
 	 *

@@ -23,7 +23,7 @@ class ErrorParserTest extends PHPUnit_Framework_TestCase {
 
 		$string = (string) $error;
 
-		$this->assertInstanceOf( '\Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\IDeal_Error', $error );
+		$this->assertInstanceOf( '\Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Error', $error );
 		$this->assertSame( 'SO1100', $error->get_code() );
 		$this->assertSame( 'Issuer not available', $error->get_message() );
 		$this->assertSame( 'System generating error: Rabobank', $error->get_detail() );

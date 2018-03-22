@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
 
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\IDeal_Error;
+use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Error;
 use Pronamic\WordPress\Pay\Core\XML\Security;
 use SimpleXMLElement;
 
@@ -27,7 +27,7 @@ class ErrorParser {
 		$error = null;
 
 		if ( 'Error' === $xml->getName() ) {
-			$error = new IDeal_Error();
+			$error = new Error();
 
 			$error->set_code( Security::filter( $xml->errorCode ) );
 			$error->set_message( Security::filter( $xml->errorMessage ) );
