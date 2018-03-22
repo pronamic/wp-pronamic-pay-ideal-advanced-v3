@@ -1,20 +1,20 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use DOMDocument;
 use Exception;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\AcquirerErrorResMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\AcquirerStatusReqMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\AcquirerStatusResMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\DirectoryRequestMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\DirectoryResponseMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\Message;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\RequestMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\ResponseMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\TransactionRequestMessage;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML\TransactionResponseMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\AcquirerErrorResMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\AcquirerStatusReqMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\AcquirerStatusResMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\DirectoryRequestMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\DirectoryResponseMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\Message;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\RequestMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\ResponseMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\TransactionRequestMessage;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\TransactionResponseMessage;
 use SimpleXMLElement;
 use WP_Error;
 use XMLSecurityDSig;
@@ -220,7 +220,7 @@ class Client {
 				$message = AcquirerErrorResMessage::parse( $document );
 
 				$this->error = new WP_Error(
-					'ideal_advanced_v3_error',
+					'IDealAdvancedV3_error',
 					sprintf( '%s. %s', $message->error->get_message(), $message->error->get_detail() ),
 					$message->error
 				);
@@ -234,7 +234,7 @@ class Client {
 				return AcquirerStatusResMessage::parse( $document );
 			default:
 				return new WP_Error(
-					'ideal_advanced_v3_error',
+					'IDealAdvancedV3_error',
 					/* translators: %s: XML document element name */
 					sprintf( __( 'Unknwon iDEAL message (%s)', 'pronamic_ideal' ), $name )
 				);

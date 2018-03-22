@@ -1,9 +1,9 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
 use Pronamic\WordPress\Pay\Core\XML\Security;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Transaction;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
 use SimpleXMLElement;
 
 /**

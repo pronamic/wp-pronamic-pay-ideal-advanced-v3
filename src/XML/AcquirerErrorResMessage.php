@@ -1,6 +1,6 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
 use Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error;
 use SimpleXMLElement;

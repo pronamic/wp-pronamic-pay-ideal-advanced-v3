@@ -1,10 +1,10 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
 use DateTime;
 use Pronamic\WordPress\Pay\Core\XML\Security;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Directory;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Directory;
 use SimpleXMLElement;
 
 /**

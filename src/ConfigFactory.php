@@ -1,6 +1,6 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
 
@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
 class ConfigFactory extends GatewayConfigFactory {
 	private $config_class;
 
-	public function __construct( $config_class = 'Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Config', $config_test_class = 'Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Config' ) {
+	public function __construct( $config_class = 'Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Config', $config_test_class = 'Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Config' ) {
 		$this->config_class      = $config_class;
 		$this->config_test_class = $config_test_class;
 	}

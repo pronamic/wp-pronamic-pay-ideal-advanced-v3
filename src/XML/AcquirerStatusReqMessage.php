@@ -1,9 +1,9 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\XML;
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
 use DOMDocument;
-use Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3\Transaction;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
 
 /**
  * Title: iDEAL status request XML message

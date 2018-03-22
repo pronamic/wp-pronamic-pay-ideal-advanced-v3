@@ -1,6 +1,6 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Gateways\IDeal_Advanced_V3;
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
