@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
-use DateTime;
+use Pronamic\WordPress\Pay\Core\DateTime;
 
 /**
  * Title: Directory

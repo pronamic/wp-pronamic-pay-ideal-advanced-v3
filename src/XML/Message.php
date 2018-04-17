@@ -2,11 +2,11 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
-use DateTime;
-use DateTimeZone;
 use DOMDocument;
 use DOMNode;
 use DOMText;
+use Pronamic\WordPress\Pay\Core\DateTime;
+use Pronamic\WordPress\Pay\Core\DateTimeZone;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
