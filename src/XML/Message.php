@@ -1,15 +1,24 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
+
+use DOMDocument;
+use DOMNode;
+use DOMText;
+use Pronamic\WordPress\DateTime\DateTime;
+use Pronamic\WordPress\DateTime\DateTimeZone;
+use Pronamic\WordPress\Pay\Plugin;
+
 /**
  * Title: iDEAL XML message
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
+class Message {
 	/**
 	 * The XML version of the iDEAL messages
 	 *
@@ -31,16 +40,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	 */
 	const XML_NAMESPACE = 'http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The version of the iDEAL messages
 	 *
 	 * @var string
 	 */
 	const VERSION = '3.3.1';
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * The name of this message
@@ -49,8 +54,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	 */
 	private $name;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The create date of this message
 	 *
@@ -58,17 +61,13 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	 */
 	private $create_date;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an message
 	 */
 	public function __construct( $name ) {
 		$this->name        = $name;
-		$this->create_date = new DateTime( null, new DateTimeZone( Pronamic_IDeal_IDeal::TIMEZONE ) );
+		$this->create_date = new DateTime( null, new DateTimeZone( Plugin::TIMEZONE ) );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the name of this message
@@ -78,8 +77,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	public function get_name() {
 		return $this->name;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the create date
@@ -99,15 +96,15 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 		$this->create_date = $create_date;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Create and add an element with the specified name and value to the specified parent
 	 *
 	 * @param DOMDocument $document
-	 * @param DOMNode $parent
-	 * @param string $name
-	 * @param string $value
+	 * @param DOMNode     $parent
+	 * @param string      $name
+	 * @param string      $value
+	 *
+	 * @return \DOMElement
 	 */
 	public static function add_element( DOMDocument $document, DOMNode $parent, $name, $value = null ) {
 		$element = $document->createElement( $name );
@@ -125,8 +122,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
 	 * Add the specified elements to the parent node
 	 *
 	 * @param DOMDocument $document
-	 * @param DOMNode $parent
-	 * @param array $elements
+	 * @param DOMNode     $parent
+	 * @param array       $elements
 	 */
 	public static function add_elements( DOMDocument $document, DOMNode $parent, array $elements = array() ) {
 		foreach ( $elements as $name => $value ) {

@@ -1,15 +1,21 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
+
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\IDeal;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Issuer;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
+
 /**
  * Title: iDEAL transaction request XML message
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionRequestMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage {
+class TransactionRequestMessage extends RequestMessage {
 	/**
 	 * The document element name
 	 *
@@ -17,23 +23,19 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionRequestMessage ext
 	 */
 	const NAME = 'AcquirerTrxReq';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Issuer
 	 *
-	 * @var Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer
+	 * @var Issuer
 	 */
 	public $issuer;
 
 	/**
 	 * Transaction
 	 *
-	 * @var Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction
+	 * @var Transaction
 	 */
 	public $transaction;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initializes an transaction request message
@@ -42,18 +44,13 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionRequestMessage ext
 		parent::__construct( self::NAME );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get document
 	 *
-	 * @see Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage::get_document()
+	 * @see RequestMessage::get_document()
 	 */
 	public function get_document() {
 		$document = parent::get_document();
-
-		// Root
-		$root = $document->documentElement;
 
 		// Issuer
 		$issuer = $this->issuer;
@@ -77,7 +74,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionRequestMessage ext
 		$element = self::add_element( $document, $document->documentElement, 'Transaction' );
 		self::add_elements( $document, $element, array(
 			'purchaseID'       => $transaction->get_purchase_id(),
-			'amount'           => Pronamic_WP_Pay_Gateways_IDealAdvancedV3_IDeal::format_amount( $transaction->get_amount() ),
+			'amount'           => IDeal::format_amount( $transaction->get_amount()->get_amount() ),
 			'currency'         => $transaction->get_currency(),
 			'expirationPeriod' => $transaction->get_expiration_period(),
 			'language'         => $transaction->get_language(),

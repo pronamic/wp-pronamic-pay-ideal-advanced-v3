@@ -1,28 +1,35 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
+
+use Pronamic\WordPress\Pay\Core\XML\Security;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Country;
+use SimpleXMLElement;
+
 /**
  * Title: Issuer XML parser
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_CountryParser implements Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Parser {
+class CountryParser implements Parser {
 	/**
 	 * Parse
 	 *
 	 * @param SimpleXMLElement $xml
-	 * @return Pronamic_Gateways_IDealAdvanced_Directory
+	 *
+	 * @return Country
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
-		$country = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Country();
+		$country = new Country();
 
-		$country->set_name( Pronamic_WP_Pay_XML_Security::filter( $xml->countryNames ) );
+		$country->set_name( Security::filter( $xml->countryNames ) );
 
 		foreach ( $xml->Issuer as $element ) {
-			$issuer = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser::parse( $element );
+			$issuer = IssuerParser::parse( $element );
 
 			$country->add_issuer( $issuer );
 		}

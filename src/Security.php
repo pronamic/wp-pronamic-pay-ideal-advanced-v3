@@ -1,16 +1,18 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
+
 /**
  * Title: Security
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.1.11
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
+class Security {
 	/**
 	 * Indicator for the begin of an certificate
 	 *
@@ -25,13 +27,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 	 */
 	const CERTIFICATE_END = '-----END CERTIFICATE-----';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the sha1 fingerprint from the specified certificate
 	 *
 	 * @param string $certificate
-	 * @return fingerprint or null on failure
+	 *
+	 * @return string Fingerprint or null on failure
 	 */
 	public static function get_sha_fingerprint( $certificate ) {
 		return self::get_fingerprint( $certificate, 'sha1' );
@@ -41,7 +42,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 	 * Get the md5 fingerprint from the specified certificate
 	 *
 	 * @param string $certificate
-	 * @return fingerprint or null on failure
+	 *
+	 * @return string Fingerprint or null on failure
 	 */
 	public static function get_md5_fingerprint( $certificate ) {
 		return self::get_fingerprint( $certificate, 'md5' );
@@ -51,7 +53,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Security {
 	 * Get the fingerprint from the specified certificate
 	 *
 	 * @param string $certificate
-	 * @return fingerprint or null on failure
+	 *
+	 * @return string Fingerprint or null on failure
 	 */
 	public static function get_fingerprint( $certificate, $hash = null ) {
 		$fingerprint = null;

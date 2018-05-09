@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
+
 /**
  * Title: iDEAL Advanced v3 error
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
+class Error {
 	/**
 	 * Code
 	 *
@@ -45,16 +47,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 	 */
 	private $consumer_message;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an error
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the code of this error
@@ -74,8 +72,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 		$this->code = $code;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the message of this error
 	 *
@@ -88,13 +84,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 	/**
 	 * Set the message error
 	 *
-	 * @param string $code
+	 * @param string $message
 	 */
 	public function set_message( $message ) {
 		$this->message = $message;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the detail of this error
@@ -114,8 +108,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 		$this->detail = $detail;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the consumer message
 	 *
@@ -128,13 +120,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 	/**
 	 * Set the consumer message
 	 *
-	 * @param string $detail
+	 * @param string $suggested_action
 	 */
 	public function set_suggested_action( $suggested_action ) {
 		$this->suggested_action = $suggested_action;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the consumer message
@@ -148,13 +138,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error {
 	/**
 	 * Set the consumer message
 	 *
-	 * @param string $detail
+	 * @param string $consumer_message
 	 */
 	public function set_consumer_message( $consumer_message ) {
 		$this->consumer_message = $consumer_message;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Create an string representation of this object

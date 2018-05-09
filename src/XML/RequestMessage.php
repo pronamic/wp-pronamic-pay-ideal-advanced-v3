@@ -1,23 +1,26 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
+
+use DOMDocument;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Merchant;
+
 /**
  * Title: iDEAL request XML message
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_Message {
+abstract class RequestMessage extends Message {
 	/**
 	 * Merchant
 	 *
 	 * @var Merchant
 	 */
 	private $merchant;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initialize an request message
@@ -27,10 +30,8 @@ abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage exten
 	public function __construct( $name ) {
 		parent::__construct( $name );
 
-		$this->merchant = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Merchant();
+		$this->merchant = new Merchant();
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the merchant
@@ -41,14 +42,12 @@ abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage exten
 		return $this->merchant;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the DOM document
 	 *
 	 * @return DOMDocument
 	 */
-	protected function get_document() {
+	public function get_document() {
 		$document = new DOMDocument( parent::XML_VERSION, parent::XML_ENCODING );
 		// We can't disable preservere white space and format the output
 		// this is causing 'Invalid electronic signature' errors
@@ -71,8 +70,6 @@ abstract class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_RequestMessage exten
 
 		return $document;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Create a string representation

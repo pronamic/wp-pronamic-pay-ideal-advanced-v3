@@ -1,35 +1,43 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
+
+use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Payments\Payment;
+
 /**
  * Title: iDEAL Advanced v3+ gateway
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.1.5
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_Gateway {
+class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
-	 * @param Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config $config
+	 * @param Config $config
 	 */
-	public function __construct( Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Config $config ) {
+	public function __construct( Config $config ) {
 		parent::__construct( $config );
 
 		$this->supports = array(
 			'payment_status_request',
 		);
 
-		$this->set_method( Pronamic_WP_Pay_Gateway::METHOD_HTTP_REDIRECT );
+		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0.01 );
 
 		// Client
-		$client = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Client();
+		$client = new Client();
+
 		$client->set_acquirer_url( $config->get_payment_server_url() );
+
 		$client->merchant_id          = $config->merchant_id;
 		$client->sub_id               = $config->sub_id;
 		$client->private_key          = $config->private_key;
@@ -39,12 +47,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 		$this->client = $client;
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get issuers
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::get_issuers()
+	 * @see Core_Gateway::get_issuers()
+	 *
 	 * @return array
 	 */
 	public function get_issuers() {
@@ -74,10 +81,8 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 		return $groups;
 	}
 
-	/////////////////////////////////////////////////
-
 	public function get_issuer_field() {
-		if ( Pronamic_WP_Pay_PaymentMethods::IDEAL === $this->get_payment_method() ) {
+		if ( PaymentMethods::IDEAL === $this->get_payment_method() ) {
 			return array(
 				'id'       => 'pronamic_ideal_issuer_id',
 				'name'     => 'pronamic_ideal_issuer_id',
@@ -89,19 +94,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 		}
 	}
 
-	/////////////////////////////////////////////////
-
-	/**
-	 * Get payment methods
-	 *
-	 * @return mixed an array or null
-	 */
-	public function get_payment_methods() {
-		return Pronamic_WP_Pay_PaymentMethods::IDEAL;
-	}
-
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get supported payment methods
 	 *
@@ -109,39 +101,35 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			Pronamic_WP_Pay_PaymentMethods::IDEAL,
+			PaymentMethods::IDEAL,
 		);
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Is payment method required to start transaction?
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::payment_method_is_required()
+	 * @see   Core_Gateway::payment_method_is_required()
 	 * @since 1.1.5
 	 */
 	public function payment_method_is_required() {
 		return true;
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Start
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::start()
 	 */
-	public function start( Pronamic_Pay_Payment $payment ) {
+	public function start( Payment $payment ) {
 		// Purchase ID
 		$purchase_id = $payment->format_string( $this->config->purchase_id );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
 		// Transaction
-		$transaction = new Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction();
+		$transaction = new Transaction();
 		$transaction->set_purchase_id( $purchase_id );
-		$transaction->set_amount( $payment->get_amount() );
+		$transaction->set_amount( $payment->get_amount()->get_amount() );
 		$transaction->set_currency( $payment->get_currency() );
 		$transaction->set_expiration_period( 'PT30M' );
 		$transaction->set_language( $payment->get_language() );
@@ -162,14 +150,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Gateway extends Pronamic_WP_Pay_G
 		$payment->set_transaction_id( $result->transaction->get_id() );
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Update status of the specified payment
 	 *
-	 * @param Pronamic_Pay_Payment $payment
+	 * @param Payment $payment
 	 */
-	public function update_status( Pronamic_Pay_Payment $payment ) {
+	public function update_status( Payment $payment ) {
 		$result = $this->client->get_status( $payment->get_transaction_id() );
 
 		$error = $this->client->get_error();

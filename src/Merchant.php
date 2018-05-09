@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
+
 /**
  * Title: Merchant
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Merchant {
+class Merchant {
 	/**
 	 * ID of the merchant
 	 *
@@ -31,16 +33,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Merchant {
 	 */
 	private $return_url;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an issuer
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the ID of this merchant
@@ -60,8 +58,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Merchant {
 		$this->id = $id;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the ID of this merchant
 	 *
@@ -80,8 +76,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Merchant {
 		$this->sub_id = $sub_id;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the return URL of this merchant
 	 *
@@ -94,7 +88,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Merchant {
 	/**
 	 * Set the ID of this merchant
 	 *
-	 * @param string $sub_id
+	 * @param string $return_url
 	 */
 	public function set_return_url( $return_url ) {
 		$this->return_url = $return_url;

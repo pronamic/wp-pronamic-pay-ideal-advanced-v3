@@ -1,15 +1,17 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
+
 /**
  * Title: Issuer
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer {
+class Issuer {
 	/**
 	 * ID of the issuer
 	 *
@@ -31,16 +33,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer {
 	 */
 	private $authentication_url;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an issuer
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the ID of this issuer
@@ -60,8 +58,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer {
 		$this->id = $id;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the name of this issuer
 	 *
@@ -80,8 +76,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer {
 		$this->name = $name;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the name of this issuer
 	 *
@@ -94,7 +88,7 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Issuer {
 	/**
 	 * Set the name of this issuer
 	 *
-	 * @param string $name
+	 * @param string $authentication_url
 	 */
 	public function set_authentication_url( $authentication_url ) {
 		$this->authentication_url = $authentication_url;

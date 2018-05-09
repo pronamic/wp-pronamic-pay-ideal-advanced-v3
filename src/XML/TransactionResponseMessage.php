@@ -1,23 +1,25 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
+
+use SimpleXMLElement;
+
 /**
  * Title: iDEAL transaction response XML message
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage extends Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_ResponseMessage {
+class TransactionResponseMessage extends ResponseMessage {
 	/**
 	 * The document element name
 	 *
 	 * @var string
 	 */
 	const NAME = 'AcquirerTrxRes';
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initialize an directory response message
@@ -26,18 +28,18 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionResponseMessage ex
 		parent::__construct( self::NAME );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Parse the specified XML into an directory response message object
 	 *
 	 * @param SimpleXMLElement $xml
+	 *
+	 * @return ResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = self::parse_create_date( $xml, new self() );
 
-		$message->issuer      = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_IssuerParser::parse( $xml->Issuer );
-		$message->transaction = Pronamic_WP_Pay_Gateways_IDealAdvancedV3_XML_TransactionParser::parse( $xml->Transaction );
+		$message->issuer      = IssuerParser::parse( $xml->Issuer );
+		$message->transaction = TransactionParser::parse( $xml->Transaction );
 
 		return $message;
 	}

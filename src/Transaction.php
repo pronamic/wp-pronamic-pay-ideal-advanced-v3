@@ -1,28 +1,23 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
+
 /**
  * Title: Transaction
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
  */
-class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
+class Transaction {
 	/**
 	 * Transaction ID
 	 *
 	 * @var string
 	 */
 	private $id;
-
-	/**
-	 * Create date
-	 *
-	 * @var unknown_type
-	 */
-	private $create_date;
 
 	/**
 	 * Purchase ID
@@ -80,16 +75,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	 */
 	private $entrance_code;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The status of this transaction
 	 *
 	 * @var string
 	 */
 	private $status;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * The consumer name
@@ -112,16 +103,12 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	 */
 	private $consumer_bic;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an transaction
 	 */
 	public function __construct() {
 
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the ID of this transaction
@@ -140,8 +127,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	public function set_id( $id ) {
 		$this->id = $id;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the purchase ID of this transaction
@@ -165,8 +150,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 		$this->purchase_id = $id;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the amount of this transaction
 	 *
@@ -185,8 +168,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 		$this->amount = $amount;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the currency of this transaction
 	 *
@@ -199,13 +180,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	/**
 	 * Set the currency of this transaction
 	 *
-	 * @param string $amount
+	 * @param string $currency
 	 */
 	public function set_currency( $currency ) {
 		$this->currency = $currency;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the expiration period of this transaction
@@ -225,8 +204,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 		$this->expiration_period = $expiration_period;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the language of this transaction
 	 *
@@ -244,8 +221,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	public function set_language( $language ) {
 		$this->language = $language;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the description of this transaction
@@ -265,8 +240,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	public function set_description( $description ) {
 		$this->description = substr( $description, 0, 32 );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the entrance code of this transaction
@@ -295,8 +268,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 		$this->entrance_code = substr( $entrance_code, 0, 40 );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the status of this transaction
 	 *
@@ -315,8 +286,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 		$this->status = $status;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the consumer name
 	 *
@@ -329,13 +298,11 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	/**
 	 * Set the consumer name
 	 *
-	 * @param string $status
+	 * @param $name
 	 */
 	public function set_consumer_name( $name ) {
 		$this->consumer_name = $name;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the consumer IBAN number
@@ -354,8 +321,6 @@ class Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction {
 	public function set_consumer_iban( $iban ) {
 		$this->consumer_iban = $iban;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get the consumer BIC number
