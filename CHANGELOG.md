@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.0.0] - 2018-05-09
+- Switched to PHP namespaces.
+
 ## [1.1.12] - 2017-12-12
 - WordPress Coding Standards improvements.
 - Fixed IBAN/BIC typos in comments.
@@ -67,7 +70,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.12...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.12...2.0.0
 [1.1.12]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.11...1.1.12
 [1.1.11]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.10...1.1.11
 [1.1.10]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.9...1.1.10

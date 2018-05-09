@@ -9,8 +9,9 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version unreleased
- * @since   unreleased
+ * @version 2.0.0
+ * @since   2.0.0
  */
 class Integration extends AbstractIntegration {
+
 }

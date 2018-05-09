@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Core\GatewaySettings;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 1.1.10
+ * @version 2.0.0
  * @since   1.1.2
  */
 class Settings extends GatewaySettings {

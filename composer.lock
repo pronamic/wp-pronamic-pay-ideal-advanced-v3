@@ -1,28 +1,28 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d850b89cd17e1e5a8629376b72e06a6e",
+    "content-hash": "3ab2a7b769a100afe7625be2d859359a",
     "packages": [
         {
             "name": "wp-pay-gateways/common",
-            "version": "dev-develop",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay-gateways/common.git",
-                "reference": "8b03e4a730aaeee44248a2cf7b570e4f8f678c9d"
+                "reference": "4dcf31cae407d9da882ead619770bd299ba80eb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay-gateways/common/zipball/8b03e4a730aaeee44248a2cf7b570e4f8f678c9d",
-                "reference": "8b03e4a730aaeee44248a2cf7b570e4f8f678c9d",
+                "url": "https://api.github.com/repos/wp-pay-gateways/common/zipball/4dcf31cae407d9da882ead619770bd299ba80eb5",
+                "reference": "4dcf31cae407d9da882ead619770bd299ba80eb5",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3",
-                "wp-pay/core": "dev-develop as 1.3"
+                "wp-pay/core": "^2.0"
             },
             "require-dev": {
                 "php-coveralls/php-coveralls": "^1.0",
@@ -66,38 +66,44 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2018-03-02T12:13:01+00:00"
+            "time": "2018-05-09T09:05:05+00:00"
         },
         {
             "name": "wp-pay-gateways/ideal",
-            "version": "1.1.5",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay-gateways/ideal.git",
-                "reference": "744f81360667a8396cc6e0ce3e2d218b45b15c3f"
+                "reference": "79ae19d1a9ae65acb2a89f8897a2844a2c08e67b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay-gateways/ideal/zipball/744f81360667a8396cc6e0ce3e2d218b45b15c3f",
-                "reference": "744f81360667a8396cc6e0ce3e2d218b45b15c3f",
+                "url": "https://api.github.com/repos/wp-pay-gateways/ideal/zipball/79ae19d1a9ae65acb2a89f8897a2844a2c08e67b",
+                "reference": "79ae19d1a9ae65acb2a89f8897a2844a2c08e67b",
                 "shasum": ""
             },
             "require": {
-                "wp-pay-gateways/common": "^1.0.2",
-                "wp-pay/core": "^1.3"
+                "php": "^5.3",
+                "wp-pay-gateways/common": "^2.0",
+                "wp-pay/core": "^2.0"
             },
             "require-dev": {
-                "satooshi/php-coveralls": "dev-master",
+                "php-coveralls/php-coveralls": "^1.0",
+                "phpunit/phpunit": "^4.8",
                 "squizlabs/php_codesniffer": "^2.7",
-                "wp-coding-standards/wpcs": "^0.10.0"
+                "wimg/php-compatibility": "^8.1",
+                "wp-coding-standards/wpcs": "^0.14.1"
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "src/"
-                ]
+                "psr-4": {
+                    "Pronamic\\WordPress\\Pay\\Gateways\\IDeal\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
             "description": "iDEAL driver for the WordPress payment processing library.",
             "homepage": "https://github.com/wp-pay-gateways/ideal",
             "keywords": [
@@ -108,20 +114,20 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2016-10-20T09:50:01+00:00"
+            "time": "2018-05-09T14:44:41+00:00"
         },
         {
             "name": "wp-pay/core",
-            "version": "dev-develop",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-pay/core.git",
-                "reference": "0fc42a266e4bb0d1d5599740fc4a94ea9e939b86"
+                "reference": "19f1669cacdc54cff404ce3024102bc13c8e4ed2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-pay/core/zipball/0fc42a266e4bb0d1d5599740fc4a94ea9e939b86",
-                "reference": "0fc42a266e4bb0d1d5599740fc4a94ea9e939b86",
+                "url": "https://api.github.com/repos/wp-pay/core/zipball/19f1669cacdc54cff404ce3024102bc13c8e4ed2",
+                "reference": "19f1669cacdc54cff404ce3024102bc13c8e4ed2",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +175,7 @@
                 "wordpress",
                 "wp"
             ],
-            "time": "2018-04-19T08:15:17+00:00"
+            "time": "2018-05-09T08:47:32+00:00"
         }
     ],
     "packages-dev": [
@@ -1947,25 +1953,9 @@
             "time": "2018-02-16T01:57:48+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "1.4",
-            "alias_normalized": "1.4.0.0",
-            "version": "dev-develop",
-            "package": "wp-pay/core"
-        },
-        {
-            "alias": "1.1",
-            "alias_normalized": "1.1.0.0",
-            "version": "dev-develop",
-            "package": "wp-pay-gateways/common"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wp-pay/core": 20,
-        "wp-pay-gateways/common": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
