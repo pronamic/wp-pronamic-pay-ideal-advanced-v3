@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.1
  */
 class TransactionRequestMessage extends RequestMessage {
 	/**
@@ -74,7 +74,7 @@ class TransactionRequestMessage extends RequestMessage {
 		$element = self::add_element( $document, $document->documentElement, 'Transaction' );
 		self::add_elements( $document, $element, array(
 			'purchaseID'       => $transaction->get_purchase_id(),
-			'amount'           => IDeal::format_amount( $transaction->get_amount()->get_amount() ),
+			'amount'           => IDeal::format_amount( $transaction->get_amount() ),
 			'currency'         => $transaction->get_currency(),
 			'expirationPeriod' => $transaction->get_expiration_period(),
 			'language'         => $transaction->get_language(),
