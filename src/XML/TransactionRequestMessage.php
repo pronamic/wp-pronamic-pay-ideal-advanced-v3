@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.1
  */
 class TransactionRequestMessage extends RequestMessage {
 	/**
