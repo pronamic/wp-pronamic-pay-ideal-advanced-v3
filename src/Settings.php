@@ -307,7 +307,7 @@ class Settings extends GatewaySettings {
 		$filename_key = __( 'ideal.key', 'pronamic_ideal' );
 		$filename_cer = __( 'ideal.cer', 'pronamic_ideal' );
 
-		// @see http://www.openssl.org/docs/apps/req.html
+		// @link http://www.openssl.org/docs/apps/req.html
 		$subj_args = array(
 			'C'            => get_post_meta( get_the_ID(), '_pronamic_gateway_country', true ),
 			'ST'           => get_post_meta( get_the_ID(), '_pronamic_gateway_state_or_province', true ),
@@ -479,7 +479,7 @@ class Settings extends GatewaySettings {
 			if ( defined( 'OPENSSL_CIPHER_AES_128_CBC' ) ) {
 				$cipher = OPENSSL_CIPHER_AES_128_CBC;
 			} elseif ( defined( 'OPENSSL_CIPHER_3DES' ) ) {
-				// @see https://www.pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf
+				// @link https://www.pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf
 				$cipher = OPENSSL_CIPHER_3DES;
 			} else {
 				// Unable to create private key without cipher.
@@ -539,7 +539,7 @@ class Settings extends GatewaySettings {
 			$distinguished_name = array_filter( $distinguished_name );
 
 			// Create certificate only if distinguished name contains all required elements
-			// @see http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
+			// @link http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
 			if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
 				$csr = openssl_csr_new( $distinguished_name, $pkey );
 
