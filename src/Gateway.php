@@ -115,7 +115,7 @@ class Gateway extends Core_Gateway {
 		$transaction = new Transaction();
 		$transaction->set_purchase_id( $purchase_id );
 		$transaction->set_amount( $payment->get_total_amount()->get_amount() );
-		$transaction->set_currency( $payment->get_currency() );
+		$transaction->set_currency( $payment->get_total_amount()->get_currency()->get_alphabetic_code() );
 		$transaction->set_expiration_period( 'PT30M' );
 		$transaction->set_language( $payment->get_language() );
 		$transaction->set_description( $payment->get_description() );
