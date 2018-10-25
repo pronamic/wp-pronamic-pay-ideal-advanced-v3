@@ -120,15 +120,18 @@ class Gateway extends Core_Gateway {
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
-		// Transaction
+		// Transaction.
 		$transaction = new Transaction();
 		$transaction->set_purchase_id( $purchase_id );
 		$transaction->set_amount( $payment->get_total_amount()->get_amount() );
 		$transaction->set_currency( $payment->get_total_amount()->get_currency()->get_alphabetic_code() );
 		$transaction->set_expiration_period( 'PT30M' );
-		$transaction->set_language( $payment->get_language() );
 		$transaction->set_description( $payment->get_description() );
 		$transaction->set_entrance_code( $payment->get_entrance_code() );
+
+		if ( null !== $payment->get_customer() ) {
+			$transaction->set_language( $payment->get_customer()->get_language() );
+		}
 
 		// Create transaction.
 		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $payment->get_issuer() );
