@@ -18,9 +18,16 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  */
 class Gateway extends Core_Gateway {
 	/**
+	 * Client.
+	 *
+	 * @var Client
+	 */
+	protected $client;
+
+	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
-	 * @param Config $config
+	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -31,7 +38,7 @@ class Gateway extends Core_Gateway {
 
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
-		// Client
+		// Client.
 		$client = new Client();
 
 		$client->set_acquirer_url( $config->get_payment_server_url() );
@@ -104,9 +111,11 @@ class Gateway extends Core_Gateway {
 	 * Start
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::start()
+	 *
+	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
-		// Purchase ID
+		// Purchase ID.
 		$purchase_id = $payment->format_string( $this->config->purchase_id );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
@@ -121,6 +130,7 @@ class Gateway extends Core_Gateway {
 		$transaction->set_description( $payment->get_description() );
 		$transaction->set_entrance_code( $payment->get_entrance_code() );
 
+		// Create transaction.
 		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $payment->get_issuer() );
 
 		$error = $this->client->get_error();
@@ -138,7 +148,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Update status of the specified payment
 	 *
-	 * @param Payment $payment
+	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
 		$result = $this->client->get_status( $payment->get_transaction_id() );
