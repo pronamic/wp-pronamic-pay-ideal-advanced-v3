@@ -311,7 +311,7 @@ class Client {
 	/**
 	 * Sign the specified DOMDocument
 	 *
-	 * @see https://github.com/Maks3w/xmlseclibs/blob/v1.3.0/tests/xml-sign.phpt
+	 * @link https://github.com/Maks3w/xmlseclibs/blob/v1.3.0/tests/xml-sign.phpt
 	 *
 	 * @param DOMDocument $document
 	 *
@@ -324,11 +324,11 @@ class Client {
 			$dsig = new XMLSecurityDSig();
 
 			// For canonicalization purposes the exclusive (9) algorithm must be used.
-			// @see http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+			// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
 			$dsig->setCanonicalMethod( XMLSecurityDSig::EXC_C14N );
 
 			// For hashing purposes the SHA-256 (11) algorithm must be used.
-			// @see http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+			// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
 			$dsig->addReference(
 				$document,
 				XMLSecurityDSig::SHA256,
@@ -339,7 +339,7 @@ class Client {
 			);
 
 			// For signature purposes the RSAWithSHA 256 (12) algorithm must be used.
-			// @see http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
+			// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
 			$key = new XMLSecurityKey( XMLSecurityKey::RSA_SHA256, array(
 				'type' => 'private',
 			) );
@@ -359,7 +359,7 @@ class Client {
 				// The public key must be referenced using a fingerprint of an X.509
 				// certificate. The fingerprint must be calculated according
 				// to the following formula HEX(SHA-1(DER certificate)) (13)
-				// @see http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
+				// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
 				$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
 
 				$dsig->addKeyInfoAndName( $fingerprint );

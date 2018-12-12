@@ -13,14 +13,21 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.2
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
 	/**
+	 * Client.
+	 *
+	 * @var Client
+	 */
+	protected $client;
+
+	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
-	 * @param Config $config
+	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -29,11 +36,9 @@ class Gateway extends Core_Gateway {
 			'payment_status_request',
 		);
 
-		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
-		$this->set_has_feedback( true );
-		$this->set_amount_minimum( 0.01 );
+		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
-		// Client
+		// Client.
 		$client = new Client();
 
 		$client->set_acquirer_url( $config->get_payment_server_url() );
@@ -81,19 +86,6 @@ class Gateway extends Core_Gateway {
 		return $groups;
 	}
 
-	public function get_issuer_field() {
-		if ( PaymentMethods::IDEAL === $this->get_payment_method() ) {
-			return array(
-				'id'       => 'pronamic_ideal_issuer_id',
-				'name'     => 'pronamic_ideal_issuer_id',
-				'label'    => __( 'Choose your bank', 'pronamic_ideal' ),
-				'required' => true,
-				'type'     => 'select',
-				'choices'  => $this->get_transient_issuers(),
-			);
-		}
-	}
-
 	/**
 	 * Get supported payment methods
 	 *
@@ -119,23 +111,29 @@ class Gateway extends Core_Gateway {
 	 * Start
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::start()
+	 *
+	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
-		// Purchase ID
+		// Purchase ID.
 		$purchase_id = $payment->format_string( $this->config->purchase_id );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
-		// Transaction
+		// Transaction.
 		$transaction = new Transaction();
 		$transaction->set_purchase_id( $purchase_id );
-		$transaction->set_amount( $payment->get_amount()->get_amount() );
-		$transaction->set_currency( $payment->get_currency() );
+		$transaction->set_amount( $payment->get_total_amount()->get_value() );
+		$transaction->set_currency( $payment->get_total_amount()->get_currency()->get_alphabetic_code() );
 		$transaction->set_expiration_period( 'PT30M' );
-		$transaction->set_language( $payment->get_language() );
 		$transaction->set_description( $payment->get_description() );
 		$transaction->set_entrance_code( $payment->get_entrance_code() );
 
+		if ( null !== $payment->get_customer() ) {
+			$transaction->set_language( $payment->get_customer()->get_language() );
+		}
+
+		// Create transaction.
 		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $payment->get_issuer() );
 
 		$error = $this->client->get_error();
@@ -153,7 +151,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Update status of the specified payment
 	 *
-	 * @param Payment $payment
+	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
 		$result = $this->client->get_status( $payment->get_transaction_id() );
