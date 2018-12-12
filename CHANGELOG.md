@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.0.2] - 2018-12-12
+- Use issuer field from core gateway.
+- Updated deprecated function calls.
+
 ## [2.0.1] - 2018-05-16
 - Fixed "Fatal error: Uncaught Error: Call to a member function get_amount() on float".
 
@@ -73,7 +77,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.0.1...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.0.2...HEAD
+[2.0.2]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.12...2.0.0
 [1.1.12]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/1.1.11...1.1.12
