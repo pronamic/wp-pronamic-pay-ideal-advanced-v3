@@ -17,7 +17,7 @@ class ErrorParserTest extends PHPUnit_Framework_TestCase {
 	public function testParser() {
 		$parser = new ErrorParser();
 
-		$xml = simplexml_load_file( dirname( __FILE__ ) . '/../Mock/Error.xml' );
+		$xml = simplexml_load_file( dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/Error.xml' );
 
 		$error = $parser->parse( $xml );
 
