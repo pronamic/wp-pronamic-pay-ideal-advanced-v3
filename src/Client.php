@@ -120,7 +120,7 @@ class Client {
 	/**
 	 * Set the acquirer URL
 	 *
-	 * @param string $url
+	 * @param string $url URL.
 	 */
 	public function set_acquirer_url( $url ) {
 		$this->acquirer_url = $url;
@@ -133,20 +133,20 @@ class Client {
 	/**
 	 * Send an specific request message to an specific URL
 	 *
-	 * @param string         $url
-	 * @param RequestMessage $message
+	 * @param string         $url     URL.
+	 * @param RequestMessage $message Message.
 	 *
 	 * @return ResponseMessage
 	 */
 	private function send_message( $url, RequestMessage $message ) {
 		$result = false;
 
-		// Sign
+		// Sign.
 		$document = $message->get_document();
 		$document = $this->sign_document( $document );
 
 		if ( false !== $document ) {
-			// Stringify
+			// Stringify.
 			$data = $document->saveXML();
 
 			/*
@@ -158,16 +158,19 @@ class Client {
 				$data = $document->C14N( true, false );
 			}
 
-			// Remote post
-			$response = wp_remote_post( $url, array(
-				'method'  => 'POST',
-				'headers' => array(
-					'Content-Type' => 'text/xml; charset=' . Message::XML_ENCODING,
-				),
-				'body'    => $data,
-			) );
+			// Remote post.
+			$response = wp_remote_post(
+				$url,
+				array(
+					'method'  => 'POST',
+					'headers' => array(
+						'Content-Type' => 'text/xml; charset=' . Message::XML_ENCODING,
+					),
+					'body'    => $data,
+				)
+			);
 
-			// Handle response
+			// Handle response.
 			if ( ! is_wp_error( $response ) ) {
 				if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 					$body = wp_remote_retrieve_body( $response );
@@ -206,7 +209,7 @@ class Client {
 	/**
 	 * Parse the specified document and return parsed result
 	 *
-	 * @param SimpleXMLElement $document
+	 * @param SimpleXMLElement $document Document.
 	 *
 	 * @return ResponseMessage|WP_Error
 	 */
@@ -267,8 +270,9 @@ class Client {
 	/**
 	 * Create transaction
 	 *
-	 * @param Transaction $transaction
-	 * @param string      $issuer_id
+	 * @param Transaction $transaction Transaction.
+	 * @param string      $return_url  Return URL.
+	 * @param string      $issuer_id   Issuer ID.
 	 *
 	 * @return TransactionResponseMessage
 	 */
@@ -291,7 +295,7 @@ class Client {
 	/**
 	 * Get the status of the specified transaction ID
 	 *
-	 * @param string $transaction_id
+	 * @param string $transaction_id Transaction ID.
 	 *
 	 * @return TransactionResponseMessage
 	 */
@@ -313,9 +317,11 @@ class Client {
 	 *
 	 * @link https://github.com/Maks3w/xmlseclibs/blob/v1.3.0/tests/xml-sign.phpt
 	 *
-	 * @param DOMDocument $document
+	 * @param DOMDocument $document Document.
 	 *
 	 * @return DOMDocument
+	 *
+	 * @throws Exception Can not load private key.
 	 */
 	private function sign_document( DOMDocument $document ) {
 		$result = false;
@@ -323,12 +329,18 @@ class Client {
 		try {
 			$dsig = new XMLSecurityDSig();
 
-			// For canonicalization purposes the exclusive (9) algorithm must be used.
-			// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+			/*
+			 * For canonicalization purposes the exclusive (9) algorithm must be used.
+			 *
+			 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+			 */
 			$dsig->setCanonicalMethod( XMLSecurityDSig::EXC_C14N );
 
-			// For hashing purposes the SHA-256 (11) algorithm must be used.
-			// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+			/*
+			 * For hashing purposes the SHA-256 (11) algorithm must be used.
+			 *
+			 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+			 */
 			$dsig->addReference(
 				$document,
 				XMLSecurityDSig::SHA256,
@@ -338,33 +350,43 @@ class Client {
 				)
 			);
 
-			// For signature purposes the RSAWithSHA 256 (12) algorithm must be used.
-			// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-			$key = new XMLSecurityKey( XMLSecurityKey::RSA_SHA256, array(
-				'type' => 'private',
-			) );
+			/*
+			 * For signature purposes the RSAWithSHA 256 (12) algorithm must be used.
+			 *
+			 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
+			 */
+			$key = new XMLSecurityKey(
+				XMLSecurityKey::RSA_SHA256,
+				array(
+					'type' => 'private',
+				)
+			);
 
 			$key->passphrase = $this->private_key_password;
 
 			$key->loadKey( $this->private_key );
 
-			// Test if we can get an private key object, to prefent the following errors:
-			// Warning: openssl_sign() [function.openssl-sign]: supplied key param cannot be coerced into a private key
+			/*
+			 * Test if we can get an private key object, to prevent the following error:
+			 * Warning: openssl_sign() [function.openssl-sign]: supplied key param cannot be coerced into a private key.
+			 */
 			$result = openssl_get_privatekey( $this->private_key, $this->private_key_password );
 
 			if ( false !== $result ) {
-				// Sign
+				// Sign.
 				$dsig->sign( $key );
 
-				// The public key must be referenced using a fingerprint of an X.509
-				// certificate. The fingerprint must be calculated according
-				// to the following formula HEX(SHA-1(DER certificate)) (13)
-				// @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
+				/*
+				 * The public key must be referenced using a fingerprint of an X.509 certificate. The
+				 * fingerprint must be calculated according to the following formula HEX(SHA-1(DER certificate)) (13).
+				 *
+				 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
+				 */
 				$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
 
 				$dsig->addKeyInfoAndName( $fingerprint );
 
-				// Add the signature
+				// Add the signature.
 				$dsig->appendSignature( $document->documentElement );
 
 				$result = $document;

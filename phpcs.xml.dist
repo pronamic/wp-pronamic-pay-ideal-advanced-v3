@@ -20,7 +20,7 @@
 
 	<rule ref="PHPCompatibilityWP" />
 
-	<rule ref="PHPCompatibility.PHP.NewConstants.openssl_cipher_aes_128_cbcFound">
+	<rule ref="PHPCompatibility.Constants.NewConstants.openssl_cipher_aes_128_cbcFound">
 		<exclude-pattern>/src/Settings.php</exclude-pattern>
 	</rule>
 
@@ -34,11 +34,7 @@
 		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
 	</rule>
 
-	<rule ref="WordPress.VIP.SlowDBQuery.slow_db_query_meta_key">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
-	</rule>
-
-	<rule ref="WordPress.VIP.RestrictedFunctions.file_get_contents_file_get_contents">
+	<rule ref="WordPress.DB.SlowDBQuery.slow_db_query_meta_key">
 		<exclude-pattern>/src/Settings.php</exclude-pattern>
 	</rule>
 

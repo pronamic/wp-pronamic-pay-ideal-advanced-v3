@@ -15,21 +15,31 @@ use Pronamic\WordPress\Pay\Core\GatewaySettings;
  * @since   1.1.2
  */
 class Settings extends GatewaySettings {
+	/**
+	 * Settings constructor.
+	 */
 	public function __construct() {
-		// Filters
+		// Filters.
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );
 
-		// Actions
+		// Actions.
 		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
 		add_action( 'current_screen', array( $this, 'maybe_download_private_key' ) );
 	}
 
+	/**
+	 * Fields.
+	 *
+	 * @param array $fields Settings fields.
+	 *
+	 * @return array
+	 */
 	public function fields( array $fields ) {
 		/*
 		 * Private Key and Certificate
 		 */
 
-		// Private key and certificate information
+		// Private key and certificate information.
 		$fields[] = array(
 			'section'  => 'ideal',
 			'methods'  => array( 'ideal-advanced-v3' ),
@@ -38,7 +48,7 @@ class Settings extends GatewaySettings {
 			'callback' => array( $this, 'field_security' ),
 		);
 
-		// Organization
+		// Organization.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -50,7 +60,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'Organization name, e.g. Pronamic', 'pronamic_ideal' ),
 		);
 
-		// Organization Unit
+		// Organization Unit.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -62,7 +72,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'Organization unit, e.g. Administration', 'pronamic_ideal' ),
 		);
 
-		// Locality
+		// Locality.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -74,7 +84,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'City, e.g. Amsterdam', 'pronamic_ideal' ),
 		);
 
-		// State or Province
+		// State or Province.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -86,7 +96,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'State or province, e.g. Friesland', 'pronamic_ideal' ),
 		);
 
-		// Country
+		// Country.
 		$locale = explode( '_', get_locale() );
 
 		$locale = array_pop( $locale );
@@ -112,7 +122,7 @@ class Settings extends GatewaySettings {
 			),
 		);
 
-		// Email Address
+		// Email Address.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -128,7 +138,7 @@ class Settings extends GatewaySettings {
 			'type'     => 'text',
 		);
 
-		// Number Days Valid
+		// Number Days Valid.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_NUMBER_INT,
 			'section'  => 'ideal',
@@ -141,7 +151,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
 		);
 
-		// Private Key Password
+		// Private Key Password.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -155,7 +165,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'A random password which will be used for the generation of the private key and certificate.', 'pronamic_ideal' ),
 		);
 
-		// Private Key
+		// Private Key.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -169,7 +179,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'The private key is used for secure communication with the payment provider. If left empty, the private key will be generated using the given private key password.', 'pronamic_ideal' ),
 		);
 
-		// Private Certificate
+		// Private Certificate.
 		$fields[] = array(
 			'filter'   => FILTER_SANITIZE_STRING,
 			'section'  => 'ideal',
@@ -183,7 +193,7 @@ class Settings extends GatewaySettings {
 			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the private key and given organization details.', 'pronamic_ideal' ),
 		);
 
-		// Transaction feedback
+		// Transaction feedback.
 		$fields[] = array(
 			'section' => 'ideal',
 			'methods' => array( 'ideal-advanced-v3' ),
@@ -195,14 +205,14 @@ class Settings extends GatewaySettings {
 			),
 		);
 
-		// Return
+		// Return.
 		return $fields;
 	}
 
 	/**
 	 * Field security
 	 *
-	 * @param array $field
+	 * @param array $field Field.
 	 */
 	public function field_security( $field ) {
 		$certificate = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_certificate', true );
@@ -245,6 +255,11 @@ class Settings extends GatewaySettings {
 		<?php
 	}
 
+	/**
+	 * Field private key.
+	 *
+	 * @param array $field Field.
+	 */
 	public function field_private_key( $field ) {
 		$private_key          = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key', true );
 		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
@@ -298,6 +313,11 @@ class Settings extends GatewaySettings {
 		<?php
 	}
 
+	/**
+	 * Field private certificate.
+	 *
+	 * @param array $field Field.
+	 */
 	public function field_private_certificate( $field ) {
 		$certificate = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_certificate', true );
 
@@ -326,14 +346,16 @@ class Settings extends GatewaySettings {
 		}
 
 		if ( ! empty( $subj ) ) {
-			$command = trim( sprintf(
-				'openssl req -x509 -sha256 -new -key %s -passin pass:%s -days %s -out %s %s',
-				escapeshellarg( $filename_key ),
-				escapeshellarg( $private_key_password ),
-				escapeshellarg( $number_days_valid ),
-				escapeshellarg( $filename_cer ),
-				empty( $subj ) ? '' : sprintf( '-subj %s', escapeshellarg( $subj ) )
-			) );
+			$command = trim(
+				sprintf(
+					'openssl req -x509 -sha256 -new -key %s -passin pass:%s -days %s -out %s %s',
+					escapeshellarg( $filename_key ),
+					escapeshellarg( $private_key_password ),
+					escapeshellarg( $number_days_valid ),
+					escapeshellarg( $filename_cer ),
+					empty( $subj ) ? '' : sprintf( '-subj %s', escapeshellarg( $subj ) )
+				)
+			);
 
 			?>
 
@@ -416,7 +438,7 @@ class Settings extends GatewaySettings {
 			header( 'Content-Disposition: attachment; filename=' . $filename );
 			header( 'Content-Type: application/x-x509-ca-cert; charset=' . get_option( 'blog_charset' ), true );
 
-			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true ); //xss ok
+			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true ); // xss ok.
 
 			exit;
 		}
@@ -435,17 +457,19 @@ class Settings extends GatewaySettings {
 			header( 'Content-Disposition: attachment; filename=' . $filename );
 			header( 'Content-Type: application/pgp-keys; charset=' . get_option( 'blog_charset' ), true );
 
-			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true ); //xss ok
+			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true ); // xss ok.
 
 			exit;
 		}
 	}
 
-	/***
+	/**
 	 * Save post.
+	 *
+	 * @param array $data Data.
 	 */
 	public function save_post( $data ) {
-		// Files
+		// Files.
 		$files = array(
 			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
 			'_pronamic_gateway_ideal_private_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
@@ -459,7 +483,7 @@ class Settings extends GatewaySettings {
 			}
 		}
 
-		// Generate private key and certificate
+		// Generate private key and certificate.
 		if ( empty( $data['_pronamic_gateway_ideal_private_key_password'] ) ) {
 			// Without private key password we can't create private key and certifiate.
 			return $data;
@@ -470,12 +494,11 @@ class Settings extends GatewaySettings {
 			return $data;
 		}
 
-		// Private key
+		// Private key.
 		$pkey = openssl_pkey_get_private( $data['_pronamic_gateway_ideal_private_key'], $data['_pronamic_gateway_ideal_private_key_password'] );
 
 		if ( false === $pkey ) {
 			// If we can't open the private key we will create a new private key and certificate.
-
 			if ( defined( 'OPENSSL_CIPHER_AES_128_CBC' ) ) {
 				$cipher = OPENSSL_CIPHER_AES_128_CBC;
 			} elseif ( defined( 'OPENSSL_CIPHER_3DES' ) ) {
@@ -503,7 +526,7 @@ class Settings extends GatewaySettings {
 				return $data;
 			}
 
-			// Export key
+			// Export key.
 			$result = openssl_pkey_export( $pkey, $private_key, $data['_pronamic_gateway_ideal_private_key_password'], $args );
 
 			if ( false === $result ) {
@@ -515,7 +538,7 @@ class Settings extends GatewaySettings {
 			$data['_pronamic_gateway_ideal_private_certificate'] = null;
 		}
 
-		// Certificate
+		// Certificate.
 		if ( empty( $data['_pronamic_gateway_ideal_private_certificate'] ) ) {
 			$required_keys = array(
 				'countryName',
@@ -538,8 +561,11 @@ class Settings extends GatewaySettings {
 
 			$distinguished_name = array_filter( $distinguished_name );
 
-			// Create certificate only if distinguished name contains all required elements
-			// @link http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
+			/*
+			 * Create certificate only if distinguished name contains all required elements
+			 *
+			 * @link http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
+			 */
 			if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
 				$csr = openssl_csr_new( $distinguished_name, $pkey );
 

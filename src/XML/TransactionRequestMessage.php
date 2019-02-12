@@ -52,37 +52,53 @@ class TransactionRequestMessage extends RequestMessage {
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Issuer
+		// Issuer.
 		$issuer = $this->issuer;
 
 		$element = self::add_element( $document, $document->documentElement, 'Issuer' );
-		self::add_element( $document, $element, 'issuerID', $issuer->get_id() );
 
-		// Merchant
+		self::add_element(
+			$document,
+			$element,
+			'issuerID',
+			$issuer->get_id()
+		);
+
+		// Merchant.
 		$merchant = $this->get_merchant();
 
 		$element = self::add_element( $document, $document->documentElement, 'Merchant' );
-		self::add_elements( $document, $element, array(
-			'merchantID'        => $merchant->get_id(),
-			'subID'             => $merchant->get_sub_id(),
-			'merchantReturnURL' => $merchant->get_return_url(),
-		) );
 
-		// Transaction
+		self::add_elements(
+			$document,
+			$element,
+			array(
+				'merchantID'        => $merchant->get_id(),
+				'subID'             => $merchant->get_sub_id(),
+				'merchantReturnURL' => $merchant->get_return_url(),
+			)
+		);
+
+		// Transaction.
 		$transaction = $this->transaction;
 
 		$element = self::add_element( $document, $document->documentElement, 'Transaction' );
-		self::add_elements( $document, $element, array(
-			'purchaseID'       => $transaction->get_purchase_id(),
-			'amount'           => IDeal::format_amount( $transaction->get_amount() ),
-			'currency'         => $transaction->get_currency(),
-			'expirationPeriod' => $transaction->get_expiration_period(),
-			'language'         => $transaction->get_language(),
-			'description'      => $transaction->get_description(),
-			'entranceCode'     => $transaction->get_entrance_code(),
-		) );
 
-		// Return
+		self::add_elements(
+			$document,
+			$element,
+			array(
+				'purchaseID'       => $transaction->get_purchase_id(),
+				'amount'           => IDeal::format_amount( $transaction->get_amount() ),
+				'currency'         => $transaction->get_currency(),
+				'expirationPeriod' => $transaction->get_expiration_period(),
+				'language'         => $transaction->get_language(),
+				'description'      => $transaction->get_description(),
+				'entranceCode'     => $transaction->get_entrance_code(),
+			)
+		);
+
+		// Return.
 		return $document;
 	}
 }

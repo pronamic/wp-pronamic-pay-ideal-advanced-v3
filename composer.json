@@ -34,6 +34,8 @@
 		}
 	},
 	"require": {
+		"ext-dom": "*",
+		"ext-openssl": "*",
 		"php": "^5.3",
 		"wp-pay/core": "^2.1",
 		"wp-pay-gateways/ideal": "^2.0"

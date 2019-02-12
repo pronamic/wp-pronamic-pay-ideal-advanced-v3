@@ -34,16 +34,21 @@ class DirectoryRequestMessage extends RequestMessage {
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Merchant
+		// Merchant.
 		$merchant = $this->get_merchant();
 
 		$element = self::add_element( $document, $document->documentElement, 'Merchant' );
-		self::add_elements( $document, $element, array(
-			'merchantID' => $merchant->get_id(),
-			'subID'      => $merchant->get_sub_id(),
-		) );
 
-		// Return
+		self::add_elements(
+			$document,
+			$element,
+			array(
+				'merchantID' => $merchant->get_id(),
+				'subID'      => $merchant->get_sub_id(),
+			)
+		);
+
+		// Return.
 		return $document;
 	}
 }
