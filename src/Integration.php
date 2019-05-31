@@ -2,6 +2,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
+use Pronamic\WordPress\Pay\Gateways\IDeal\AbstractIntegration;
+
 /**
  * Title: iDEAL Advanced v3 integration
  * Description:
@@ -22,9 +24,12 @@ class Integration extends AbstractIntegration {
 		add_action( 'current_screen', array( $this, 'maybe_download_private_key' ) );
 	}
 
+	public function get_config_factory_class() {
+		return __NAMESPACE__ . '\ConfigFactory';
+	}
 
 	public function get_settings_fields() {
-		$fields = array();
+		$fields = parent::get_settings_fields();
 
 		/*
 		 * Private Key and Certificate
