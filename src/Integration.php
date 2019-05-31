@@ -19,6 +19,11 @@ class Integration extends AbstractIntegration {
 	 * Settings constructor.
 	 */
 	public function __construct() {
+		// Supported features.
+		$this->supports = array(
+			'payment_status_request',
+		);
+
 		// Actions.
 		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
 		add_action( 'current_screen', array( $this, 'maybe_download_private_key' ) );
@@ -37,8 +42,7 @@ class Integration extends AbstractIntegration {
 
 		// Private key and certificate information.
 		$fields[] = array(
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
+			'section'  => 'general',
 			'title'    => __( 'Private key and certificate', 'pronamic_ideal' ),
 			'type'     => 'description',
 			'callback' => array( $this, 'field_security' ),
@@ -46,9 +50,8 @@ class Integration extends AbstractIntegration {
 
 		// Organization.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_organization',
 			'title'    => __( 'Organization', 'pronamic_ideal' ),
@@ -58,9 +61,8 @@ class Integration extends AbstractIntegration {
 
 		// Organization Unit.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_organization_unit',
 			'title'    => __( 'Organization Unit', 'pronamic_ideal' ),
@@ -70,9 +72,8 @@ class Integration extends AbstractIntegration {
 
 		// Locality.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_locality',
 			'title'    => __( 'City', 'pronamic_ideal' ),
@@ -82,9 +83,8 @@ class Integration extends AbstractIntegration {
 
 		// State or Province.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_state_or_province',
 			'title'    => __( 'State / province', 'pronamic_ideal' ),
@@ -98,9 +98,8 @@ class Integration extends AbstractIntegration {
 		$locale = array_pop( $locale );
 
 		$fields[] = array(
+			'section'     => 'general',
 			'filter'      => FILTER_SANITIZE_STRING,
-			'section'     => 'ideal',
-			'methods'     => array( 'ideal-advanced-v3' ),
 			'group'       => 'pk-cert',
 			'meta_key'    => '_pronamic_gateway_country',
 			'title'       => __( 'Country', 'pronamic_ideal' ),
@@ -120,9 +119,8 @@ class Integration extends AbstractIntegration {
 
 		// Email Address.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_email',
 			'title'    => __( 'E-mail address', 'pronamic_ideal' ),
@@ -136,9 +134,8 @@ class Integration extends AbstractIntegration {
 
 		// Number Days Valid.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_NUMBER_INT,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_number_days_valid',
 			'title'    => __( 'Number Days Valid', 'pronamic_ideal' ),
@@ -149,9 +146,8 @@ class Integration extends AbstractIntegration {
 
 		// Private Key Password.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key_password',
 			'title'    => __( 'Private Key Password', 'pronamic_ideal' ),
@@ -163,9 +159,8 @@ class Integration extends AbstractIntegration {
 
 		// Private Key.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key',
 			'title'    => __( 'Private Key', 'pronamic_ideal' ),
@@ -177,9 +172,8 @@ class Integration extends AbstractIntegration {
 
 		// Private Certificate.
 		$fields[] = array(
+			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
-			'section'  => 'ideal',
-			'methods'  => array( 'ideal-advanced-v3' ),
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_certificate',
 			'title'    => __( 'Private Certificate', 'pronamic_ideal' ),
@@ -187,15 +181,6 @@ class Integration extends AbstractIntegration {
 			'callback' => array( $this, 'field_private_certificate' ),
 			'classes'  => array( 'code' ),
 			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the private key and given organization details.', 'pronamic_ideal' ),
-		);
-
-		// Transaction feedback.
-		$fields[] = array(
-			'section' => 'ideal',
-			'methods' => array( 'ideal-advanced-v3' ),
-			'title'   => __( 'Transaction feedback', 'pronamic_ideal' ),
-			'type'    => 'description',
-			'html'    => __( 'Payment status updates will be processed without any additional configuration.', 'pronamic_ideal' ),
 		);
 
 		// Return.
