@@ -199,10 +199,7 @@ class Settings extends GatewaySettings {
 			'methods' => array( 'ideal-advanced-v3' ),
 			'title'   => __( 'Transaction feedback', 'pronamic_ideal' ),
 			'type'    => 'description',
-			'html'    => sprintf(
-				'<span class="dashicons dashicons-yes"></span> %s',
-				__( 'Payment status updates will be processed without any additional configuration.', 'pronamic_ideal' )
-			),
+			'html'    => __( 'Payment status updates will be processed without any additional configuration.', 'pronamic_ideal' ),
 		);
 
 		// Return.
