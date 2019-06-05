@@ -20,12 +20,14 @@ class Integration extends AbstractIntegration {
 	 */
 	public function __construct( $args = array() ) {
 		$args = wp_parse_args( $args, array(
-			'id'            => 'ideal-advanced-v3',
-			'name'          => 'iDEAL Advanced v3',
-			'url'           => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-			'product_url'   => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-			'dashboard_url' => null,
-			'provider'      => null,
+			'id'               => 'ideal-advanced-v3',
+			'name'             => 'iDEAL Advanced v3',
+			'url'              => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+			'product_url'      => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+			'dashboard_url'    => null,
+			'provider'         => null,
+			'aquirer_url'      => null,
+			'aquirer_test_url' => null,
 		) );
 
 		$this->id            = $args['id'];
@@ -34,6 +36,9 @@ class Integration extends AbstractIntegration {
 		$this->product_url   = $args['product_url'];
 		$this->dashboard_url = $args['dashboard_url'];
 		$this->provider      = $args['provider'];
+
+		$this->aquirer_url      = $args['aquirer_url'];
+		$this->aquirer_test_url = $args['aquirer_test_url'];
 
 		// Supported features.
 		$this->supports = array(
@@ -575,6 +580,12 @@ class Integration extends AbstractIntegration {
 
 		$config = new Config();
 
+		$config->payment_server_url = $this->aquirer_url;
+
+		if ( 'test' === $mode && null !== $this->aquirer_test_url ) {
+			$config->payment_server_url = $this->aquirer_test_url;		
+		}
+
 		$config->merchant_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_merchant_id', true );
 		$config->sub_id      = get_post_meta( $post_id, '_pronamic_gateway_ideal_sub_id', true );
 		$config->purchase_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_purchase_id', true );
@@ -584,5 +595,15 @@ class Integration extends AbstractIntegration {
 		$config->private_certificate  = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
 
 		return $config;
+	}
+
+	/**
+	 * Get gateway.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Gateway
+	 */
+	public function get_gateway( $post_id ) {
+		return new Gateway( $this->get_config( $post_id ) );
 	}
 }
