@@ -18,7 +18,23 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Settings constructor.
 	 */
-	public function __construct() {
+	public function __construct( $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			'id'            => 'ideal-advanced-v3',
+			'name'          => 'iDEAL Advanced v3',
+			'url'           => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+			'product_url'   => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+			'dashboard_url' => null,
+			'provider'      => null,
+		) );
+
+		$this->id            = $args['id'];
+		$this->name          = $args['name'];
+		$this->url           = $args['url'];
+		$this->product_url   = $args['product_url'];
+		$this->dashboard_url = $args['dashboard_url'];
+		$this->provider      = $args['provider'];
+
 		// Supported features.
 		$this->supports = array(
 			'payment_status_request',
@@ -27,10 +43,6 @@ class Integration extends AbstractIntegration {
 		// Actions.
 		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
 		add_action( 'current_screen', array( $this, 'maybe_download_private_key' ) );
-	}
-
-	public function get_config_factory_class() {
-		return __NAMESPACE__ . '\ConfigFactory';
 	}
 
 	public function get_settings_fields() {
@@ -556,5 +568,21 @@ class Integration extends AbstractIntegration {
 		}
 
 		return $data;
+	}
+
+	public function get_config( $post_id ) {
+		$mode = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
+
+		$config = new Config();
+
+		$config->merchant_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_merchant_id', true );
+		$config->sub_id      = get_post_meta( $post_id, '_pronamic_gateway_ideal_sub_id', true );
+		$config->purchase_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_purchase_id', true );
+
+		$config->private_key          = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
+		$config->private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
+		$config->private_certificate  = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
+
+		return $config;
 	}
 }
