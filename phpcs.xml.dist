@@ -21,7 +21,7 @@
 	<rule ref="PHPCompatibilityWP" />
 
 	<rule ref="PHPCompatibility.Constants.NewConstants.openssl_cipher_aes_128_cbcFound">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress">
@@ -35,14 +35,14 @@
 	</rule>
 
 	<rule ref="WordPress.DB.SlowDBQuery.slow_db_query_meta_key">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.WP.AlternativeFunctions.file_system_read_file_get_contents">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 </ruleset>

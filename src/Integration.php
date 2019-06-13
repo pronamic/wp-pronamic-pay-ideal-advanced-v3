@@ -19,16 +19,19 @@ class Integration extends AbstractIntegration {
 	 * Settings constructor.
 	 */
 	public function __construct( $args = array() ) {
-		$args = wp_parse_args( $args, array(
-			'id'               => 'ideal-advanced-v3',
-			'name'             => 'iDEAL Advanced v3',
-			'url'              => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-			'product_url'      => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-			'dashboard_url'    => null,
-			'provider'         => null,
-			'aquirer_url'      => null,
-			'aquirer_test_url' => null,
-		) );
+		$args = wp_parse_args(
+			$args,
+			array(
+				'id'               => 'ideal-advanced-v3',
+				'name'             => 'iDEAL Advanced v3',
+				'url'              => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'product_url'      => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'dashboard_url'    => null,
+				'provider'         => null,
+				'aquirer_url'      => null,
+				'aquirer_test_url' => null,
+			)
+		);
 
 		$this->id            = $args['id'];
 		$this->name          = $args['name'];
@@ -583,7 +586,7 @@ class Integration extends AbstractIntegration {
 		$config->payment_server_url = $this->aquirer_url;
 
 		if ( 'test' === $mode && null !== $this->aquirer_test_url ) {
-			$config->payment_server_url = $this->aquirer_test_url;		
+			$config->payment_server_url = $this->aquirer_test_url;
 		}
 
 		$config->merchant_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_merchant_id', true );
