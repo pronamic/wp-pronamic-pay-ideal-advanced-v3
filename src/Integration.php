@@ -464,12 +464,12 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Save post.
 	 *
-	 * @param array $data Data.
+	 * @param int $post_id Post ID.
 	 */
-	public function save_post( $data ) {
+	public function save_post( $post_id ) {
 		// Files.
 		$files = array(
-			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
+			'_pronamic_gateway_ideal_private_key_file'         => '_pronamic_gateway_ideal_private_key',
 			'_pronamic_gateway_ideal_private_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
 		);
 
@@ -477,23 +477,26 @@ class Integration extends AbstractIntegration {
 			if ( isset( $_FILES[ $name ] ) && UPLOAD_ERR_OK === $_FILES[ $name ]['error'] ) { // WPCS: input var okay.
 				$value = file_get_contents( $_FILES[ $name ]['tmp_name'] ); // WPCS: input var okay. // WPCS: sanitization ok.
 
-				$data[ $meta_key ] = $value;
+				update_post_meta( $post_id, $meta_key, $value );
 			}
 		}
 
 		// Generate private key and certificate.
-		if ( empty( $data['_pronamic_gateway_ideal_private_key_password'] ) ) {
+		$private_key          = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
+		$private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
+
+		if ( empty( $private_key_password ) ) {
 			// Without private key password we can't create private key and certifiate.
-			return $data;
+			return;
 		}
 
 		if ( ! in_array( 'aes-128-cbc', openssl_get_cipher_methods(), true ) ) {
 			// Without AES-128-CBC ciphter method we can't create private key and certificate.
-			return $data;
+			return;
 		}
 
 		// Private key.
-		$pkey = openssl_pkey_get_private( $data['_pronamic_gateway_ideal_private_key'], $data['_pronamic_gateway_ideal_private_key_password'] );
+		$pkey = openssl_pkey_get_private( $private_key, $private_key_password );
 
 		if ( false === $pkey ) {
 			// If we can't open the private key we will create a new private key and certificate.
@@ -504,7 +507,7 @@ class Integration extends AbstractIntegration {
 				$cipher = OPENSSL_CIPHER_3DES;
 			} else {
 				// Unable to create private key without cipher.
-				return $data;
+				return;
 			}
 
 			$args = array(
@@ -521,23 +524,27 @@ class Integration extends AbstractIntegration {
 			$pkey = openssl_pkey_new( $args );
 
 			if ( false === $pkey ) {
-				return $data;
+				return;
 			}
 
 			// Export key.
-			$result = openssl_pkey_export( $pkey, $private_key, $data['_pronamic_gateway_ideal_private_key_password'], $args );
+			$result = openssl_pkey_export( $pkey, $private_key, $private_key_password, $args );
 
 			if ( false === $result ) {
-				return $data;
+				return;
 			}
 
-			$data['_pronamic_gateway_ideal_private_key'] = $private_key;
+			update_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', $private_key );
+
 			// Delete private certificate since this is no longer valid.
-			$data['_pronamic_gateway_ideal_private_certificate'] = null;
+			delete_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate' );
 		}
 
 		// Certificate.
-		if ( empty( $data['_pronamic_gateway_ideal_private_certificate'] ) ) {
+		$private_certificate = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
+		$number_days_valid   = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
+		
+		if ( empty( $private_certificate ) ) {
 			$required_keys = array(
 				'countryName',
 				'stateOrProvinceName',
@@ -548,13 +555,13 @@ class Integration extends AbstractIntegration {
 			);
 
 			$distinguished_name = array(
-				'countryName'            => $data['_pronamic_gateway_country'],
-				'stateOrProvinceName'    => $data['_pronamic_gateway_state_or_province'],
-				'localityName'           => $data['_pronamic_gateway_locality'],
-				'organizationName'       => $data['_pronamic_gateway_organization'],
-				'organizationalUnitName' => $data['_pronamic_gateway_organization_unit'],
-				'commonName'             => $data['_pronamic_gateway_organization'],
-				'emailAddress'           => $data['_pronamic_gateway_email'],
+				'countryName'            => get_post_meta( $post_id, '_pronamic_gateway_country', true ),
+				'stateOrProvinceName'    => get_post_meta( $post_id, '_pronamic_gateway_state_or_province', true ),
+				'localityName'           => get_post_meta( $post_id, '_pronamic_gateway_locality', true ),
+				'organizationName'       => get_post_meta( $post_id, '_pronamic_gateway_organization', true ),
+				'organizationalUnitName' => get_post_meta( $post_id, '_pronamic_gateway_organization_unit', true ),
+				'commonName'             => get_post_meta( $post_id, '_pronamic_gateway_organization', true ),
+				'emailAddress'           => get_post_meta( $post_id, '_pronamic_gateway_email', true ),
 			);
 
 			$distinguished_name = array_filter( $distinguished_name );
@@ -567,15 +574,13 @@ class Integration extends AbstractIntegration {
 			if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
 				$csr = openssl_csr_new( $distinguished_name, $pkey );
 
-				$cert = openssl_csr_sign( $csr, null, $pkey, $data['_pronamic_gateway_number_days_valid'], $args, time() );
+				$cert = openssl_csr_sign( $csr, null, $pkey, $number_days_valid, $args, time() );
 
 				openssl_x509_export( $cert, $certificate );
 
-				$data['_pronamic_gateway_ideal_private_certificate'] = $certificate;
+				update_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', $certificate );
 			}
 		}
-
-		return $data;
 	}
 
 	public function get_config( $post_id ) {
