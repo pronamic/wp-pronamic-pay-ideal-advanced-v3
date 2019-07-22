@@ -469,7 +469,7 @@ class Integration extends AbstractIntegration {
 	public function save_post( $post_id ) {
 		// Files.
 		$files = array(
-			'_pronamic_gateway_ideal_private_key_file'         => '_pronamic_gateway_ideal_private_key',
+			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
 			'_pronamic_gateway_ideal_private_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
 		);
 
@@ -543,7 +543,7 @@ class Integration extends AbstractIntegration {
 		// Certificate.
 		$private_certificate = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
 		$number_days_valid   = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
-		
+
 		if ( empty( $private_certificate ) ) {
 			$required_keys = array(
 				'countryName',
