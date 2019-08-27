@@ -31,7 +31,7 @@
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
-		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
 	</rule>
 
 	<rule ref="WordPress.DB.SlowDBQuery.slow_db_query_meta_key">

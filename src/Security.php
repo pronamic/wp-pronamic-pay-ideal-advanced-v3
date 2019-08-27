@@ -81,6 +81,7 @@ class Security {
 		$output = str_replace( self::CERTIFICATE_END, '', $output );
 
 		// Base64 decode
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$fingerprint = base64_decode( $output );
 
 		// Hash

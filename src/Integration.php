@@ -436,7 +436,8 @@ class Integration extends AbstractIntegration {
 			header( 'Content-Disposition: attachment; filename=' . $filename );
 			header( 'Content-Type: application/x-x509-ca-cert; charset=' . get_option( 'blog_charset' ), true );
 
-			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true ); // xss ok.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
 
 			exit;
 		}
@@ -455,7 +456,8 @@ class Integration extends AbstractIntegration {
 			header( 'Content-Disposition: attachment; filename=' . $filename );
 			header( 'Content-Type: application/pgp-keys; charset=' . get_option( 'blog_charset' ), true );
 
-			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true ); // xss ok.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
 
 			exit;
 		}
@@ -474,8 +476,10 @@ class Integration extends AbstractIntegration {
 		);
 
 		foreach ( $files as $name => $meta_key ) {
-			if ( isset( $_FILES[ $name ] ) && UPLOAD_ERR_OK === $_FILES[ $name ]['error'] ) { // WPCS: input var okay.
-				$value = file_get_contents( $_FILES[ $name ]['tmp_name'] ); // WPCS: input var okay. // WPCS: sanitization ok.
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+			if ( isset( $_FILES[ $name ] ) && UPLOAD_ERR_OK === $_FILES[ $name ]['error'] ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$value = file_get_contents( $_FILES[ $name ]['tmp_name'] );
 
 				update_post_meta( $post_id, $meta_key, $value );
 			}
