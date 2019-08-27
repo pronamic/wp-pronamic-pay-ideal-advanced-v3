@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: iDEAL Advanced v3+ gateway
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -32,11 +32,12 @@ class Gateway extends Core_Gateway {
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
 
+		$this->set_method( self::METHOD_HTTP_REDIRECT );
+
+		// Supported features.
 		$this->supports = array(
 			'payment_status_request',
 		);
-
-		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Client.
 		$client = new Client();

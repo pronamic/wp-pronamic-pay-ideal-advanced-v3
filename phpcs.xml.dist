@@ -1,16 +1,27 @@
 <?xml version="1.0"?>
 
 <ruleset name="WordPress Pay Gateway: iDEAL Advanced v3 rules">
-	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs,vendor/wimg/php-compatibility" />
-
 	<config name="minimum_supported_wp_version" value="4.7" />
 
-	<config name="testVersion" value="5.3-99.0" />
+	<config name="testVersion" value="5.3-" />
 
-	<rule ref="PHPCompatibility" />
+	<file>.</file>
 
-	<rule ref="PHPCompatibility.PHP.NewConstants.openssl_cipher_aes_128_cbcFound">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+	<arg name="colors"/>
+	<arg name="extensions" value="php" />
+	<arg value="sp" />
+
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>tests/bootstrap.php</exclude-pattern>
+	<exclude-pattern>tests/wp-config.php</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>wordpress/*</exclude-pattern>
+	<exclude-pattern type="relative">^wp-content/*</exclude-pattern>
+
+	<rule ref="PHPCompatibilityWP" />
+
+	<rule ref="PHPCompatibility.Constants.NewConstants.openssl_cipher_aes_128_cbcFound">
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress">
@@ -20,22 +31,18 @@
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
-		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
 	</rule>
 
-	<rule ref="WordPress.VIP.SlowDBQuery.slow_db_query_meta_key">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
-	</rule>
-
-	<rule ref="WordPress.VIP.RestrictedFunctions.file_get_contents_file_get_contents">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+	<rule ref="WordPress.DB.SlowDBQuery.slow_db_query_meta_key">
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.WP.AlternativeFunctions.file_system_read_file_get_contents">
-		<exclude-pattern>/src/Settings.php</exclude-pattern>
+		<exclude-pattern>/src/Integration.php</exclude-pattern>
 	</rule>
 </ruleset>

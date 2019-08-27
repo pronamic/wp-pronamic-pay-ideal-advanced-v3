@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 /**
  * Title: iDEAL Advanced config
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -19,6 +19,13 @@ class Config extends GatewayConfig {
 
 	public $sub_id = 0;
 
+	/**
+	 * Payment server URL.
+	 *
+	 * @var string|null
+	 */
+	public $payment_server_url;
+
 	public $private_key_password;
 
 	public $private_key;
@@ -27,9 +34,5 @@ class Config extends GatewayConfig {
 
 	public function get_payment_server_url() {
 		return $this->payment_server_url;
-	}
-
-	public function get_certificates() {
-		return array();
 	}
 }

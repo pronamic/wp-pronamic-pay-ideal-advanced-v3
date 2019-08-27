@@ -7,7 +7,7 @@ use PHPUnit_Framework_TestCase;
 /**
  * Title: iDEAL Advanced v3 XML error parser test
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author Remco Tolsma
@@ -17,7 +17,7 @@ class ErrorParserTest extends PHPUnit_Framework_TestCase {
 	public function testParser() {
 		$parser = new ErrorParser();
 
-		$xml = simplexml_load_file( dirname( __FILE__ ) . '/../Mock/Error.xml' );
+		$xml = simplexml_load_file( dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/Error.xml' );
 
 		$error = $parser->parse( $xml );
 

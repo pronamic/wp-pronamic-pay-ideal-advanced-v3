@@ -5,7 +5,7 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 /**
  * Title: iDEAL directory request XML message
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -34,16 +34,21 @@ class DirectoryRequestMessage extends RequestMessage {
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Merchant
+		// Merchant.
 		$merchant = $this->get_merchant();
 
 		$element = self::add_element( $document, $document->documentElement, 'Merchant' );
-		self::add_elements( $document, $element, array(
-			'merchantID' => $merchant->get_id(),
-			'subID'      => $merchant->get_sub_id(),
-		) );
 
-		// Return
+		self::add_elements(
+			$document,
+			$element,
+			array(
+				'merchantID' => $merchant->get_id(),
+				'subID'      => $merchant->get_sub_id(),
+			)
+		);
+
+		// Return.
 		return $document;
 	}
 }

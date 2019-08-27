@@ -5,7 +5,7 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 /**
  * Title: Security
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -81,6 +81,7 @@ class Security {
 		$output = str_replace( self::CERTIFICATE_END, '', $output );
 
 		// Base64 decode
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$fingerprint = base64_decode( $output );
 
 		// Hash
