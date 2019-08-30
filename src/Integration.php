@@ -246,8 +246,6 @@ class Integration extends AbstractIntegration {
 
 				?>
 
-				<a class="pronamic-pay-btn-link" href="#" id="pk-cert-fields-toggle"><?php esc_html_e( 'Show details…', 'pronamic_ideal' ); ?></a>
-
 			<?php endif; ?>
 		</p>
 		<?php
