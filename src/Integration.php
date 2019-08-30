@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Gateways\IDeal\AbstractIntegration;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.0.4
  * @since   2.0.0
  */
 class Integration extends AbstractIntegration {
@@ -245,8 +245,6 @@ class Integration extends AbstractIntegration {
 				);
 
 				?>
-
-				<a class="pronamic-pay-btn-link" href="#" id="pk-cert-fields-toggle"><?php esc_html_e( 'Show details…', 'pronamic_ideal' ); ?></a>
 
 			<?php endif; ?>
 		</p>
