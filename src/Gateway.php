@@ -137,14 +137,6 @@ class Gateway extends Core_Gateway {
 		// Create transaction.
 		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $payment->get_issuer() );
 
-		$error = $this->client->get_error();
-
-		if ( is_wp_error( $error ) ) {
-			$this->set_error( $error );
-
-			return;
-		}
-
 		$payment->set_action_url( $result->issuer->get_authentication_url() );
 		$payment->set_transaction_id( $result->transaction->get_id() );
 	}
@@ -155,19 +147,15 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
+		// Try to retrieve payment status.
 		$result = $this->client->get_status( $payment->get_transaction_id() );
 
-		$error = $this->client->get_error();
+		// Update payment with transaction data.
+		$transaction = $result->transaction;
 
-		if ( is_wp_error( $error ) ) {
-			$this->set_error( $error );
-		} else {
-			$transaction = $result->transaction;
-
-			$payment->set_status( $transaction->get_status() );
-			$payment->set_consumer_name( $transaction->get_consumer_name() );
-			$payment->set_consumer_iban( $transaction->get_consumer_iban() );
-			$payment->set_consumer_bic( $transaction->get_consumer_bic() );
-		}
+		$payment->set_status( $transaction->get_status() );
+		$payment->set_consumer_name( $transaction->get_consumer_name() );
+		$payment->set_consumer_iban( $transaction->get_consumer_iban() );
+		$payment->set_consumer_bic( $transaction->get_consumer_bic() );
 	}
 }

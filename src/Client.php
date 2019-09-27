@@ -3,7 +3,6 @@
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use DOMDocument;
-use Exception;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\AcquirerErrorResMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\AcquirerStatusReqMessage;
@@ -16,7 +15,6 @@ use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\ResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\TransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\TransactionResponseMessage;
 use SimpleXMLElement;
-use WP_Error;
 use XMLSecurityDSig;
 use XMLSecurityKey;
 
@@ -95,29 +93,6 @@ class Client {
 	public $private_key_password;
 
 	/**
-	 * Error
-	 *
-	 * @var WP_Error
-	 */
-	private $error;
-
-	/**
-	 * Constructs and initialzies an iDEAL Advanced v3 client object
-	 */
-	public function __construct() {
-
-	}
-
-	/**
-	 * Get the latest error
-	 *
-	 * @return WP_Error or null
-	 */
-	public function get_error() {
-		return $this->error;
-	}
-
-	/**
 	 * Set the acquirer URL
 	 *
 	 * @param string $url URL.
@@ -171,36 +146,31 @@ class Client {
 			);
 
 			// Handle response.
-			if ( ! is_wp_error( $response ) ) {
-				if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-					$body = wp_remote_retrieve_body( $response );
-
-					$xml = Core_Util::simplexml_load_string( $body );
-
-					if ( is_wp_error( $xml ) ) {
-						$this->error = $xml;
-					} else {
-						$document = self::parse_document( $xml );
-
-						if ( is_wp_error( $document ) ) {
-							$this->error = $document;
-						} else {
-							$result = $document;
-						}
-					}
-				} else {
-					$this->error = new WP_Error(
-						'wrong_response_code',
-						sprintf(
-							/* translators: %s: response code */
-							__( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ),
-							wp_remote_retrieve_response_code( $response )
-						)
-					);
-				}
-			} else {
-				$this->error = $response;
+			if ( is_wp_error( $response ) ) {
+				throw new \Pronamic\WordPress\Pay\GatewayException( 'ideal_advanced_v3', $response->get_error_message() );
 			}
+
+			if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+				throw new \Pronamic\WordPress\Pay\GatewayException(
+					'ideal_advanced_v3',
+					sprintf(
+						/* translators: %s: response code */
+						__( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ),
+						wp_remote_retrieve_response_code( $response )
+					),
+					$response
+				);
+			}
+
+			$body = wp_remote_retrieve_body( $response );
+
+			try {
+				$xml = Core_Util::simplexml_load_string( $body );
+			} catch ( \InvalidArgumentException $e ) {
+				throw new \Pronamic\WordPress\Pay\GatewayException( 'ideal_advanced_v3', $e->getMessage(), $body );
+			}
+
+			$result = self::parse_document( $xml );
 		}
 
 		return $result;
@@ -211,24 +181,19 @@ class Client {
 	 *
 	 * @param SimpleXMLElement $document Document.
 	 *
-	 * @return ResponseMessage|WP_Error
+	 * @return ResponseMessage
 	 */
 	private function parse_document( SimpleXMLElement $document ) {
-		$this->error = null;
-
 		$name = $document->getName();
 
 		switch ( $name ) {
 			case AcquirerErrorResMessage::NAME:
 				$message = AcquirerErrorResMessage::parse( $document );
 
-				$this->error = new WP_Error(
-					'IDealAdvancedV3_error',
-					sprintf( '%s. %s', $message->error->get_message(), $message->error->get_detail() ),
-					$message->error
+				throw new \Pronamic\WordPress\Pay\GatewayException(
+					'ideal_advanced_v3',
+					sprintf( '%s. %s', $message->error->get_message(), $message->error->get_detail() )
 				);
-
-				return $message;
 			case DirectoryResponseMessage::NAME:
 				return DirectoryResponseMessage::parse( $document );
 			case TransactionResponseMessage::NAME:
@@ -236,8 +201,8 @@ class Client {
 			case AcquirerStatusResMessage::NAME:
 				return AcquirerStatusResMessage::parse( $document );
 			default:
-				return new WP_Error(
-					'IDealAdvancedV3_error',
+				throw new \Pronamic\WordPress\Pay\GatewayException(
+					'ideal_advanced_v3',
 					/* translators: %s: XML document element name */
 					sprintf( __( 'Unknwon iDEAL message (%s)', 'pronamic_ideal' ), $name )
 				);
@@ -321,7 +286,7 @@ class Client {
 	 *
 	 * @return DOMDocument
 	 *
-	 * @throws Exception Can not load private key.
+	 * @throws \Exception Can not load private key.
 	 */
 	private function sign_document( DOMDocument $document ) {
 		$result = false;
@@ -391,10 +356,10 @@ class Client {
 
 				$result = $document;
 			} else {
-				throw new Exception( 'Can not load private key' );
+				throw new \Exception( 'Can not load private key' );
 			}
-		} catch ( Exception $e ) {
-			$this->error = new WP_Error( 'xml_security', $e->getMessage(), $e );
+		} catch ( \Exception $e ) {
+			throw new \Pronamic\WordPress\Pay\GatewayException( 'ideal_advanced_v3', $e->getMessage(), $e );
 		}
 
 		return $result;
