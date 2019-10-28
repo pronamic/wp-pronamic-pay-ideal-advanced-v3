@@ -38,12 +38,13 @@ class Integration extends AbstractIntegration {
 		$this->name          = $args['name'];
 		$this->url           = $args['url'];
 		$this->product_url   = $args['product_url'];
-		$this->manual_url    = $args['manual_url'];
 		$this->dashboard_url = $args['dashboard_url'];
 		$this->provider      = $args['provider'];
 
 		$this->aquirer_url      = $args['aquirer_url'];
 		$this->aquirer_test_url = $args['aquirer_test_url'];
+
+		$this->set_manual_url( $args['manual_url'] );
 
 		// Supported features.
 		$this->supports = array(
