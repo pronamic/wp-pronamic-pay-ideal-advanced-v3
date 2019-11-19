@@ -61,15 +61,19 @@ class Gateway extends Core_Gateway {
 	 * @return array
 	 */
 	public function get_issuers() {
-		$directory = $this->client->get_directory();
+		$groups = array();
 
-		if ( ! $directory ) {
-			$this->error = $this->client->get_error();
+		try {
+			$directory = $this->client->get_directory();
+		} catch ( \Exception $e ) {
+			$this->error = new \WP_Error( 'ideal_advanced_v3_error', $e->getMessage() );
 
-			return array();
+			return $groups;
 		}
 
-		$groups = array();
+		if ( ! $directory ) {
+			return $groups;
+		}
 
 		foreach ( $directory->get_countries() as $country ) {
 			$issuers = array();
@@ -147,8 +151,12 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		// Try to retrieve payment status.
-		$result = $this->client->get_status( $payment->get_transaction_id() );
+		try {
+			// Try to retrieve payment status.
+			$result = $this->client->get_status( $payment->get_transaction_id() );
+		} catch( \Exception $e ) {
+			return;
+		}
 
 		// Update payment with transaction data.
 		$transaction = $result->transaction;

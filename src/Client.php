@@ -147,18 +147,16 @@ class Client {
 
 			// Handle response.
 			if ( is_wp_error( $response ) ) {
-				throw new \Pronamic\WordPress\Pay\GatewayException( 'ideal_advanced_v3', $response->get_error_message() );
+				throw new \Exception( $response->get_error_message() );
 			}
 
 			if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				throw new \Pronamic\WordPress\Pay\GatewayException(
-					'ideal_advanced_v3',
+				throw new \Exception(
 					sprintf(
 						/* translators: %s: response code */
 						__( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ),
 						wp_remote_retrieve_response_code( $response )
-					),
-					$response
+					)
 				);
 			}
 
@@ -167,7 +165,7 @@ class Client {
 			try {
 				$xml = Core_Util::simplexml_load_string( $body );
 			} catch ( \InvalidArgumentException $e ) {
-				throw new \Pronamic\WordPress\Pay\GatewayException( 'ideal_advanced_v3', $e->getMessage(), $body );
+				throw new \Exception( $e->getMessage() );
 			}
 
 			$result = self::parse_document( $xml );
@@ -190,8 +188,7 @@ class Client {
 			case AcquirerErrorResMessage::NAME:
 				$message = AcquirerErrorResMessage::parse( $document );
 
-				throw new \Pronamic\WordPress\Pay\GatewayException(
-					'ideal_advanced_v3',
+				throw new \Exception(
 					sprintf( '%s. %s', $message->error->get_message(), $message->error->get_detail() )
 				);
 			case DirectoryResponseMessage::NAME:
@@ -201,8 +198,7 @@ class Client {
 			case AcquirerStatusResMessage::NAME:
 				return AcquirerStatusResMessage::parse( $document );
 			default:
-				throw new \Pronamic\WordPress\Pay\GatewayException(
-					'ideal_advanced_v3',
+				throw new \Exception(
 					/* translators: %s: XML document element name */
 					sprintf( __( 'Unknwon iDEAL message (%s)', 'pronamic_ideal' ), $name )
 				);
@@ -291,75 +287,71 @@ class Client {
 	private function sign_document( DOMDocument $document ) {
 		$result = false;
 
-		try {
-			$dsig = new XMLSecurityDSig();
+		$dsig = new XMLSecurityDSig();
+
+		/*
+		 * For canonicalization purposes the exclusive (9) algorithm must be used.
+		 *
+		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+		 */
+		$dsig->setCanonicalMethod( XMLSecurityDSig::EXC_C14N );
+
+		/*
+		 * For hashing purposes the SHA-256 (11) algorithm must be used.
+		 *
+		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
+		 */
+		$dsig->addReference(
+			$document,
+			XMLSecurityDSig::SHA256,
+			array( 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' ),
+			array(
+				'force_uri' => true,
+			)
+		);
+
+		/*
+		 * For signature purposes the RSAWithSHA 256 (12) algorithm must be used.
+		 *
+		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
+		 */
+		$key = new XMLSecurityKey(
+			XMLSecurityKey::RSA_SHA256,
+			array(
+				'type' => 'private',
+			)
+		);
+
+		$key->passphrase = $this->private_key_password;
+
+		$key->loadKey( $this->private_key );
+
+		/*
+		 * Test if we can get an private key object, to prevent the following error:
+		 * Warning: openssl_sign() [function.openssl-sign]: supplied key param cannot be coerced into a private key.
+		 */
+		$result = openssl_get_privatekey( $this->private_key, $this->private_key_password );
+
+		if ( false !== $result ) {
+			// Sign.
+			$dsig->sign( $key );
 
 			/*
-			 * For canonicalization purposes the exclusive (9) algorithm must be used.
-			 *
-			 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
-			 */
-			$dsig->setCanonicalMethod( XMLSecurityDSig::EXC_C14N );
-
-			/*
-			 * For hashing purposes the SHA-256 (11) algorithm must be used.
-			 *
-			 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
-			 */
-			$dsig->addReference(
-				$document,
-				XMLSecurityDSig::SHA256,
-				array( 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' ),
-				array(
-					'force_uri' => true,
-				)
-			);
-
-			/*
-			 * For signature purposes the RSAWithSHA 256 (12) algorithm must be used.
+			 * The public key must be referenced using a fingerprint of an X.509 certificate. The
+			 * fingerprint must be calculated according to the following formula HEX(SHA-1(DER certificate)) (13).
 			 *
 			 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
 			 */
-			$key = new XMLSecurityKey(
-				XMLSecurityKey::RSA_SHA256,
-				array(
-					'type' => 'private',
-				)
-			);
+			$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
 
-			$key->passphrase = $this->private_key_password;
+			$dsig->addKeyInfoAndName( $fingerprint );
 
-			$key->loadKey( $this->private_key );
+			// Add the signature.
+			$dsig->appendSignature( $document->documentElement );
 
-			/*
-			 * Test if we can get an private key object, to prevent the following error:
-			 * Warning: openssl_sign() [function.openssl-sign]: supplied key param cannot be coerced into a private key.
-			 */
-			$result = openssl_get_privatekey( $this->private_key, $this->private_key_password );
-
-			if ( false !== $result ) {
-				// Sign.
-				$dsig->sign( $key );
-
-				/*
-				 * The public key must be referenced using a fingerprint of an X.509 certificate. The
-				 * fingerprint must be calculated according to the following formula HEX(SHA-1(DER certificate)) (13).
-				 *
-				 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-				 */
-				$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
-
-				$dsig->addKeyInfoAndName( $fingerprint );
-
-				// Add the signature.
-				$dsig->appendSignature( $document->documentElement );
-
-				$result = $document;
-			} else {
-				throw new \Exception( 'Can not load private key' );
-			}
-		} catch ( \Exception $e ) {
-			throw new \Pronamic\WordPress\Pay\GatewayException( 'ideal_advanced_v3', $e->getMessage(), $e );
+			$result = $document;
+		} else {
+			throw new \Exception( 'Can not load private key' );
 		}
 
 		return $result;
