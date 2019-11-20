@@ -154,7 +154,7 @@ class Gateway extends Core_Gateway {
 		try {
 			// Try to retrieve payment status.
 			$result = $this->client->get_status( $payment->get_transaction_id() );
-		} catch( \Exception $e ) {
+		} catch ( \Exception $e ) {
 			return;
 		}
 
