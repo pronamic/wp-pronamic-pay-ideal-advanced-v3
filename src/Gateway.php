@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.5
  * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
@@ -61,15 +61,19 @@ class Gateway extends Core_Gateway {
 	 * @return array
 	 */
 	public function get_issuers() {
-		$directory = $this->client->get_directory();
+		$groups = array();
 
-		if ( ! $directory ) {
-			$this->error = $this->client->get_error();
+		try {
+			$directory = $this->client->get_directory();
+		} catch ( \Exception $e ) {
+			$this->error = new \WP_Error( 'ideal_advanced_v3_error', $e->getMessage() );
 
-			return array();
+			return $groups;
 		}
 
-		$groups = array();
+		if ( ! $directory ) {
+			return $groups;
+		}
 
 		foreach ( $directory->get_countries() as $country ) {
 			$issuers = array();
@@ -137,14 +141,6 @@ class Gateway extends Core_Gateway {
 		// Create transaction.
 		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $payment->get_issuer() );
 
-		$error = $this->client->get_error();
-
-		if ( is_wp_error( $error ) ) {
-			$this->set_error( $error );
-
-			return;
-		}
-
 		$payment->set_action_url( $result->issuer->get_authentication_url() );
 		$payment->set_transaction_id( $result->transaction->get_id() );
 	}
@@ -155,19 +151,19 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		$result = $this->client->get_status( $payment->get_transaction_id() );
-
-		$error = $this->client->get_error();
-
-		if ( is_wp_error( $error ) ) {
-			$this->set_error( $error );
-		} else {
-			$transaction = $result->transaction;
-
-			$payment->set_status( $transaction->get_status() );
-			$payment->set_consumer_name( $transaction->get_consumer_name() );
-			$payment->set_consumer_iban( $transaction->get_consumer_iban() );
-			$payment->set_consumer_bic( $transaction->get_consumer_bic() );
+		try {
+			// Try to retrieve payment status.
+			$result = $this->client->get_status( $payment->get_transaction_id() );
+		} catch ( \Exception $e ) {
+			return;
 		}
+
+		// Update payment with transaction data.
+		$transaction = $result->transaction;
+
+		$payment->set_status( $transaction->get_status() );
+		$payment->set_consumer_name( $transaction->get_consumer_name() );
+		$payment->set_consumer_iban( $transaction->get_consumer_iban() );
+		$payment->set_consumer_bic( $transaction->get_consumer_bic() );
 	}
 }
