@@ -7,7 +7,7 @@ use PHPUnit_Framework_TestCase;
 /**
  * Title: iDEAL Advanced v3 error test
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author Remco Tolsma
