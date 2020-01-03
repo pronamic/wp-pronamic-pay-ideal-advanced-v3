@@ -2,6 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
+use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -162,8 +163,17 @@ class Gateway extends Core_Gateway {
 		$transaction = $result->transaction;
 
 		$payment->set_status( $transaction->get_status() );
-		$payment->set_consumer_name( $transaction->get_consumer_name() );
-		$payment->set_consumer_iban( $transaction->get_consumer_iban() );
-		$payment->set_consumer_bic( $transaction->get_consumer_bic() );
+
+		$consumer_bank_details = $payment->get_consumer_bank_details();
+
+		if ( null === $consumer_bank_details ) {
+			$consumer_bank_details = new BankAccountDetails();
+
+			$payment->set_consumer_bank_details( $consumer_bank_details );
+		}
+
+		$consumer_bank_details->set_name( $transaction->get_consumer_name() );
+		$consumer_bank_details->set_iban( $transaction->get_consumer_iban() );
+		$consumer_bank_details->set_bic( $transaction->get_consumer_bic() );
 	}
 }
