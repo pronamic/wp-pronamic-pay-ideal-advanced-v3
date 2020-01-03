@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
-use Directory;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Directory;
 use SimpleXMLElement;
 
 /**

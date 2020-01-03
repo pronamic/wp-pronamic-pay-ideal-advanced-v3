@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
-use Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Error;
 use SimpleXMLElement;
 
 /**
@@ -25,7 +25,7 @@ class AcquirerErrorResMessage extends ResponseMessage {
 	/**
 	 * The error within this response message
 	 *
-	 * @var Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error
+	 * @var Error
 	 */
 	public $error;
 

@@ -150,7 +150,7 @@ class Integration extends AbstractIntegration {
 			'tooltip'  => sprintf(
 				/* translators: %s: admin email */
 				__( 'E-mail address, e.g. %s', 'pronamic_ideal' ),
-				get_option( 'admin_email' )
+				(string) get_option( 'admin_email' )
 			),
 			'type'     => 'text',
 		);

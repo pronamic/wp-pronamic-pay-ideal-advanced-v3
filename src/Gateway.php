@@ -72,7 +72,7 @@ class Gateway extends Core_Gateway {
 			return $groups;
 		}
 
-		if ( ! $directory ) {
+		if ( null === $directory ) {
 			return $groups;
 		}
 

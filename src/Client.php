@@ -168,7 +168,7 @@ class Client {
 				throw new \Exception( $e->getMessage() );
 			}
 
-			$result = self::parse_document( $xml );
+			$result = $this->parse_document( $xml );
 		}
 
 		return $result;
@@ -208,10 +208,10 @@ class Client {
 	/**
 	 * Get directory of issuers
 	 *
-	 * @return Directory
+	 * @return null|Directory
 	 */
 	public function get_directory() {
-		$directory = false;
+		$directory = null;
 
 		$request_dir_message = new DirectoryRequestMessage();
 
@@ -285,8 +285,6 @@ class Client {
 	 * @throws \Exception Can not load private key.
 	 */
 	private function sign_document( DOMDocument $document ) {
-		$result = false;
-
 		$dsig = new XMLSecurityDSig();
 
 		/*
