@@ -34,6 +34,8 @@ class Integration extends AbstractIntegration {
 			)
 		);
 
+		parent::__construct( $args );
+
 		$this->id            = $args['id'];
 		$this->name          = $args['name'];
 		$this->url           = $args['url'];
