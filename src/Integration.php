@@ -2,21 +2,23 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
-use Pronamic\WordPress\Pay\Gateways\IDeal\AbstractIntegration;
+use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
  * Title: iDEAL Advanced v3 integration
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
  * @version 2.0.5
  * @since   2.0.0
  */
-class Integration extends AbstractIntegration {
+class Integration extends AbstractGatewayIntegration {
 	/**
-	 * Settings constructor.
+	 * Construct iDEAL Advanced v3 integration.
+	 *
+	 * @param array $args Arguments.
 	 */
 	public function __construct( $args = array() ) {
 		$args = wp_parse_args(
@@ -24,32 +26,24 @@ class Integration extends AbstractIntegration {
 			array(
 				'id'               => 'ideal-advanced-v3',
 				'name'             => 'iDEAL Advanced v3',
-				'url'              => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-				'product_url'      => __( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'url'              => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'product_url'      => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
 				'manual_url'       => null,
 				'dashboard_url'    => null,
 				'provider'         => null,
 				'aquirer_url'      => null,
 				'aquirer_test_url' => null,
+				'supports'         => array(
+					'payment_status_request',
+				),
 			)
 		);
 
-		$this->id            = $args['id'];
-		$this->name          = $args['name'];
-		$this->url           = $args['url'];
-		$this->product_url   = $args['product_url'];
-		$this->dashboard_url = $args['dashboard_url'];
-		$this->provider      = $args['provider'];
+		parent::__construct( $args );
 
+		// Acquirer URL.
 		$this->aquirer_url      = $args['aquirer_url'];
 		$this->aquirer_test_url = $args['aquirer_test_url'];
-
-		$this->set_manual_url( $args['manual_url'] );
-
-		// Supported features.
-		$this->supports = array(
-			'payment_status_request',
-		);
 
 		// Actions.
 		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
@@ -150,7 +144,7 @@ class Integration extends AbstractIntegration {
 			'tooltip'  => sprintf(
 				/* translators: %s: admin email */
 				__( 'E-mail address, e.g. %s', 'pronamic_ideal' ),
-				get_option( 'admin_email' )
+				(string) get_option( 'admin_email' )
 			),
 			'type'     => 'text',
 		);

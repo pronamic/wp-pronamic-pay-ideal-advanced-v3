@@ -2,13 +2,13 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
-use Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
 use SimpleXMLElement;
 
 /**
  * Title: iDEAL status response XML message
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -25,7 +25,7 @@ class AcquirerStatusResMessage extends ResponseMessage {
 	/**
 	 * Transaction
 	 *
-	 * @var Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Transaction
+	 * @var Transaction
 	 */
 	public $transaction;
 

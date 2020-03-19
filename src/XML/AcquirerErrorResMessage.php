@@ -2,13 +2,13 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
-use Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Error;
 use SimpleXMLElement;
 
 /**
  * Title: iDEAL error response XML message
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -25,7 +25,7 @@ class AcquirerErrorResMessage extends ResponseMessage {
 	/**
 	 * The error within this response message
 	 *
-	 * @var Pronamic_WP_Pay_Gateways_IDealAdvancedV3_Error
+	 * @var Error
 	 */
 	public $error;
 
