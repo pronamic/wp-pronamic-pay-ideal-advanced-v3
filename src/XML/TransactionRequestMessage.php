@@ -1,7 +1,16 @@
 <?php
+/**
+ * Transaction request message.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
+use DOMDocument;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\IDeal;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Issuer;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
@@ -48,55 +57,68 @@ class TransactionRequestMessage extends RequestMessage {
 	 * Get document
 	 *
 	 * @see RequestMessage::get_document()
+	 * @return DOMDocument
+	 * @throws \Exception Throws exception if no transaction amount has been set.
 	 */
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Issuer.
-		$issuer = $this->issuer;
+		$document_element = $document->documentElement;
 
-		$element = self::add_element( $document, $document->documentElement, 'Issuer' );
+		if ( null !== $document_element ) {
+			// Issuer.
+			$issuer = $this->issuer;
 
-		self::add_element(
-			$document,
-			$element,
-			'issuerID',
-			$issuer->get_id()
-		);
+			$element = self::add_element( $document, $document_element, 'Issuer' );
 
-		// Merchant.
-		$merchant = $this->get_merchant();
+			self::add_elements(
+				$document,
+				$element,
+				array(
+					'issuerID' => $issuer->get_id(),
+				)
+			);
 
-		$element = self::add_element( $document, $document->documentElement, 'Merchant' );
+			// Merchant.
+			$merchant = $this->get_merchant();
 
-		self::add_elements(
-			$document,
-			$element,
-			array(
-				'merchantID'        => $merchant->get_id(),
-				'subID'             => $merchant->get_sub_id(),
-				'merchantReturnURL' => $merchant->get_return_url(),
-			)
-		);
+			$element = self::add_element( $document, $document_element, 'Merchant' );
 
-		// Transaction.
-		$transaction = $this->transaction;
+			self::add_elements(
+				$document,
+				$element,
+				array(
+					'merchantID'        => $merchant->get_id(),
+					'subID'             => $merchant->get_sub_id(),
+					'merchantReturnURL' => $merchant->get_return_url(),
+				)
+			);
 
-		$element = self::add_element( $document, $document->documentElement, 'Transaction' );
+			// Transaction.
+			$transaction = $this->transaction;
 
-		self::add_elements(
-			$document,
-			$element,
-			array(
-				'purchaseID'       => $transaction->get_purchase_id(),
-				'amount'           => IDeal::format_amount( $transaction->get_amount() ),
-				'currency'         => $transaction->get_currency(),
-				'expirationPeriod' => $transaction->get_expiration_period(),
-				'language'         => $transaction->get_language(),
-				'description'      => $transaction->get_description(),
-				'entranceCode'     => $transaction->get_entrance_code(),
-			)
-		);
+			$element = self::add_element( $document, $document_element, 'Transaction' );
+
+			$amount = $transaction->get_amount();
+
+			if ( null === $amount ) {
+				throw new \Exception( 'Required iDEAL transaction amount has not been set.' );
+			}
+
+			self::add_elements(
+				$document,
+				$element,
+				array(
+					'purchaseID'       => $transaction->get_purchase_id(),
+					'amount'           => IDeal::format_amount( $amount ),
+					'currency'         => $transaction->get_currency(),
+					'expirationPeriod' => $transaction->get_expiration_period(),
+					'language'         => $transaction->get_language(),
+					'description'      => $transaction->get_description(),
+					'entranceCode'     => $transaction->get_entrance_code(),
+				)
+			);
+		}
 
 		// Return.
 		return $document;

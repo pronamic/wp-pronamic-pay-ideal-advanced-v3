@@ -1,4 +1,12 @@
 <?php
+/**
+ * Country parser.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
@@ -19,15 +27,20 @@ class CountryParser implements Parser {
 	/**
 	 * Parse
 	 *
-	 * @param SimpleXMLElement $xml
-	 *
+	 * @param SimpleXMLElement $xml XML.
 	 * @return Country
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
 		$country = new Country();
 
-		$country->set_name( Security::filter( $xml->countryNames ) );
+		// Name.
+		$name = Security::filter( $xml->countryNames );
 
+		if ( null !== $name ) {
+			$country->set_name( $name );
+		}
+
+		// Issuers.
 		foreach ( $xml->Issuer as $element ) {
 			$issuer = IssuerParser::parse( $element );
 

@@ -1,4 +1,12 @@
 <?php
+/**
+ * Merchant.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -35,9 +43,10 @@ class Merchant {
 
 	/**
 	 * Constructs and initializes an issuer
+	 *
+	 * @return void
 	 */
 	public function __construct() {
-
 	}
 
 	/**
@@ -52,7 +61,8 @@ class Merchant {
 	/**
 	 * Set the ID of this merchant
 	 *
-	 * @param string $id
+	 * @param string $id Merchant ID.
+	 * @return void
 	 */
 	public function set_id( $id ) {
 		$this->id = $id;
@@ -70,7 +80,8 @@ class Merchant {
 	/**
 	 * Set the ID of this merchant
 	 *
-	 * @param string $sub_id
+	 * @param string $sub_id Sub ID.
+	 * @return void
 	 */
 	public function set_sub_id( $sub_id ) {
 		$this->sub_id = $sub_id;
@@ -88,7 +99,8 @@ class Merchant {
 	/**
 	 * Set the ID of this merchant
 	 *
-	 * @param string $return_url
+	 * @param string $return_url Return URL.
+	 * @return void
 	 */
 	public function set_return_url( $return_url ) {
 		$this->return_url = $return_url;

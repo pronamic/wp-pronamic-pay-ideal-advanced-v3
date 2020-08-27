@@ -1,4 +1,12 @@
 <?php
+/**
+ * Issuer.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -15,35 +23,36 @@ class Issuer {
 	/**
 	 * ID of the issuer
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $id;
 
 	/**
 	 * Name of the issuer
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $name;
 
 	/**
 	 * Authentication URL
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $authentication_url;
 
 	/**
 	 * Constructs and initializes an issuer
+	 *
+	 * @return void
 	 */
 	public function __construct() {
-
 	}
 
 	/**
 	 * Get the ID of this issuer
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_id() {
 		return $this->id;
@@ -52,7 +61,8 @@ class Issuer {
 	/**
 	 * Set the ID of this issuer
 	 *
-	 * @param string $id
+	 * @param string|null $id Issuer ID.
+	 * @return void
 	 */
 	public function set_id( $id ) {
 		$this->id = $id;
@@ -61,7 +71,7 @@ class Issuer {
 	/**
 	 * Get the name of this issuer
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_name() {
 		return $this->name;
@@ -70,7 +80,8 @@ class Issuer {
 	/**
 	 * Set the name of this issuer
 	 *
-	 * @param string $name
+	 * @param string|null $name Issuer name.
+	 * @return void
 	 */
 	public function set_name( $name ) {
 		$this->name = $name;
@@ -79,7 +90,7 @@ class Issuer {
 	/**
 	 * Get the name of this issuer
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_authentication_url() {
 		return $this->authentication_url;
@@ -88,7 +99,8 @@ class Issuer {
 	/**
 	 * Set the name of this issuer
 	 *
-	 * @param string $authentication_url
+	 * @param string|null $authentication_url Authentication URL.
+	 * @return void
 	 */
 	public function set_authentication_url( $authentication_url ) {
 		$this->authentication_url = $authentication_url;

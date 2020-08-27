@@ -1,4 +1,12 @@
 <?php
+/**
+ * Client.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -11,10 +19,10 @@ use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\DirectoryRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\DirectoryResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\Message;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\RequestMessage;
-use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\ResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\TransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\TransactionResponseMessage;
 use SimpleXMLElement;
+use WP_Error;
 use XMLSecurityDSig;
 use XMLSecurityKey;
 
@@ -96,6 +104,7 @@ class Client {
 	 * Set the acquirer URL
 	 *
 	 * @param string $url URL.
+	 * @return void
 	 */
 	public function set_acquirer_url( $url ) {
 		$this->acquirer_url = $url;
@@ -110,66 +119,62 @@ class Client {
 	 *
 	 * @param string         $url     URL.
 	 * @param RequestMessage $message Message.
-	 *
-	 * @return ResponseMessage
+	 * @return DirectoryResponseMessage|TransactionResponseMessage|AcquirerStatusResMessage
+	 * @throws \Exception Throws exception on error with private key when signing document.
 	 */
 	private function send_message( $url, RequestMessage $message ) {
-		$result = false;
-
 		// Sign.
 		$document = $message->get_document();
 		$document = $this->sign_document( $document );
 
-		if ( false !== $document ) {
-			// Stringify.
-			$data = $document->saveXML();
+		// Stringify.
+		$data = $document->saveXML();
 
-			/*
-			 * Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
-			 *
-			 * @since 1.1.11
-			 */
-			if ( 'https://www.ideal-checkout.nl/simulator/' === $url ) {
-				$data = $document->C14N( true, false );
-			}
+		/*
+		 * Fix for a incorrect implementation at https://www.ideal-checkout.nl/simulator/.
+		 *
+		 * @since 1.1.11
+		 */
+		if ( 'https://www.ideal-checkout.nl/simulator/' === $url ) {
+			$data = $document->C14N( true, false );
+		}
 
-			// Remote post.
-			$response = wp_remote_post(
-				$url,
-				array(
-					'method'  => 'POST',
-					'headers' => array(
-						'Content-Type' => 'text/xml; charset=' . Message::XML_ENCODING,
-					),
-					'body'    => $data,
+		// Remote post.
+		$response = wp_remote_post(
+			$url,
+			array(
+				'method'  => 'POST',
+				'headers' => array(
+					'Content-Type' => 'text/xml; charset=' . Message::XML_ENCODING,
+				),
+				'body'    => $data,
+			)
+		);
+
+		// Handle response.
+		if ( $response instanceof WP_Error ) {
+			throw new \Exception( $response->get_error_message() );
+		}
+
+		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			throw new \Exception(
+				sprintf(
+					/* translators: %s: response code */
+					__( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ),
+					wp_remote_retrieve_response_code( $response )
 				)
 			);
-
-			// Handle response.
-			if ( is_wp_error( $response ) ) {
-				throw new \Exception( $response->get_error_message() );
-			}
-
-			if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
-				throw new \Exception(
-					sprintf(
-						/* translators: %s: response code */
-						__( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ),
-						wp_remote_retrieve_response_code( $response )
-					)
-				);
-			}
-
-			$body = wp_remote_retrieve_body( $response );
-
-			try {
-				$xml = Core_Util::simplexml_load_string( $body );
-			} catch ( \InvalidArgumentException $e ) {
-				throw new \Exception( $e->getMessage() );
-			}
-
-			$result = $this->parse_document( $xml );
 		}
+
+		$body = wp_remote_retrieve_body( $response );
+
+		try {
+			$xml = Core_Util::simplexml_load_string( $body );
+		} catch ( \InvalidArgumentException $e ) {
+			throw new \Exception( $e->getMessage() );
+		}
+
+		$result = $this->parse_document( $xml );
 
 		return $result;
 	}
@@ -178,8 +183,8 @@ class Client {
 	 * Parse the specified document and return parsed result
 	 *
 	 * @param SimpleXMLElement $document Document.
-	 *
-	 * @return ResponseMessage
+	 * @return DirectoryResponseMessage|TransactionResponseMessage|AcquirerStatusResMessage
+	 * @throws \Exception Throws exception if response XML document can not be parsed.
 	 */
 	private function parse_document( SimpleXMLElement $document ) {
 		$name = $document->getName();
@@ -234,8 +239,8 @@ class Client {
 	 * @param Transaction $transaction Transaction.
 	 * @param string      $return_url  Return URL.
 	 * @param string      $issuer_id   Issuer ID.
-	 *
 	 * @return TransactionResponseMessage
+	 * @throws \Exception Throws exception on unexpected transaction request response.
 	 */
 	public function create_transaction( Transaction $transaction, $return_url, $issuer_id ) {
 		$message = new TransactionRequestMessage();
@@ -250,15 +255,21 @@ class Client {
 
 		$message->transaction = $transaction;
 
-		return $this->send_message( $this->transaction_request_url, $message );
+		$result = $this->send_message( $this->transaction_request_url, $message );
+
+		if ( ! ( $result instanceof TransactionResponseMessage ) ) {
+			throw new \Exception( 'Unexpected response for transaction request.' );
+		}
+
+		return $result;
 	}
 
 	/**
 	 * Get the status of the specified transaction ID
 	 *
 	 * @param string $transaction_id Transaction ID.
-	 *
 	 * @return TransactionResponseMessage
+	 * @throws \Exception Throws exception on unexpected acquirer status response.
 	 */
 	public function get_status( $transaction_id ) {
 		$message = new AcquirerStatusReqMessage();
@@ -270,7 +281,13 @@ class Client {
 		$message->transaction = new Transaction();
 		$message->transaction->set_id( $transaction_id );
 
-		return $this->send_message( $this->status_request_url, $message );
+		$result = $this->send_message( $this->status_request_url, $message );
+
+		if ( ! ( $result instanceof TransactionResponseMessage ) ) {
+			throw new \Exception( 'Unexpected response for acquirer status request.' );
+		}
+
+		return $result;
 	}
 
 	/**
@@ -279,9 +296,7 @@ class Client {
 	 * @link https://github.com/Maks3w/xmlseclibs/blob/v1.3.0/tests/xml-sign.phpt
 	 *
 	 * @param DOMDocument $document Document.
-	 *
 	 * @return DOMDocument
-	 *
 	 * @throws \Exception Can not load private key.
 	 */
 	private function sign_document( DOMDocument $document ) {
@@ -328,30 +343,32 @@ class Client {
 		 * Test if we can get an private key object, to prevent the following error:
 		 * Warning: openssl_sign() [function.openssl-sign]: supplied key param cannot be coerced into a private key.
 		 */
-		$result = openssl_get_privatekey( $this->private_key, $this->private_key_password );
+		$private_key = openssl_get_privatekey( $this->private_key, $this->private_key_password );
 
-		if ( false !== $result ) {
-			// Sign.
-			$dsig->sign( $key );
-
-			/*
-			 * The public key must be referenced using a fingerprint of an X.509 certificate. The
-			 * fingerprint must be calculated according to the following formula HEX(SHA-1(DER certificate)) (13).
-			 *
-			 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-			 */
-			$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
-
-			$dsig->addKeyInfoAndName( $fingerprint );
-
-			// Add the signature.
-			$dsig->appendSignature( $document->documentElement );
-
-			$result = $document;
-		} else {
+		if ( false === $private_key ) {
 			throw new \Exception( 'Can not load private key' );
 		}
 
-		return $result;
+		// Sign.
+		$dsig->sign( $key );
+
+		/*
+		 * The public key must be referenced using a fingerprint of an X.509 certificate. The
+		 * fingerprint must be calculated according to the following formula HEX(SHA-1(DER certificate)) (13).
+		 *
+		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
+		 */
+		$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
+
+		if ( null === $fingerprint ) {
+			throw new \Exception( 'Unable to calculate fingerprint of private certificate.' );
+		}
+
+		$dsig->addKeyInfoAndName( $fingerprint );
+
+		// Add the signature.
+		$dsig->appendSignature( $document->documentElement );
+
+		return $document;
 	}
 }

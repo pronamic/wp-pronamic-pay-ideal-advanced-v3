@@ -1,4 +1,12 @@
 <?php
+/**
+ * Integration.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -18,22 +26,23 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Construct iDEAL Advanced v3 integration.
 	 *
-	 * @param array $args Arguments.
+	 * @param array<string, mixed> $args Arguments.
+	 * @return void
 	 */
 	public function __construct( $args = array() ) {
 		$args = wp_parse_args(
 			$args,
 			array(
-				'id'               => 'ideal-advanced-v3',
-				'name'             => 'iDEAL Advanced v3',
-				'url'              => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-				'product_url'      => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-				'manual_url'       => null,
-				'dashboard_url'    => null,
-				'provider'         => null,
-				'aquirer_url'      => null,
-				'aquirer_test_url' => null,
-				'supports'         => array(
+				'id'                => 'ideal-advanced-v3',
+				'name'              => 'iDEAL Advanced v3',
+				'url'               => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'product_url'       => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'manual_url'        => null,
+				'dashboard_url'     => null,
+				'provider'          => null,
+				'acquirer_url'      => null,
+				'acquirer_test_url' => null,
+				'supports'          => array(
 					'payment_status_request',
 				),
 			)
@@ -42,14 +51,19 @@ class Integration extends AbstractIntegration {
 		parent::__construct( $args );
 
 		// Acquirer URL.
-		$this->aquirer_url      = $args['aquirer_url'];
-		$this->aquirer_test_url = $args['aquirer_test_url'];
+		$this->acquirer_url      = $args['acquirer_url'];
+		$this->acquirer_test_url = $args['acquirer_test_url'];
 
 		// Actions.
 		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
 		add_action( 'current_screen', array( $this, 'maybe_download_private_key' ) );
 	}
 
+	/**
+	 * Get settings fields.
+	 *
+	 * @return array<int, array<string, callable|int|string|bool|array<int|string,int|string>>>
+	 */
 	public function get_settings_fields() {
 		$fields = parent::get_settings_fields();
 
@@ -110,9 +124,9 @@ class Integration extends AbstractIntegration {
 		);
 
 		// Country.
-		$locale = explode( '_', get_locale() );
+		$locale = \explode( '_', \get_locale() );
 
-		$locale = array_pop( $locale );
+		$locale = count( $locale ) > 1 ? $locale[1] : $locale[0];
 
 		$fields[] = array(
 			'section'     => 'general',
@@ -207,10 +221,13 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Field security
 	 *
-	 * @param array $field Field.
+	 * @param array<string, mixed> $field Field.
+	 * @return void
 	 */
 	public function field_security( $field ) {
-		$certificate = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_certificate', true );
+		$post_id = (int) \get_the_ID();
+
+		$certificate = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
 
 		?>
 		<p>
@@ -251,12 +268,15 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Field private key.
 	 *
-	 * @param array $field Field.
+	 * @param array<string, mixed> $field Field.
+	 * @return void
 	 */
 	public function field_private_key( $field ) {
-		$private_key          = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key', true );
-		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
-		$number_days_valid    = get_post_meta( get_the_ID(), '_pronamic_gateway_number_days_valid', true );
+		$post_id = (int) \get_the_ID();
+
+		$private_key          = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
+		$private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
+		$number_days_valid    = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
 
 		$filename = __( 'ideal.key', 'pronamic_ideal' );
 
@@ -309,31 +329,35 @@ class Integration extends AbstractIntegration {
 	/**
 	 * Field private certificate.
 	 *
-	 * @param array $field Field.
+	 * @param array<string, mixed> $field Field.
+	 * @return void
 	 */
 	public function field_private_certificate( $field ) {
-		$certificate = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_certificate', true );
+		$post_id = (int) \get_the_ID();
 
-		$private_key_password = get_post_meta( get_the_ID(), '_pronamic_gateway_ideal_private_key_password', true );
-		$number_days_valid    = get_post_meta( get_the_ID(), '_pronamic_gateway_number_days_valid', true );
+		$certificate = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
+
+		$private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
+		$number_days_valid    = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
 
 		$filename_key = __( 'ideal.key', 'pronamic_ideal' );
 		$filename_cer = __( 'ideal.cer', 'pronamic_ideal' );
 
 		// @link http://www.openssl.org/docs/apps/req.html
 		$subj_args = array(
-			'C'            => get_post_meta( get_the_ID(), '_pronamic_gateway_country', true ),
-			'ST'           => get_post_meta( get_the_ID(), '_pronamic_gateway_state_or_province', true ),
-			'L'            => get_post_meta( get_the_ID(), '_pronamic_gateway_locality', true ),
-			'O'            => get_post_meta( get_the_ID(), '_pronamic_gateway_organization', true ),
-			'OU'           => get_post_meta( get_the_ID(), '_pronamic_gateway_organization_unit', true ),
-			'CN'           => get_post_meta( get_the_ID(), '_pronamic_gateway_organization', true ),
-			'emailAddress' => get_post_meta( get_the_ID(), '_pronamic_gateway_email', true ),
+			'C'            => get_post_meta( $post_id, '_pronamic_gateway_country', true ),
+			'ST'           => get_post_meta( $post_id, '_pronamic_gateway_state_or_province', true ),
+			'L'            => get_post_meta( $post_id, '_pronamic_gateway_locality', true ),
+			'O'            => get_post_meta( $post_id, '_pronamic_gateway_organization', true ),
+			'OU'           => get_post_meta( $post_id, '_pronamic_gateway_organization_unit', true ),
+			'CN'           => get_post_meta( $post_id, '_pronamic_gateway_organization', true ),
+			'emailAddress' => get_post_meta( $post_id, '_pronamic_gateway_email', true ),
 		);
 
 		$subj_args = array_filter( $subj_args );
 
 		$subj = '';
+
 		foreach ( $subj_args as $type => $value ) {
 			$subj .= '/' . $type . '=' . addslashes( $value );
 		}
@@ -346,7 +370,7 @@ class Integration extends AbstractIntegration {
 					escapeshellarg( $private_key_password ),
 					escapeshellarg( $number_days_valid ),
 					escapeshellarg( $filename_cer ),
-					empty( $subj ) ? '' : sprintf( '-subj %s', escapeshellarg( $subj ) )
+					sprintf( '-subj %s', escapeshellarg( $subj ) )
 				)
 			);
 
@@ -364,7 +388,7 @@ class Integration extends AbstractIntegration {
 		}
 
 		if ( ! empty( $certificate ) ) {
-			$fingerprint = Security::get_sha_fingerprint( $certificate );
+			$fingerprint = (string) Security::get_sha_fingerprint( $certificate );
 			$fingerprint = str_split( $fingerprint, 2 );
 			$fingerprint = implode( ':', $fingerprint );
 
@@ -419,27 +443,33 @@ class Integration extends AbstractIntegration {
 	}
 
 	/**
-	 * Download private certificate
+	 * Download private certificate.
+	 *
+	 * @return void
 	 */
 	public function maybe_download_private_certificate() {
-		if ( filter_has_var( INPUT_POST, 'download_private_certificate' ) ) {
-			$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
-
-			$filename = sprintf( 'ideal-private-certificate-%s.cer', $post_id );
-
-			header( 'Content-Description: File Transfer' );
-			header( 'Content-Disposition: attachment; filename=' . $filename );
-			header( 'Content-Type: application/x-x509-ca-cert; charset=' . get_option( 'blog_charset' ), true );
-
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
-
-			exit;
+		if ( ! filter_has_var( INPUT_POST, 'download_private_certificate' ) ) {
+			return;
 		}
+
+		$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
+
+		$filename = sprintf( 'ideal-private-certificate-%s.cer', $post_id );
+
+		header( 'Content-Description: File Transfer' );
+		header( 'Content-Disposition: attachment; filename=' . $filename );
+		header( 'Content-Type: application/x-x509-ca-cert; charset=' . get_option( 'blog_charset' ), true );
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
+
+		exit;
 	}
 
 	/**
-	 * Download private key
+	 * Download private key.
+	 *
+	 * @return void
 	 */
 	public function maybe_download_private_key() {
 		if ( filter_has_var( INPUT_POST, 'download_private_key' ) ) {
@@ -462,6 +492,7 @@ class Integration extends AbstractIntegration {
 	 * Save post.
 	 *
 	 * @param int $post_id Post ID.
+	 * @return void
 	 */
 	public function save_post( $post_id ) {
 		// Files.
@@ -494,31 +525,30 @@ class Integration extends AbstractIntegration {
 			return;
 		}
 
+		$args = array(
+			'digest_alg'             => 'SHA256',
+			'private_key_bits'       => 2048,
+			'private_key_type'       => \OPENSSL_KEYTYPE_RSA,
+			'encrypt_key'            => true,
+			'subjectKeyIdentifier'   => 'hash',
+			'authorityKeyIdentifier' => 'keyid:always,issuer:always',
+			'basicConstraints'       => 'CA:true',
+		);
+
 		// Private key.
 		$pkey = openssl_pkey_get_private( $private_key, $private_key_password );
 
 		if ( false === $pkey ) {
 			// If we can't open the private key we will create a new private key and certificate.
 			if ( defined( 'OPENSSL_CIPHER_AES_128_CBC' ) ) {
-				$cipher = OPENSSL_CIPHER_AES_128_CBC;
+				$args['encrypt_key_cipher'] = \OPENSSL_CIPHER_AES_128_CBC;
 			} elseif ( defined( 'OPENSSL_CIPHER_3DES' ) ) {
 				// @link https://www.pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf
-				$cipher = OPENSSL_CIPHER_3DES;
+				$args['encrypt_key_cipher'] = \OPENSSL_CIPHER_3DES;
 			} else {
 				// Unable to create private key without cipher.
 				return;
 			}
-
-			$args = array(
-				'digest_alg'             => 'SHA256',
-				'private_key_bits'       => 2048,
-				'private_key_type'       => OPENSSL_KEYTYPE_RSA,
-				'encrypt_key'            => true,
-				'encrypt_key_cipher'     => $cipher,
-				'subjectKeyIdentifier'   => 'hash',
-				'authorityKeyIdentifier' => 'keyid:always,issuer:always',
-				'basicConstraints'       => 'CA:true',
-			);
 
 			$pkey = openssl_pkey_new( $args );
 
@@ -571,35 +601,56 @@ class Integration extends AbstractIntegration {
 			 * @link http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
 			 */
 			if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
+				// If we can't open the private key we will create a new private key and certificate.
+				if ( defined( 'OPENSSL_CIPHER_AES_128_CBC' ) ) {
+					$args['encrypt_key_cipher'] = \OPENSSL_CIPHER_AES_128_CBC;
+				} elseif ( defined( 'OPENSSL_CIPHER_3DES' ) ) {
+					// @link https://www.pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf
+					$args['encrypt_key_cipher'] = \OPENSSL_CIPHER_3DES;
+				} else {
+					// Unable to create private key without cipher.
+					return;
+				}
+
 				$csr = openssl_csr_new( $distinguished_name, $pkey );
 
-				$cert = openssl_csr_sign( $csr, null, $pkey, $number_days_valid, $args, time() );
+				if ( false !== $csr ) {
+					$cert = openssl_csr_sign( $csr, null, $pkey, $number_days_valid, $args, time() );
 
-				openssl_x509_export( $cert, $certificate );
+					if ( false !== $cert ) {
+						openssl_x509_export( $cert, $certificate );
 
-				update_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', $certificate );
+						update_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', $certificate );
+					}
+				}
 			}
 		}
 	}
 
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$mode = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
 
 		$config = new Config();
 
-		$config->payment_server_url = $this->aquirer_url;
+		$config->payment_server_url = $this->acquirer_url;
 
-		if ( 'test' === $mode && null !== $this->aquirer_test_url ) {
-			$config->payment_server_url = $this->aquirer_test_url;
+		if ( 'test' === $mode && null !== $this->acquirer_test_url ) {
+			$config->payment_server_url = $this->acquirer_test_url;
 		}
 
-		$config->merchant_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_merchant_id', true );
-		$config->sub_id      = get_post_meta( $post_id, '_pronamic_gateway_ideal_sub_id', true );
-		$config->purchase_id = get_post_meta( $post_id, '_pronamic_gateway_ideal_purchase_id', true );
+		$config->set_merchant_id( get_post_meta( $post_id, '_pronamic_gateway_ideal_merchant_id', true ) );
+		$config->set_sub_id( get_post_meta( $post_id, '_pronamic_gateway_ideal_sub_id', true ) );
+		$config->set_purchase_id( get_post_meta( $post_id, '_pronamic_gateway_ideal_purchase_id', true ) );
 
-		$config->private_key          = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
-		$config->private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
-		$config->private_certificate  = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
+		$config->set_private_key( get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true ) );
+		$config->set_private_key_password( get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true ) );
+		$config->set_private_certificate( get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true ) );
 
 		return $config;
 	}

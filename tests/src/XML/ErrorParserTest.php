@@ -1,4 +1,12 @@
 <?php
+/**
+ * Error parser test.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
@@ -14,6 +22,11 @@ use PHPUnit_Framework_TestCase;
  * @version 1.0.0
  */
 class ErrorParserTest extends PHPUnit_Framework_TestCase {
+	/**
+	 * Test parser.
+	 *
+	 * @return void
+	 */
 	public function testParser() {
 		$parser = new ErrorParser();
 

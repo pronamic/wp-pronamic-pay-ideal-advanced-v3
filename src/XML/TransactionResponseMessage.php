@@ -1,7 +1,17 @@
 <?php
+/**
+ * Transaction response message.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Issuer;
+use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
 use SimpleXMLElement;
 
 /**
@@ -22,21 +32,34 @@ class TransactionResponseMessage extends ResponseMessage {
 	const NAME = 'AcquirerTrxRes';
 
 	/**
+	 * Issuer.
+	 *
+	 * @var Issuer|null
+	 */
+	public $issuer;
+
+	/**
+	 * Transaction.
+	 *
+	 * @var Transaction|null
+	 */
+	public $transaction;
+
+	/**
 	 * Constructs and initialize an directory response message
 	 */
-	public function __construct() {
+	final public function __construct() {
 		parent::__construct( self::NAME );
 	}
 
 	/**
 	 * Parse the specified XML into an directory response message object
 	 *
-	 * @param SimpleXMLElement $xml
-	 *
-	 * @return ResponseMessage
+	 * @param SimpleXMLElement $xml XML.
+	 * @return TransactionResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
-		$message = self::parse_create_date( $xml, new self() );
+		$message = self::parse_create_date( $xml, new static() );
 
 		$message->issuer      = IssuerParser::parse( $xml->Issuer );
 		$message->transaction = TransactionParser::parse( $xml->Transaction );

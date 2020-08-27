@@ -1,4 +1,12 @@
 <?php
+/**
+ * Gateway.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -43,13 +51,13 @@ class Gateway extends Core_Gateway {
 		// Client.
 		$client = new Client();
 
-		$client->set_acquirer_url( $config->get_payment_server_url() );
+		$client->set_acquirer_url( (string) $config->get_payment_server_url() );
 
-		$client->merchant_id          = $config->merchant_id;
-		$client->sub_id               = $config->sub_id;
-		$client->private_key          = $config->private_key;
-		$client->private_key_password = $config->private_key_password;
-		$client->private_certificate  = $config->private_certificate;
+		$client->merchant_id          = (string) $config->get_merchant_id();
+		$client->sub_id               = (string) $config->get_sub_id();
+		$client->private_key          = (string) $config->get_private_key();
+		$client->private_key_password = (string) $config->get_private_key_password();
+		$client->private_certificate  = (string) $config->get_private_certificate();
 
 		$this->client = $client;
 	}
@@ -58,8 +66,7 @@ class Gateway extends Core_Gateway {
 	 * Get issuers
 	 *
 	 * @see Core_Gateway::get_issuers()
-	 *
-	 * @return array
+	 * @return array<int, array<string, array<string, string>|string>>
 	 */
 	public function get_issuers() {
 		$groups = array();
@@ -80,7 +87,14 @@ class Gateway extends Core_Gateway {
 			$issuers = array();
 
 			foreach ( $country->get_issuers() as $issuer ) {
-				$issuers[ $issuer->get_id() ] = $issuer->get_name();
+				$id   = $issuer->get_id();
+				$name = $issuer->get_name();
+
+				if ( null === $id || null === $name ) {
+					continue;
+				}
+
+				$issuers[ $id ] = $name;
 			}
 
 			$groups[] = array(
@@ -95,7 +109,8 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get supported payment methods
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
+	 * @see Core_Gateway::get_supported_payment_methods()
+	 * @return array<int, string>
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -122,7 +137,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function start( Payment $payment ) {
 		// Purchase ID.
-		$purchase_id = $payment->format_string( $this->config->purchase_id );
+		$purchase_id = $payment->format_string( $this->config->get_purchase_id() );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
@@ -135,15 +150,26 @@ class Gateway extends Core_Gateway {
 		$transaction->set_description( $payment->get_description() );
 		$transaction->set_entrance_code( $payment->get_entrance_code() );
 
-		if ( null !== $payment->get_customer() ) {
-			$transaction->set_language( $payment->get_customer()->get_language() );
+		$customer = $payment->get_customer();
+
+		if ( null !== $customer ) {
+			$transaction->set_language( $customer->get_language() );
 		}
 
 		// Create transaction.
-		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), $payment->get_issuer() );
+		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), (string) $payment->get_issuer() );
 
-		$payment->set_action_url( $result->issuer->get_authentication_url() );
-		$payment->set_transaction_id( $result->transaction->get_id() );
+		if ( null !== $result->issuer ) {
+			$authentication_url = $result->issuer->get_authentication_url();
+
+			if ( null !== $authentication_url ) {
+				$payment->set_action_url( $authentication_url );
+			}
+		}
+
+		if ( null !== $result->transaction ) {
+			$payment->set_transaction_id( $result->transaction->get_id() );
+		}
 	}
 
 	/**
@@ -154,8 +180,15 @@ class Gateway extends Core_Gateway {
 	public function update_status( Payment $payment ) {
 		try {
 			// Try to retrieve payment status.
-			$result = $this->client->get_status( $payment->get_transaction_id() );
+			$transaction_id = (string) $payment->get_transaction_id();
+
+			$result = $this->client->get_status( $transaction_id );
 		} catch ( \Exception $e ) {
+			return;
+		}
+
+		// Check transaction result.
+		if ( null === $result->transaction ) {
 			return;
 		}
 

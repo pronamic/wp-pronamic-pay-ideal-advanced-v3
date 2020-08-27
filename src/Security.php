@@ -1,4 +1,12 @@
 <?php
+/**
+ * Security.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -30,9 +38,8 @@ class Security {
 	/**
 	 * Get the sha1 fingerprint from the specified certificate
 	 *
-	 * @param string $certificate
-	 *
-	 * @return string Fingerprint or null on failure
+	 * @param string $certificate Certificate.
+	 * @return string|null Fingerprint or `null` on failure.
 	 */
 	public static function get_sha_fingerprint( $certificate ) {
 		return self::get_fingerprint( $certificate, 'sha1' );
@@ -41,9 +48,8 @@ class Security {
 	/**
 	 * Get the md5 fingerprint from the specified certificate
 	 *
-	 * @param string $certificate
-	 *
-	 * @return string Fingerprint or null on failure
+	 * @param string $certificate Certificate.
+	 * @return string|null Fingerprint or `null` on failure.
 	 */
 	public static function get_md5_fingerprint( $certificate ) {
 		return self::get_fingerprint( $certificate, 'md5' );
@@ -52,9 +58,9 @@ class Security {
 	/**
 	 * Get the fingerprint from the specified certificate
 	 *
-	 * @param string $certificate
-	 *
-	 * @return string Fingerprint or null on failure
+	 * @param string      $certificate Certificate.
+	 * @param string|null $hash        Hashing algorithm.
+	 * @return string|null Fingerprint or `null` on failure.
 	 */
 	public static function get_fingerprint( $certificate, $hash = null ) {
 		$fingerprint = null;
@@ -66,7 +72,7 @@ class Security {
 		// @codingStandardsIgnoreEnd
 
 		if ( false === $resource ) {
-			return false;
+			return null;
 		}
 
 		$output = null;
@@ -74,17 +80,17 @@ class Security {
 		$result = openssl_x509_export( $resource, $output );
 
 		if ( false === $result ) {
-			return false;
+			return null;
 		}
 
-		$output = str_replace( self::CERTIFICATE_BEGIN, '', $output );
+		$output = str_replace( self::CERTIFICATE_BEGIN, '', (string) $output );
 		$output = str_replace( self::CERTIFICATE_END, '', $output );
 
-		// Base64 decode
+		// Base64 decode.
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 		$fingerprint = base64_decode( $output );
 
-		// Hash
+		// Hash.
 		if ( null !== $hash ) {
 			$fingerprint = hash( $hash, $fingerprint );
 		}

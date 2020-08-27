@@ -1,4 +1,12 @@
 <?php
+/**
+ * Directory response message.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
@@ -32,7 +40,7 @@ class DirectoryResponseMessage extends ResponseMessage {
 	/**
 	 * Constructs and initialize an directory response message
 	 */
-	public function __construct() {
+	final public function __construct() {
 		parent::__construct( self::NAME );
 	}
 
@@ -48,12 +56,11 @@ class DirectoryResponseMessage extends ResponseMessage {
 	/**
 	 * Parse the specified XML into an directory response message object
 	 *
-	 * @param SimpleXMLElement $xml
-	 *
-	 * @return ResponseMessage
+	 * @param SimpleXMLElement $xml XML.
+	 * @return DirectoryResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
-		$message = self::parse_create_date( $xml, new self() );
+		$message = self::parse_create_date( $xml, new static() );
 
 		$message->directory = DirectoryParser::parse( $xml->Directory );
 
