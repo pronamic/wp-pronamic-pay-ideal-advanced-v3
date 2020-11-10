@@ -1,4 +1,12 @@
 <?php
+/**
+ * Acquirer error response message.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
@@ -32,23 +40,30 @@ class AcquirerErrorResMessage extends ResponseMessage {
 	/**
 	 * Constructs and initialize an error response message
 	 */
-	public function __construct() {
+	final public function __construct() {
 		parent::__construct( self::NAME );
 	}
 
 	/**
 	 * Parse the specified XML into an directory response message object
 	 *
-	 * @param SimpleXMLElement $xml
-	 *
-	 * @return ResponseMessage
+	 * @param SimpleXMLElement $xml XML.
+	 * @return AcquirerErrorResMessage
+	 * @throws \Exception Throws exception on failed error parsing.
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
-		$message = self::parse_create_date( $xml, new self() );
+		$message = self::parse_create_date( $xml, new static() );
 
+		// Parse error.
 		$parser = new ErrorParser();
 
-		$message->error = $parser->parse( $xml->Error );
+		$error = $parser->parse( $xml->Error );
+
+		if ( null === $error ) {
+			throw new \Exception( 'Failed to parse error response.' );
+		}
+
+		$message->error = $error;
 
 		return $message;
 	}

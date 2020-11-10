@@ -1,4 +1,12 @@
 <?php
+/**
+ * Error.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -48,14 +56,13 @@ class Error {
 	private $consumer_message;
 
 	/**
-	 * Constructs and initializes an error
+	 * Construct and initialize an error.
 	 */
 	public function __construct() {
-
 	}
 
 	/**
-	 * Get the code of this error
+	 * Get error code.
 	 *
 	 * @return string
 	 */
@@ -64,16 +71,17 @@ class Error {
 	}
 
 	/**
-	 * Set the code error
+	 * Set error code.
 	 *
-	 * @param string $code
+	 * @param string $code Error code.
+	 * @return void
 	 */
 	public function set_code( $code ) {
 		$this->code = $code;
 	}
 
 	/**
-	 * Get the message of this error
+	 * Get error message.
 	 *
 	 * @return string
 	 */
@@ -82,16 +90,17 @@ class Error {
 	}
 
 	/**
-	 * Set the message error
+	 * Set error message.
 	 *
-	 * @param string $message
+	 * @param string $message Error message.
+	 * @return void
 	 */
 	public function set_message( $message ) {
 		$this->message = $message;
 	}
 
 	/**
-	 * Get the detail of this error
+	 * Get error detail.
 	 *
 	 * @return string
 	 */
@@ -100,16 +109,17 @@ class Error {
 	}
 
 	/**
-	 * Set the detail error
+	 * Set error detail.
 	 *
-	 * @param string $detail
+	 * @param string $detail Detail.
+	 * @return void
 	 */
 	public function set_detail( $detail ) {
 		$this->detail = $detail;
 	}
 
 	/**
-	 * Get the consumer message
+	 * Get suggested action.
 	 *
 	 * @return string
 	 */
@@ -118,16 +128,17 @@ class Error {
 	}
 
 	/**
-	 * Set the consumer message
+	 * Set suggested action.
 	 *
-	 * @param string $suggested_action
+	 * @param string $suggested_action Suggested action.
+	 * @return void
 	 */
 	public function set_suggested_action( $suggested_action ) {
 		$this->suggested_action = $suggested_action;
 	}
 
 	/**
-	 * Get the consumer message
+	 * Get consumer message.
 	 *
 	 * @return string
 	 */
@@ -136,16 +147,17 @@ class Error {
 	}
 
 	/**
-	 * Set the consumer message
+	 * Set consumer message.
 	 *
-	 * @param string $consumer_message
+	 * @param string $consumer_message Consumer message.
+	 * @return void
 	 */
 	public function set_consumer_message( $consumer_message ) {
 		$this->consumer_message = $consumer_message;
 	}
 
 	/**
-	 * Create an string representation of this object
+	 * Create a string representation of this object.
 	 *
 	 * @return string
 	 */

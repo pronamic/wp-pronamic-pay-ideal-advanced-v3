@@ -1,4 +1,12 @@
 <?php
+/**
+ * Directory request message.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
@@ -29,7 +37,7 @@ class DirectoryRequestMessage extends RequestMessage {
 	/**
 	 * Get document
 	 *
-	 * @see Pronamic_Gateways_IDealAdvanced_XML_RequestMessage::getDocument()
+	 * @see \Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\RequestMessage::get_document()
 	 */
 	public function get_document() {
 		$document = parent::get_document();
@@ -37,16 +45,20 @@ class DirectoryRequestMessage extends RequestMessage {
 		// Merchant.
 		$merchant = $this->get_merchant();
 
-		$element = self::add_element( $document, $document->documentElement, 'Merchant' );
+		$document_element = $document->documentElement;
 
-		self::add_elements(
-			$document,
-			$element,
-			array(
-				'merchantID' => $merchant->get_id(),
-				'subID'      => $merchant->get_sub_id(),
-			)
-		);
+		if ( null !== $document_element ) {
+			$element = self::add_element( $document, $document_element, 'Merchant' );
+
+			self::add_elements(
+				$document,
+				$element,
+				array(
+					'merchantID' => $merchant->get_id(),
+					'subID'      => $merchant->get_sub_id(),
+				)
+			);
+		}
 
 		// Return.
 		return $document;

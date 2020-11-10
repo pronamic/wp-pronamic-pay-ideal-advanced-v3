@@ -1,4 +1,12 @@
 <?php
+/**
+ * Country.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -13,16 +21,16 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
  */
 class Country {
 	/**
-	 * The date the issuer list was modified
+	 * Country name.
 	 *
 	 * @var string
 	 */
 	private $name;
 
 	/**
-	 * The countries in this directory
+	 * Issuers for this country.
 	 *
-	 * @var array
+	 * @var array<int, Issuer>
 	 */
 	private $issuers;
 
@@ -34,7 +42,7 @@ class Country {
 	}
 
 	/**
-	 * Get the name
+	 * Get the country name.
 	 *
 	 * @return string
 	 */
@@ -43,27 +51,29 @@ class Country {
 	}
 
 	/**
-	 * Set the name
+	 * Set the country name.
 	 *
-	 * @param string $name
+	 * @param string $name Name.
+	 * @return void
 	 */
 	public function set_name( $name ) {
 		$this->name = $name;
 	}
 
 	/**
-	 * Add the specified issuer to this country
+	 * Add issuer to this country.
 	 *
-	 * @param Issuer $issuer
+	 * @param Issuer $issuer Issuer.
+	 * @return void
 	 */
 	public function add_issuer( Issuer $issuer ) {
 		$this->issuers[] = $issuer;
 	}
 
 	/**
-	 * Get the issuers within this directory
+	 * Get the issuers within this country.
 	 *
-	 * @return array
+	 * @return array<int, Issuer>
 	 */
 	public function get_issuers() {
 		return $this->issuers;

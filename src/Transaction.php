@@ -1,4 +1,12 @@
 <?php
+/**
+ * Transaction.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -15,28 +23,28 @@ class Transaction {
 	/**
 	 * Transaction ID
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $id;
 
 	/**
 	 * Purchase ID
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $purchase_id;
 
 	/**
 	 * Amount
 	 *
-	 * @var string
+	 * @var float|null
 	 */
 	private $amount;
 
 	/**
 	 * Currency
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $currency;
 
@@ -49,21 +57,21 @@ class Transaction {
 	 * minutes. Maximum allowed is PT1H; minimum allowed is
 	 * PT1M.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $expiration_period;
 
 	/**
 	 * Language
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $language;
 
 	/**
 	 * Description
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $description;
 
@@ -71,49 +79,50 @@ class Transaction {
 	 * Mandatory code to identify the customer when he/she is
 	 * redirected back to the merchantReturnURL
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $entrance_code;
 
 	/**
 	 * The status of this transaction
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $status;
 
 	/**
 	 * The consumer name
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $consumer_name;
 
 	/**
 	 * Consumer IBAN
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $consumer_iban;
 
 	/**
 	 * Consumer BIC
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	private $consumer_bic;
 
 	/**
 	 * Constructs and initializes an transaction
+	 *
+	 * @return void
 	 */
 	public function __construct() {
-
 	}
 
 	/**
 	 * Get the ID of this transaction
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_id() {
 		return $this->id;
@@ -122,7 +131,8 @@ class Transaction {
 	/**
 	 * Set the ID of this transaction
 	 *
-	 * @param string $id
+	 * @param string|null $id Transaction ID.
+	 * @return void
 	 */
 	public function set_id( $id ) {
 		$this->id = $id;
@@ -133,7 +143,7 @@ class Transaction {
 	 *
 	 * The purchase number according to the online shop’s system
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_purchase_id() {
 		return $this->purchase_id;
@@ -144,7 +154,8 @@ class Transaction {
 	 *
 	 * The purchase number according to the online shop’s system
 	 *
-	 * @param string $id
+	 * @param string|null $id Purchase ID.
+	 * @return void
 	 */
 	public function set_purchase_id( $id ) {
 		$this->purchase_id = $id;
@@ -153,7 +164,7 @@ class Transaction {
 	/**
 	 * Get the amount of this transaction
 	 *
-	 * @return string
+	 * @return float|null
 	 */
 	public function get_amount() {
 		return $this->amount;
@@ -162,7 +173,8 @@ class Transaction {
 	/**
 	 * Set the amount of this transaction
 	 *
-	 * @param string $amount
+	 * @param float|null $amount Amount.
+	 * @return void
 	 */
 	public function set_amount( $amount ) {
 		$this->amount = $amount;
@@ -171,7 +183,7 @@ class Transaction {
 	/**
 	 * Get the currency of this transaction
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_currency() {
 		return $this->currency;
@@ -180,7 +192,8 @@ class Transaction {
 	/**
 	 * Set the currency of this transaction
 	 *
-	 * @param string $currency
+	 * @param string|null $currency Currency.
+	 * @return void
 	 */
 	public function set_currency( $currency ) {
 		$this->currency = $currency;
@@ -189,7 +202,7 @@ class Transaction {
 	/**
 	 * Get the expiration period of this transaction
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_expiration_period() {
 		return $this->expiration_period;
@@ -198,7 +211,8 @@ class Transaction {
 	/**
 	 * Set the expiration period of this transaction
 	 *
-	 * @param string $expiration_period
+	 * @param string|null $expiration_period Expiration period in date interval specification notation (e.g. `PT30M`).
+	 * @return void
 	 */
 	public function set_expiration_period( $expiration_period ) {
 		$this->expiration_period = $expiration_period;
@@ -207,7 +221,7 @@ class Transaction {
 	/**
 	 * Get the language of this transaction
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_language() {
 		return $this->language;
@@ -216,7 +230,8 @@ class Transaction {
 	/**
 	 * Set the language of this transaction
 	 *
-	 * @param string $language
+	 * @param string|null $language Language.
+	 * @return void
 	 */
 	public function set_language( $language ) {
 		$this->language = $language;
@@ -225,7 +240,7 @@ class Transaction {
 	/**
 	 * Get the description of this transaction
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_description() {
 		return $this->description;
@@ -235,10 +250,15 @@ class Transaction {
 	 * Set the description of this transaction
 	 * AN..max32 (AN = Alphanumerical, free text)
 	 *
-	 * @param string $description
+	 * @param string|null $description Description.
+	 * @return void
 	 */
 	public function set_description( $description ) {
-		$this->description = substr( $description, 0, 32 );
+		if ( null !== $description ) {
+			$description = substr( $description, 0, 32 );
+		}
+
+		$this->description = $description;
 	}
 
 	/**
@@ -248,30 +268,35 @@ class Transaction {
 	 * authenticated upon redirection to the online shop (see section 4.2.2
 	 * for details).
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_entrance_code() {
 		return $this->entrance_code;
 	}
 
 	/**
-	 * Set the entrancode
+	 * Set the entrance code
 	 * ANS..max40 (ANS = Strictly alphanumerical (letters and numbers only))
 	 *
 	 * A code determined by the online shop with which the purchase can be
 	 * authenticated upon redirection to the online shop (see section 4.2.2
 	 * for details).
 	 *
-	 * @param string $entrance_code
+	 * @param string|null $entrance_code Entrance code.
+	 * @return void
 	 */
 	public function set_entrance_code( $entrance_code ) {
-		$this->entrance_code = substr( $entrance_code, 0, 40 );
+		if ( null !== $entrance_code ) {
+			$entrance_code = substr( $entrance_code, 0, 40 );
+		}
+
+		$this->entrance_code = $entrance_code;
 	}
 
 	/**
 	 * Get the status of this transaction
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_status() {
 		return $this->status;
@@ -280,7 +305,8 @@ class Transaction {
 	/**
 	 * Set the status
 	 *
-	 * @param string $status
+	 * @param string|null $status Status.
+	 * @return void
 	 */
 	public function set_status( $status ) {
 		$this->status = $status;
@@ -289,7 +315,7 @@ class Transaction {
 	/**
 	 * Get the consumer name
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_consumer_name() {
 		return $this->consumer_name;
@@ -298,7 +324,8 @@ class Transaction {
 	/**
 	 * Set the consumer name
 	 *
-	 * @param $name
+	 * @param string|null $name Consumer name.
+	 * @return void
 	 */
 	public function set_consumer_name( $name ) {
 		$this->consumer_name = $name;
@@ -307,7 +334,7 @@ class Transaction {
 	/**
 	 * Get the consumer IBAN number
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_consumer_iban() {
 		return $this->consumer_iban;
@@ -316,7 +343,8 @@ class Transaction {
 	/**
 	 * Set the consumer IBAN number
 	 *
-	 * @param string $iban
+	 * @param string|null $iban Consumber IBAN.
+	 * @return void
 	 */
 	public function set_consumer_iban( $iban ) {
 		$this->consumer_iban = $iban;
@@ -325,7 +353,7 @@ class Transaction {
 	/**
 	 * Get the consumer BIC number
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function get_consumer_bic() {
 		return $this->consumer_bic;
@@ -334,7 +362,8 @@ class Transaction {
 	/**
 	 * Set the consumer BIC number
 	 *
-	 * @param string $bic
+	 * @param string|null $bic Consumer BIC.
+	 * @return void
 	 */
 	public function set_consumer_bic( $bic ) {
 		$this->consumer_bic = $bic;

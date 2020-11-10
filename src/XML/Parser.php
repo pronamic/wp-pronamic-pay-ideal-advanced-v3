@@ -1,4 +1,12 @@
 <?php
+/**
+ * Parser.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
@@ -17,7 +25,8 @@ interface Parser {
 	/**
 	 * Parse the specified XML element
 	 *
-	 * @param SimpleXMLElement $xml
+	 * @param SimpleXMLElement $xml XML.
+	 * @return mixed
 	 */
 	public static function parse( SimpleXMLElement $xml );
 }

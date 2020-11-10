@@ -1,4 +1,12 @@
 <?php
+/**
+ * Error test.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -14,6 +22,9 @@ use PHPUnit_Framework_TestCase;
  * @version 1.0.0
  */
 class ErrorTest extends PHPUnit_Framework_TestCase {
+	/**
+	 * Test error to string.
+	 */
 	public function testToStringError() {
 		$error = new Error();
 		$error->set_code( '1' );

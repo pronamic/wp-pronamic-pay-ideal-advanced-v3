@@ -1,12 +1,20 @@
 <?php
+/**
+ * Message.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use DOMDocument;
 use DOMNode;
 use DOMText;
-use Pronamic\WordPress\DateTime\DateTime;
-use Pronamic\WordPress\DateTime\DateTimeZone;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
@@ -57,16 +65,20 @@ class Message {
 	/**
 	 * The create date of this message
 	 *
-	 * @var DateTime
+	 * @var DateTimeImmutable
 	 */
 	private $create_date;
 
 	/**
 	 * Constructs and initialize an message
+	 *
+	 * @param string $name Message name.
+	 * @return void
+	 * @throws \Exception Throws exception on date error.
 	 */
 	public function __construct( $name ) {
 		$this->name        = $name;
-		$this->create_date = new DateTime( null, new DateTimeZone( Plugin::TIMEZONE ) );
+		$this->create_date = new DateTimeImmutable( 'now', new DateTimeZone( Plugin::TIMEZONE ) );
 	}
 
 	/**
@@ -81,7 +93,7 @@ class Message {
 	/**
 	 * Get the create date
 	 *
-	 * @return DateTime
+	 * @return DateTimeImmutable
 	 */
 	public function get_create_date() {
 		return $this->create_date;
@@ -90,20 +102,20 @@ class Message {
 	/**
 	 * Set the create date
 	 *
-	 * @return DateTime
+	 * @param DateTimeImmutable $create_date Date created.
+	 * @return void
 	 */
-	public function set_create_date( DateTime $create_date ) {
+	public function set_create_date( DateTimeImmutable $create_date ) {
 		$this->create_date = $create_date;
 	}
 
 	/**
 	 * Create and add an element with the specified name and value to the specified parent
 	 *
-	 * @param DOMDocument $document
-	 * @param DOMNode     $parent
-	 * @param string      $name
-	 * @param string      $value
-	 *
+	 * @param DOMDocument $document Document.
+	 * @param DOMNode     $parent   Parent.
+	 * @param string      $name     Element name.
+	 * @param string|null $value    Element text value.
 	 * @return \DOMElement
 	 */
 	public static function add_element( DOMDocument $document, DOMNode $parent, $name, $value = null ) {
@@ -121,19 +133,14 @@ class Message {
 	/**
 	 * Add the specified elements to the parent node
 	 *
-	 * @param DOMDocument $document
-	 * @param DOMNode     $parent
-	 * @param array       $elements
+	 * @param DOMDocument                $document Document.
+	 * @param DOMNode                    $parent   Parent.
+	 * @param array<string, string|null> $elements Elements to add.
+	 * @return void
 	 */
 	public static function add_elements( DOMDocument $document, DOMNode $parent, array $elements = array() ) {
 		foreach ( $elements as $name => $value ) {
-			$element = $document->createElement( $name );
-
-			if ( null !== $value ) {
-				$element->appendChild( new DOMText( $value ) );
-			}
-
-			$parent->appendChild( $element );
+			self::add_element( $document, $parent, $name, $value );
 		}
 	}
 }

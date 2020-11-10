@@ -1,4 +1,12 @@
 <?php
+/**
+ * Directory.
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay
+ */
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
@@ -17,19 +25,21 @@ class Directory {
 	/**
 	 * The date the issuer list was modified
 	 *
-	 * @var string
+	 * @var DateTime
 	 */
 	private $date;
 
 	/**
 	 * The countries in this directory
 	 *
-	 * @var array
+	 * @var array<int, Country>
 	 */
 	private $countries;
 
 	/**
-	 * Constructs and initializes an directory
+	 * Constructs and initializes a directory
+	 *
+	 * @return void
 	 */
 	public function __construct() {
 		$this->countries = array();
@@ -38,7 +48,8 @@ class Directory {
 	/**
 	 * Set the specified date
 	 *
-	 * @param DateTime $date
+	 * @param DateTime $date Date.
+	 * @return void
 	 */
 	public function set_date( DateTime $date ) {
 		$this->date = $date;
@@ -47,7 +58,8 @@ class Directory {
 	/**
 	 * Add the specified country to this directory
 	 *
-	 * @param Country $country
+	 * @param Country $country Country.
+	 * @return void
 	 */
 	public function add_country( Country $country ) {
 		$this->countries[] = $country;
@@ -56,7 +68,7 @@ class Directory {
 	/**
 	 * Get the countries within this directory
 	 *
-	 * @return array
+	 * @return array<int, Country>
 	 */
 	public function get_countries() {
 		return $this->countries;
