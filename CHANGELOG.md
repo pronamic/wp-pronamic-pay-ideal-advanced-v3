@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.2] - 2020-11-10
+- Fix setting acquirer URL.
+
 ## [2.1.1] - 2020-03-26
 - Fix incomplete gateway settings.
 
@@ -94,7 +97,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.1...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.2...HEAD
+[2.1.2]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.0.5...2.1.0
 [2.0.5]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.0.4...2.0.5
