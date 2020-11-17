@@ -268,7 +268,7 @@ class Client {
 	 * Get the status of the specified transaction ID
 	 *
 	 * @param string $transaction_id Transaction ID.
-	 * @return TransactionResponseMessage
+	 * @return AcquirerStatusResMessage
 	 * @throws \Exception Throws exception on unexpected acquirer status response.
 	 */
 	public function get_status( $transaction_id ) {
