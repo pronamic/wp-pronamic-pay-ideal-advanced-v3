@@ -283,7 +283,7 @@ class Client {
 
 		$result = $this->send_message( $this->status_request_url, $message );
 
-		if ( ! ( $result instanceof TransactionResponseMessage ) ) {
+		if ( ! ( $result instanceof AcquirerStatusResMessage ) ) {
 			throw new \Exception( 'Unexpected response for acquirer status request.' );
 		}
 
