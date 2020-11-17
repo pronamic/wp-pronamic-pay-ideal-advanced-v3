@@ -178,12 +178,20 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		try {
-			// Try to retrieve payment status.
-			$transaction_id = (string) $payment->get_transaction_id();
+		$transaction_id = (string) $payment->get_transaction_id();
 
+		// Try to retrieve payment status.
+		try {
 			$result = $this->client->get_status( $transaction_id );
 		} catch ( \Exception $e ) {
+			$note = sprintf(
+				/* translators: %s: exception message */
+				__( 'Error getting payment status: %s', 'pronamic_ideal' ),
+				$e->getMessage()
+			);
+
+			$payment->add_note( $note );
+
 			return;
 		}
 
