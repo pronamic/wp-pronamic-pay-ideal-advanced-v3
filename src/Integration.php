@@ -516,12 +516,12 @@ class Integration extends AbstractIntegration {
 		$private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
 
 		if ( empty( $private_key_password ) ) {
-			// Without private key password we can't create private key and certifiate.
+			// Without private key password we can't create private key and certificate.
 			return;
 		}
 
 		if ( ! in_array( 'aes-128-cbc', openssl_get_cipher_methods(), true ) ) {
-			// Without AES-128-CBC ciphter method we can't create private key and certificate.
+			// Without AES-128-CBC cipher method we can't create private key and certificate.
 			return;
 		}
 

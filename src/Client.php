@@ -205,7 +205,7 @@ class Client {
 			default:
 				throw new \Exception(
 					/* translators: %s: XML document element name */
-					sprintf( __( 'Unknwon iDEAL message (%s)', 'pronamic_ideal' ), $name )
+					sprintf( __( 'Unknown iDEAL message (%s)', 'pronamic_ideal' ), $name )
 				);
 		}
 	}

@@ -343,7 +343,7 @@ class Transaction {
 	/**
 	 * Set the consumer IBAN number
 	 *
-	 * @param string|null $iban Consumber IBAN.
+	 * @param string|null $iban Consumer IBAN.
 	 * @return void
 	 */
 	public function set_consumer_iban( $iban ) {
