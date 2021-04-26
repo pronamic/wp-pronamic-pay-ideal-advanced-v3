@@ -3,7 +3,7 @@
  * Client.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay
  */
@@ -29,7 +29,7 @@ use XMLSecurityKey;
 /**
  * Title: iDEAL client
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -205,7 +205,7 @@ class Client {
 			default:
 				throw new \Exception(
 					/* translators: %s: XML document element name */
-					sprintf( __( 'Unknwon iDEAL message (%s)', 'pronamic_ideal' ), $name )
+					sprintf( __( 'Unknown iDEAL message (%s)', 'pronamic_ideal' ), $name )
 				);
 		}
 	}
@@ -268,7 +268,7 @@ class Client {
 	 * Get the status of the specified transaction ID
 	 *
 	 * @param string $transaction_id Transaction ID.
-	 * @return TransactionResponseMessage
+	 * @return AcquirerStatusResMessage
 	 * @throws \Exception Throws exception on unexpected acquirer status response.
 	 */
 	public function get_status( $transaction_id ) {

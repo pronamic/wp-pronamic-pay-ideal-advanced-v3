@@ -3,7 +3,7 @@
  * Transaction.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay
  */
@@ -13,7 +13,7 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 /**
  * Title: Transaction
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -343,7 +343,7 @@ class Transaction {
 	/**
 	 * Set the consumer IBAN number
 	 *
-	 * @param string|null $iban Consumber IBAN.
+	 * @param string|null $iban Consumer IBAN.
 	 * @return void
 	 */
 	public function set_consumer_iban( $iban ) {

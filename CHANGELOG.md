@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.4] - 2021-04-26
+- Happy 2021.
+
 ## [2.1.3] - 2020-11-17
 - Fix regression in payment status retrieval.
 
@@ -68,7 +71,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## [1.1.5] - 2016-06-08
 - Added payment method requirement.
-- Simplified the gateay payment start function.
+- Simplified the gateway payment start function.
 
 ## [1.1.4] - 2016-03-22
 - Updated gateway settings, including private key and certificate generation.
@@ -93,14 +96,15 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 - Improved support for user defined purchase ID's.
 
 ## [1.0.1] - 2015-03-03
-- Changed WordPress pay core library requirment from ~1.0.0 to >=1.0.0.
-- Changed WordPress pay iDEAL library requirment from ~1.0.0 to >=1.0.0.
-- Changed WordPress pay iDEAL Advanced library requirment from `~1.0.0` to `>=1.0.0`.
+- Changed WordPress pay core library requirement from ~1.0.0 to >=1.0.0.
+- Changed WordPress pay iDEAL library requirement from ~1.0.0 to >=1.0.0.
+- Changed WordPress pay iDEAL Advanced library requirement from `~1.0.0` to `>=1.0.0`.
 
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.3...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.4...HEAD
+[2.1.4]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.3...2.1.4
 [2.1.3]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.2...2.1.3
 [2.1.2]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/wp-pay-gateways/ideal-advanced-v3/compare/2.1.0...2.1.1
