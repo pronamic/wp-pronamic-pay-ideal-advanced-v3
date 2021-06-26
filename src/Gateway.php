@@ -131,7 +131,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Start
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::start()
+	 * @see Core_Gateway::start()
 	 *
 	 * @param Payment $payment Payment.
 	 */
