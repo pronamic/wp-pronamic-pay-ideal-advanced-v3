@@ -110,7 +110,7 @@ class TransactionRequestMessage extends RequestMessage {
 				$element,
 				array(
 					'purchaseID'       => $transaction->get_purchase_id(),
-					'amount'           => IDeal::format_amount( $amount ),
+					'amount'           => $amount,
 					'currency'         => $transaction->get_currency(),
 					'expirationPeriod' => $transaction->get_expiration_period(),
 					'language'         => $transaction->get_language(),

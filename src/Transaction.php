@@ -37,7 +37,7 @@ class Transaction {
 	/**
 	 * Amount
 	 *
-	 * @var float|null
+	 * @var string|null
 	 */
 	private $amount;
 
@@ -164,7 +164,7 @@ class Transaction {
 	/**
 	 * Get the amount of this transaction
 	 *
-	 * @return float|null
+	 * @return string|null
 	 */
 	public function get_amount() {
 		return $this->amount;
@@ -173,7 +173,7 @@ class Transaction {
 	/**
 	 * Set the amount of this transaction
 	 *
-	 * @param float|null $amount Amount.
+	 * @param string|null $amount Amount.
 	 * @return void
 	 */
 	public function set_amount( $amount ) {
