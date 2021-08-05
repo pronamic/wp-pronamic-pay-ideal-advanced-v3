@@ -1,6 +1,6 @@
 {
   "name": "ideal-advanced-v3",
-  "version": "2.1.4",
+  "version": "3.0.0",
   "description": "iDEAL Advanced v3 driver for the WordPress payment processing library.",
   "repository": {
     "type": "git",
