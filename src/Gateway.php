@@ -155,7 +155,7 @@ class Gateway extends Core_Gateway {
 		 *
 		 * @link https://www.pronamic.eu/wp-content/uploads/sites/2/2016/06/Merchant-Integration-Guide-v3-3-1-ENG-February-2015.pdf
 		 */
-		$entrance_code = \wp_generate_password( 40 );
+		$entrance_code = \wp_generate_password( 40, false );
 
 		$payment->set_meta( 'entrance_code', $entrance_code );
 
