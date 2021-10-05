@@ -175,7 +175,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Create transaction.
-		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), (string) $payment->get_issuer() );
+		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), (string) $payment->get_meta( 'issuer' ) );
 
 		if ( null !== $result->issuer ) {
 			$authentication_url = $result->issuer->get_authentication_url();
