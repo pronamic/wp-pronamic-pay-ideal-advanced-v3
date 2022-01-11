@@ -3,7 +3,7 @@
  * Gateway.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay
  */
@@ -18,7 +18,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: iDEAL Advanced v3+ gateway
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -141,6 +141,24 @@ class Gateway extends Core_Gateway {
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
+		/**
+		 * The Transaction.entranceCode is an 'authentication identifier' to
+		 * facilitate continuation of the session between Merchant and Consumer,
+		 * even if the existing session has been lost. It enables the Merchant to
+		 * recognise the Consumer associated with a (completed) transaction.
+		 * The Transaction.entranceCode is sent to the Merchant in the Redirect.
+		 * The Transaction.entranceCode must have a minimum variation of 1
+		 * million and should comprise letters and/or figures (maximum 40
+		 * positions).
+		 * The Transaction.entranceCode is created by the Merchant and passed
+		 * to the Issuer.
+		 *
+		 * @link https://www.pronamic.eu/wp-content/uploads/sites/2/2016/06/Merchant-Integration-Guide-v3-3-1-ENG-February-2015.pdf
+		 */
+		$entrance_code = \wp_generate_password( 40, false );
+
+		$payment->set_meta( 'entrance_code', $entrance_code );
+
 		// Transaction.
 		$transaction = new Transaction();
 		$transaction->set_purchase_id( $purchase_id );
@@ -148,7 +166,7 @@ class Gateway extends Core_Gateway {
 		$transaction->set_currency( $payment->get_total_amount()->get_currency()->get_alphabetic_code() );
 		$transaction->set_expiration_period( 'PT30M' );
 		$transaction->set_description( $payment->get_description() );
-		$transaction->set_entrance_code( $payment->get_entrance_code() );
+		$transaction->set_entrance_code( $entrance_code );
 
 		$customer = $payment->get_customer();
 
@@ -157,7 +175,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Create transaction.
-		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), (string) $payment->get_issuer() );
+		$result = $this->client->create_transaction( $transaction, $payment->get_return_url(), (string) $payment->get_meta( 'issuer' ) );
 
 		if ( null !== $result->issuer ) {
 			$authentication_url = $result->issuer->get_authentication_url();

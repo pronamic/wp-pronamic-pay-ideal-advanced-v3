@@ -3,7 +3,7 @@
  * Request message.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay
  */
@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Merchant;
 /**
  * Title: iDEAL request XML message
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
