@@ -34,6 +34,13 @@ class Gateway extends Core_Gateway {
 	protected $client;
 
 	/**
+	 * Config.
+	 *
+	 * @var Config
+	 */
+	protected $config;
+
+	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
 	 * @param Config $config Config.
@@ -137,7 +144,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function start( Payment $payment ) {
 		// Purchase ID.
-		$purchase_id = $payment->format_string( $this->config->get_purchase_id() );
+		$purchase_id = $payment->format_string( (string) $this->config->get_purchase_id() );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
