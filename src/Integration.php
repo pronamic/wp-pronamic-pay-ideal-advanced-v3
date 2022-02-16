@@ -35,13 +35,13 @@ class Integration extends AbstractIntegration {
 			array(
 				'id'                => 'ideal-advanced-v3',
 				'name'              => 'iDEAL Advanced v3',
+				'mode'              => 'live',
 				'url'               => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
 				'product_url'       => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
 				'manual_url'        => null,
 				'dashboard_url'     => null,
 				'provider'          => null,
 				'acquirer_url'      => null,
-				'acquirer_test_url' => null,
 				'supports'          => array(
 					'payment_status_request',
 				),
@@ -51,8 +51,9 @@ class Integration extends AbstractIntegration {
 		parent::__construct( $args );
 
 		// Acquirer URL.
-		$this->acquirer_url      = $args['acquirer_url'];
-		$this->acquirer_test_url = $args['acquirer_test_url'];
+		$this->acquirer_url = $args['acquirer_url'];
+
+		$this->mode = $args['mode'];
 
 		// Actions.
 		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
@@ -634,15 +635,9 @@ class Integration extends AbstractIntegration {
 	 * @return Config
 	 */
 	public function get_config( $post_id ) {
-		$mode = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
-
 		$config = new Config();
 
 		$config->payment_server_url = $this->acquirer_url;
-
-		if ( 'test' === $mode && null !== $this->acquirer_test_url ) {
-			$config->payment_server_url = $this->acquirer_test_url;
-		}
 
 		$config->set_merchant_id( get_post_meta( $post_id, '_pronamic_gateway_ideal_merchant_id', true ) );
 		$config->set_sub_id( get_post_meta( $post_id, '_pronamic_gateway_ideal_sub_id', true ) );
@@ -662,6 +657,10 @@ class Integration extends AbstractIntegration {
 	 * @return Gateway
 	 */
 	public function get_gateway( $post_id ) {
-		return new Gateway( $this->get_config( $post_id ) );
+		$gateway = new Gateway( $this->get_config( $post_id ) );
+
+		$gateway->mode = $this->mode;
+
+		return $gateway;
 	}
 }

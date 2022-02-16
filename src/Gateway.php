@@ -41,6 +41,13 @@ class Gateway extends Core_Gateway {
 	protected $config;
 
 	/**
+	 * Mode.
+	 *
+	 * @var string
+	 */
+	public $mode = 'live';
+
+	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
 	 * @param Config $config Config.
@@ -241,5 +248,14 @@ class Gateway extends Core_Gateway {
 		$consumer_bank_details->set_name( $transaction->get_consumer_name() );
 		$consumer_bank_details->set_iban( $transaction->get_consumer_iban() );
 		$consumer_bank_details->set_bic( $transaction->get_consumer_bic() );
+	}
+
+	/**
+	 * Get mode.
+	 * 
+	 * @return string
+	 */
+	public function get_mode() {
+		return $this->mode;
 	}
 }
