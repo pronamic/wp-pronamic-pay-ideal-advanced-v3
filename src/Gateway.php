@@ -85,13 +85,7 @@ class Gateway extends Core_Gateway {
 	public function get_issuers() {
 		$groups = array();
 
-		try {
-			$directory = $this->client->get_directory();
-		} catch ( \Exception $e ) {
-			$this->error = new \WP_Error( 'ideal_advanced_v3_error', $e->getMessage() );
-
-			return $groups;
-		}
+		$directory = $this->client->get_directory();
 
 		if ( null === $directory ) {
 			return $groups;
