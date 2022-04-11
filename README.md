@@ -17,15 +17,21 @@
 
 ## Documentation
 
-| Title                                               | Language | Version | Date    |
-| --------------------------------------------------- | -------- | ------- | ------- |
-| [iDEAL Merchant Integration Guide][doc-en-feb-2015] | EN       | `3.3.1` | 2015-02 |
-| [iDEAL Merchant Integratie Gids][doc-nl-feb-2015]   | NL       | `3.3.1` | 2015-02 |
-| [iDEAL Merchant Integration Guide][doc-en-nov-2012] | EN       | `3.3.1` | 2012-11 |
+| Title                                                    | Language | Version | Date       |
+| -------------------------------------------------------- | -------- | ------- | ---------- |
+| [iDEAL Merchant Integration Guide][doc-en-feb-2015]      | EN       | `3.3.1` | 2015-02    |
+| [iDEAL Merchant Integratie Gids][doc-nl-feb-2015]        | NL       | `3.3.1` | 2015-02    |
+| [iDEAL Merchant Integration Guide][doc-en-nov-2012]      | EN       | `3.3.1` | 2012-11    |
+| [Rabobank - Handleiding iDEAL Professional][rb-v3]       | NL       | `3.0`   | 2019-02    |
+| [iDEAL Merchant Integratie Gids (NL)][doc-nl-okt-2020]   | NL       | `3.6`   | 2020-10-09 |
+| [iDEAL Merchant Integration Guide (EN)][doc-en-okt-2020] | NL       | `3.6`   | 2020-10-09 |
 
 [doc-en-feb-2015]: https://www.pronamic.eu/wp-content/uploads/sites/2/2016/06/Merchant-Integration-Guide-v3-3-1-ENG-February-2015.pdf
 [doc-nl-feb-2015]: https://www.pronamic.eu/wp-content/uploads/sites/2/2016/06/iDEAL-Merchant-Integratie-Gids-v3-3-1-NL-Februari-2015.pdf
 [doc-en-nov-2012]: https://www.pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf
+[rb-v3]: documentation/handleiding-rabo-ideal-professional_2966322.pdf
+[doc-nl-okt-2020]: documentation/iDEAL_Merchant-Integratie-Gids_29696265_931138690.pdf
+[doc-en-okt-2020]: documentation/iDEAL-Merchant-Integration-Guide_29696264_931138689.pdf
 
 ## Signing iDEAL messages
 

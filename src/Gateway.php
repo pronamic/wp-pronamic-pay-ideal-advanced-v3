@@ -34,12 +34,28 @@ class Gateway extends Core_Gateway {
 	protected $client;
 
 	/**
+	 * Config.
+	 *
+	 * @var Config
+	 */
+	protected $config;
+
+	/**
+	 * Mode.
+	 *
+	 * @var string
+	 */
+	public $mode = 'live';
+
+	/**
 	 * Constructs and initializes an iDEAL Advanced v3 gateway
 	 *
 	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
+
+		$this->config = $config;
 
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
@@ -71,13 +87,7 @@ class Gateway extends Core_Gateway {
 	public function get_issuers() {
 		$groups = array();
 
-		try {
-			$directory = $this->client->get_directory();
-		} catch ( \Exception $e ) {
-			$this->error = new \WP_Error( 'ideal_advanced_v3_error', $e->getMessage() );
-
-			return $groups;
-		}
+		$directory = $this->client->get_directory();
 
 		if ( null === $directory ) {
 			return $groups;
@@ -137,7 +147,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function start( Payment $payment ) {
 		// Purchase ID.
-		$purchase_id = $payment->format_string( $this->config->get_purchase_id() );
+		$purchase_id = $payment->format_string( (string) $this->config->get_purchase_id() );
 
 		$payment->set_meta( 'purchase_id', $purchase_id );
 
@@ -234,5 +244,14 @@ class Gateway extends Core_Gateway {
 		$consumer_bank_details->set_name( $transaction->get_consumer_name() );
 		$consumer_bank_details->set_iban( $transaction->get_consumer_iban() );
 		$consumer_bank_details->set_bic( $transaction->get_consumer_bic() );
+	}
+
+	/**
+	 * Get mode.
+	 * 
+	 * @return string
+	 */
+	public function get_mode() {
+		return $this->mode;
 	}
 }
