@@ -133,18 +133,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get supported payment methods
-	 *
-	 * @see Core_Gateway::get_supported_payment_methods()
-	 * @return array<int, string>
-	 */
-	public function get_supported_payment_methods() {
-		return array(
-			PaymentMethods::IDEAL,
-		);
-	}
-
-	/**
 	 * Is payment method required to start transaction?
 	 *
 	 * @see   Core_Gateway::payment_method_is_required()
