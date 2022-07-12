@@ -80,11 +80,11 @@ class Client {
 	public $sub_id;
 
 	/**
-	 * Private certificate
+	 * Certificate
 	 *
 	 * @var string
 	 */
-	public $private_certificate;
+	public $certificate;
 
 	/**
 	 * Private key
@@ -358,10 +358,10 @@ class Client {
 		 *
 		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
 		 */
-		$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
+		$fingerprint = Security::get_sha_fingerprint( $this->certificate );
 
 		if ( null === $fingerprint ) {
-			throw new \Exception( 'Unable to calculate fingerprint of private certificate.' );
+			throw new \Exception( 'Unable to calculate fingerprint of certificate.' );
 		}
 
 		$dsig->addKeyInfoAndName( $fingerprint );
