@@ -73,7 +73,7 @@ class Gateway extends Core_Gateway {
 		$client->sub_id               = (string) $config->get_sub_id();
 		$client->private_key          = (string) $config->get_private_key();
 		$client->private_key_password = (string) $config->get_private_key_password();
-		$client->private_certificate  = (string) $config->get_private_certificate();
+		$client->certificate          = (string) $config->get_certificate();
 
 		$this->client = $client;
 	}

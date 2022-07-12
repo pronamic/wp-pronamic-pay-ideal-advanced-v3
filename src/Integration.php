@@ -56,8 +56,8 @@ class Integration extends AbstractIntegration {
 		$this->mode = $args['mode'];
 
 		// Actions.
-		add_action( 'current_screen', array( $this, 'maybe_download_private_certificate' ) );
-		add_action( 'current_screen', array( $this, 'maybe_download_private_key' ) );
+		add_action( 'current_screen', array( $this, 'maybe_download_certificate' ) );
+		add_action( 'current_screen', array( $this, 'maybe_download_secret_key' ) );
 	}
 
 	/**
@@ -69,13 +69,13 @@ class Integration extends AbstractIntegration {
 		$fields = parent::get_settings_fields();
 
 		/*
-		 * Private Key and Certificate
+		 * Secret key and certificate
 		 */
 
-		// Private key and certificate information.
+		// Secret key and certificate information.
 		$fields[] = array(
 			'section'  => 'general',
-			'title'    => __( 'Private key and certificate', 'pronamic_ideal' ),
+			'title'    => __( 'Secret key and certificate', 'pronamic_ideal' ),
 			'type'     => 'description',
 			'callback' => array( $this, 'field_security' ),
 		);
@@ -176,43 +176,43 @@ class Integration extends AbstractIntegration {
 			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
 		);
 
-		// Private Key Password.
+		// Secret Key Password.
 		$fields[] = array(
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key_password',
-			'title'    => __( 'Private Key Password', 'pronamic_ideal' ),
+			'title'    => __( 'Secret Key Password', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'regular-text', 'code' ),
 			'default'  => wp_generate_password(),
-			'tooltip'  => __( 'A random password which will be used for the generation of the private key and certificate.', 'pronamic_ideal' ),
+			'tooltip'  => __( 'A random password which will be used for the generation of the secret key and certificate.', 'pronamic_ideal' ),
 		);
 
-		// Private Key.
+		// Secret Key.
 		$fields[] = array(
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key',
-			'title'    => __( 'Private Key', 'pronamic_ideal' ),
+			'title'    => __( 'Secret Key', 'pronamic_ideal' ),
 			'type'     => 'textarea',
 			'callback' => array( $this, 'field_private_key' ),
 			'classes'  => array( 'code' ),
-			'tooltip'  => __( 'The private key is used for secure communication with the payment provider. If left empty, the private key will be generated using the given private key password.', 'pronamic_ideal' ),
+			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic_ideal' ),
 		);
 
-		// Private Certificate.
+		// Certificate.
 		$fields[] = array(
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_certificate',
-			'title'    => __( 'Private Certificate', 'pronamic_ideal' ),
+			'title'    => __( 'Certificate', 'pronamic_ideal' ),
 			'type'     => 'textarea',
-			'callback' => array( $this, 'field_private_certificate' ),
+			'callback' => array( $this, 'field_certificate' ),
 			'classes'  => array( 'code' ),
-			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the private key and given organization details.', 'pronamic_ideal' ),
+			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic_ideal' ),
 		);
 
 		// Return.
@@ -234,18 +234,16 @@ class Integration extends AbstractIntegration {
 		<p>
 			<?php if ( empty( $certificate ) ) : ?>
 
-				<span
-					class="dashicons dashicons-no"></span> <?php esc_html_e( 'The private key and certificate have not yet been configured.', 'pronamic_ideal' ); ?>
+				<span class="dashicons dashicons-no"></span> <?php esc_html_e( 'The secret key and certificate have not yet been configured.', 'pronamic_ideal' ); ?>
 				<br/>
 
 				<br/>
 
-				<?php esc_html_e( 'A private key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.', 'pronamic_ideal' ); ?>
+				<?php esc_html_e( 'A secret key and certificate are required for communication with the payment provider. Enter the organization details from the iDEAL account below to generate these required files.', 'pronamic_ideal' ); ?>
 
 			<?php else : ?>
 
-				<span
-					class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A private key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.', 'pronamic_ideal' ); ?>
+				<span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'A secret key and certificate have been configured. The certificate must be uploaded to the payment provider dashboard to complete configuration.', 'pronamic_ideal' ); ?>
 				<br/>
 
 				<br/>
@@ -255,7 +253,7 @@ class Integration extends AbstractIntegration {
 				submit_button(
 					__( 'Download certificate', 'pronamic_ideal' ),
 					'secondary',
-					'download_private_certificate',
+					'download_certificate',
 					false
 				);
 
@@ -297,7 +295,7 @@ class Integration extends AbstractIntegration {
 		} else {
 			printf(
 				'<p class="pronamic-pay-description description">%s</p>',
-				esc_html__( 'Leave empty and save the configuration to generate the private key or view the OpenSSL command.', 'pronamic_ideal' )
+				esc_html__( 'Leave empty and save the configuration to generate the secret key or view the OpenSSL command.', 'pronamic_ideal' )
 			);
 		}
 
@@ -309,7 +307,7 @@ class Integration extends AbstractIntegration {
 				submit_button(
 					__( 'Download', 'pronamic_ideal' ),
 					'secondary',
-					'download_private_key',
+					'download_secret_key',
 					false
 				);
 
@@ -328,12 +326,12 @@ class Integration extends AbstractIntegration {
 	}
 
 	/**
-	 * Field private certificate.
+	 * Field certificate.
 	 *
 	 * @param array<string, mixed> $field Field.
 	 * @return void
 	 */
-	public function field_private_certificate( $field ) {
+	public function field_certificate( $field ) {
 		$post_id = (int) \get_the_ID();
 
 		$certificate = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
@@ -425,7 +423,7 @@ class Integration extends AbstractIntegration {
 				submit_button(
 					__( 'Download', 'pronamic_ideal' ),
 					'secondary',
-					'download_private_certificate',
+					'download_certificate',
 					false
 				);
 
@@ -435,7 +433,7 @@ class Integration extends AbstractIntegration {
 			printf(
 				'<label class="pronamic-pay-form-control-file-button button">%s <input type="file" name="%s" /></label>',
 				esc_html__( 'Upload', 'pronamic_ideal' ),
-				'_pronamic_gateway_ideal_private_certificate_file'
+				'_pronamic_gateway_ideal_certificate_file'
 			);
 
 			?>
@@ -444,18 +442,18 @@ class Integration extends AbstractIntegration {
 	}
 
 	/**
-	 * Download private certificate.
+	 * Download certificate.
 	 *
 	 * @return void
 	 */
-	public function maybe_download_private_certificate() {
-		if ( ! filter_has_var( INPUT_POST, 'download_private_certificate' ) ) {
+	public function maybe_download_certificate() {
+		if ( ! filter_has_var( INPUT_POST, 'download_certificate' ) ) {
 			return;
 		}
 
 		$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
 
-		$filename = sprintf( 'ideal-private-certificate-%s.cer', $post_id );
+		$filename = sprintf( 'ideal-certificate-%s.cer', $post_id );
 
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
@@ -468,25 +466,27 @@ class Integration extends AbstractIntegration {
 	}
 
 	/**
-	 * Download private key.
+	 * Download secret key.
 	 *
 	 * @return void
 	 */
-	public function maybe_download_private_key() {
-		if ( filter_has_var( INPUT_POST, 'download_private_key' ) ) {
-			$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
-
-			$filename = sprintf( 'ideal-private-key-%s.key', $post_id );
-
-			header( 'Content-Description: File Transfer' );
-			header( 'Content-Disposition: attachment; filename=' . $filename );
-			header( 'Content-Type: application/pgp-keys; charset=' . get_option( 'blog_charset' ), true );
-
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
-
-			exit;
+	public function maybe_download_secret_key() {
+		if ( ! \filter_has_var( INPUT_POST, 'download_secret_key' ) ) {
+			return;
 		}
+
+		$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
+
+		$filename = sprintf( 'ideal-secret-key-%s.key', $post_id );
+
+		header( 'Content-Description: File Transfer' );
+		header( 'Content-Disposition: attachment; filename=' . $filename );
+		header( 'Content-Type: application/pgp-keys; charset=' . get_option( 'blog_charset' ), true );
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
+
+		exit;
 	}
 
 	/**
@@ -499,7 +499,7 @@ class Integration extends AbstractIntegration {
 		// Files.
 		$files = array(
 			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
-			'_pronamic_gateway_ideal_private_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
+			'_pronamic_gateway_ideal_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
 		);
 
 		foreach ( $files as $name => $meta_key ) {
@@ -566,15 +566,15 @@ class Integration extends AbstractIntegration {
 
 			update_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', $private_key );
 
-			// Delete private certificate since this is no longer valid.
+			// Delete certificate since this is no longer valid.
 			delete_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate' );
 		}
 
 		// Certificate.
-		$private_certificate = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
-		$number_days_valid   = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
+		$certificate       = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true );
+		$number_days_valid = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
 
-		if ( empty( $private_certificate ) ) {
+		if ( empty( $certificate ) ) {
 			$required_keys = array(
 				'countryName',
 				'stateOrProvinceName',
@@ -602,14 +602,14 @@ class Integration extends AbstractIntegration {
 			 * @link http://stackoverflow.com/questions/13169588/how-to-check-if-multiple-array-keys-exists
 			 */
 			if ( count( array_intersect_key( array_flip( $required_keys ), $distinguished_name ) ) === count( $required_keys ) ) {
-				// If we can't open the private key we will create a new private key and certificate.
+				// Determine cipher.
 				if ( defined( 'OPENSSL_CIPHER_AES_128_CBC' ) ) {
 					$args['encrypt_key_cipher'] = \OPENSSL_CIPHER_AES_128_CBC;
 				} elseif ( defined( 'OPENSSL_CIPHER_3DES' ) ) {
 					// @link https://www.pronamic.nl/wp-content/uploads/2011/12/iDEAL_Advanced_PHP_EN_V2.2.pdf
 					$args['encrypt_key_cipher'] = \OPENSSL_CIPHER_3DES;
 				} else {
-					// Unable to create private key without cipher.
+					// Unable to create certificate without cipher.
 					return;
 				}
 
@@ -645,7 +645,7 @@ class Integration extends AbstractIntegration {
 
 		$config->set_private_key( get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true ) );
 		$config->set_private_key_password( get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true ) );
-		$config->set_private_certificate( get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true ) );
+		$config->set_certificate( get_post_meta( $post_id, '_pronamic_gateway_ideal_private_certificate', true ) );
 
 		return $config;
 	}

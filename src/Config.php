@@ -59,11 +59,11 @@ class Config extends GatewayConfig {
 	public $private_key;
 
 	/**
-	 * Private certificate.
+	 * Certificate.
 	 *
 	 * @var string|null
 	 */
-	public $private_certificate;
+	public $certificate;
 
 	/**
 	 * Purchase ID.
@@ -168,22 +168,22 @@ class Config extends GatewayConfig {
 	}
 
 	/**
-	 * Get private certificate.
+	 * Get certificate.
 	 *
 	 * @return string|null
 	 */
-	public function get_private_certificate() {
-		return $this->private_certificate;
+	public function get_certificate() {
+		return $this->certificate;
 	}
 
 	/**
-	 * Set private certificate.
+	 * Set certificate.
 	 *
-	 * @param string|null $private_certificate Private certificate.
+	 * @param string|null $certificate Certificate.
 	 * @return void
 	 */
-	public function set_private_certificate( $private_certificate ) {
-		$this->private_certificate = $private_certificate;
+	public function set_certificate( $certificate ) {
+		$this->certificate = $certificate;
 	}
 
 	/**
