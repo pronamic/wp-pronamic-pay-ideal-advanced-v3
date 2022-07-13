@@ -69,6 +69,7 @@ class Gateway extends Core_Gateway {
 
 		// Methods.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
+		$ideal_payment_method->set_status( 'active' );
 
 		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
 		$ideal_issuer_field->set_required( true );
