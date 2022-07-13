@@ -139,6 +139,30 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
+		/**
+		 * If the payment method of the payment is unknown (`null`), we will turn it into
+		 * an iDEAL payment.
+		 */
+		$payment_method = $payment->get_payment_method();
+
+		if ( null === $payment_method ) {
+			$payment->set_payment_method( PaymentMethods::IDEAL );
+		}
+
+		/**
+		 * This gateway can only process payments for the payment method iDEAL.
+		 */
+		$payment_method = $payment->get_payment_method();
+
+		if ( PaymentMethods::IDEAL !== $payment_method ) {
+			throw new \Exception(
+				\sprintf(
+					'The iDEAL Advanced gateway cannot process `%s` payments, only iDEAL payments.',
+					$payment_method
+				)
+			);
+		}
+
 		// Purchase ID.
 		$purchase_id = $payment->format_string( (string) $this->config->get_purchase_id() );
 
