@@ -73,6 +73,16 @@ class Gateway extends Core_Gateway {
 		$ideal_payment_method->set_status( 'active' );
 
 		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
+
+		$ideal_issuer_field->set_cache_key( 'pronamic_pay_ideal_issuers_' . \md5( \serialize( [
+			'class'                => __CLASS__,
+			'merchant_id'          => (string) $config->get_merchant_id(),
+			'sub_id'               => (string) $config->get_sub_id(),
+			'private_key'          => (string) $config->get_private_key(),
+			'private_key_password' => (string) $config->get_private_key_password(),
+			'private_certificate'  => (string) $config->get_private_certificate(),
+		] ) ) );
+
 		$ideal_issuer_field->set_required( true );
 		$ideal_issuer_field->set_options_callback( function() {
 			return $this->get_ideal_issuers();
