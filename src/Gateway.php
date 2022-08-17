@@ -11,11 +11,12 @@
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
-use Pronamic\WordPress\Pay\Core\Field;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
-use Pronamic\WordPress\Pay\Core\SelectField;
+use Pronamic\WordPress\Pay\Core\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Core\SelectFieldOption;
+use Pronamic\WordPress\Pay\Core\SelectFieldOptionGroup;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -71,7 +72,7 @@ class Gateway extends Core_Gateway {
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 		$ideal_payment_method->set_status( 'active' );
 
-		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
+		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
 		$ideal_issuer_field->set_required( true );
 		$ideal_issuer_field->set_options_callback( function() {
 			return $this->get_ideal_issuers();
@@ -110,7 +111,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		foreach ( $directory->get_countries() as $country ) {
-			$issuers = array();
+			$group = new SelectFieldOptionGroup( $country->get_name() );
 
 			foreach ( $country->get_issuers() as $issuer ) {
 				$id   = $issuer->get_id();
@@ -120,13 +121,10 @@ class Gateway extends Core_Gateway {
 					continue;
 				}
 
-				$issuers[ $id ] = $name;
+				$group->options[] = new SelectFieldOption( $id, $name );
 			}
 
-			$groups[] = array(
-				'name'    => $country->get_name(),
-				'options' => $issuers,
-			);
+			$groups[] = $group;
 		}
 
 		return $groups;
