@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
+use JsonSerializable;
 use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
@@ -22,7 +23,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @version 2.0.0
  * @since   1.0.0
  */
-class Config extends GatewayConfig {
+class Config extends GatewayConfig implements JsonSerializable {
 	/**
 	 * Merchant ID.
 	 *
@@ -203,5 +204,22 @@ class Config extends GatewayConfig {
 	 */
 	public function set_purchase_id( $purchase_id ) {
 		$this->purchase_id = $purchase_id;
+	}
+
+	/**
+	 * Serialize to JSON.
+	 *
+	 * @link https://www.w3.org/TR/json-ld11/#specifying-the-type
+	 * @return mixed|void
+	 */
+	public function jsonSerialize() {
+		return [
+			'@type'                => __CLASS__,
+			'merchant_id'          => (string) $this->merchant_id,
+			'sub_id'               => (string) $this->sub_id,
+			'private_key'          => (string) $this->private_key,
+			'private_key_password' => (string) $this->private_key_password,
+			'private_certificate'  => (string) $this->private_certificate,
+		];
 	}
 }

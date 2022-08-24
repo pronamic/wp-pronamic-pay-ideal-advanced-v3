@@ -12,7 +12,12 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
+use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
+use Pronamic\WordPress\Pay\Fields\SelectFieldOptionGroup;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -64,6 +69,25 @@ class Gateway extends Core_Gateway {
 			'payment_status_request',
 		);
 
+		// Methods.
+		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
+		$ideal_payment_method->set_status( 'active' );
+
+		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
+
+		$ideal_issuer_field->set_required( true );
+
+		$ideal_issuer_field->set_options( new CachedCallbackOptions(
+			function() {
+				return $this->get_ideal_issuers();
+			},
+			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+		) );
+
+		$ideal_payment_method->add_field( $ideal_issuer_field );
+
+		$this->register_payment_method( $ideal_payment_method );
+
 		// Client.
 		$client = new Client();
 
@@ -79,12 +103,11 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get issuers
+	 * Get iDEAL issuers.
 	 *
-	 * @see Core_Gateway::get_issuers()
 	 * @return array<int, array<string, array<string, string>|string>>
 	 */
-	public function get_issuers() {
+	private function get_ideal_issuers() {
 		$groups = array();
 
 		$directory = $this->client->get_directory();
@@ -94,7 +117,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		foreach ( $directory->get_countries() as $country ) {
-			$issuers = array();
+			$group = new SelectFieldOptionGroup( $country->get_name() );
 
 			foreach ( $country->get_issuers() as $issuer ) {
 				$id   = $issuer->get_id();
@@ -104,38 +127,13 @@ class Gateway extends Core_Gateway {
 					continue;
 				}
 
-				$issuers[ $id ] = $name;
+				$group->options[] = new SelectFieldOption( $id, $name );
 			}
 
-			$groups[] = array(
-				'name'    => $country->get_name(),
-				'options' => $issuers,
-			);
+			$groups[] = $group;
 		}
 
 		return $groups;
-	}
-
-	/**
-	 * Get supported payment methods
-	 *
-	 * @see Core_Gateway::get_supported_payment_methods()
-	 * @return array<int, string>
-	 */
-	public function get_supported_payment_methods() {
-		return array(
-			PaymentMethods::IDEAL,
-		);
-	}
-
-	/**
-	 * Is payment method required to start transaction?
-	 *
-	 * @see   Core_Gateway::payment_method_is_required()
-	 * @since 1.1.5
-	 */
-	public function payment_method_is_required() {
-		return true;
 	}
 
 	/**
@@ -146,6 +144,30 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
+		/**
+		 * If the payment method of the payment is unknown (`null`), we will turn it into
+		 * an iDEAL payment.
+		 */
+		$payment_method = $payment->get_payment_method();
+
+		if ( null === $payment_method ) {
+			$payment->set_payment_method( PaymentMethods::IDEAL );
+		}
+
+		/**
+		 * This gateway can only process payments for the payment method iDEAL.
+		 */
+		$payment_method = $payment->get_payment_method();
+
+		if ( PaymentMethods::IDEAL !== $payment_method ) {
+			throw new \Exception(
+				\sprintf(
+					'The iDEAL Advanced gateway cannot process `%s` payments, only iDEAL payments.',
+					$payment_method
+				)
+			);
+		}
+
 		// Purchase ID.
 		$purchase_id = $payment->format_string( (string) $this->config->get_purchase_id() );
 
