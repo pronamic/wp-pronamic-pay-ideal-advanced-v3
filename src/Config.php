@@ -219,7 +219,7 @@ class Config extends GatewayConfig implements JsonSerializable {
 			'sub_id'               => (string) $this->sub_id,
 			'private_key'          => (string) $this->private_key,
 			'private_key_password' => (string) $this->private_key_password,
-			'private_certificate'  => (string) $this->private_certificate,
+			'certificate'          => (string) $this->certificate,
 		];
 	}
 }
