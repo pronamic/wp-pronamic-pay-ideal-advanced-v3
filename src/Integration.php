@@ -29,23 +29,23 @@ class Integration extends AbstractIntegration {
 	 * @param array<string, mixed> $args Arguments.
 	 * @return void
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = [] ) {
 		$args = wp_parse_args(
 			$args,
-			array(
-				'id'                => 'ideal-advanced-v3',
-				'name'              => 'iDEAL Advanced v3',
-				'mode'              => 'live',
-				'url'               => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-				'product_url'       => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
-				'manual_url'        => null,
-				'dashboard_url'     => null,
-				'provider'          => null,
-				'acquirer_url'      => null,
-				'supports'          => array(
+			[
+				'id'            => 'ideal-advanced-v3',
+				'name'          => 'iDEAL Advanced v3',
+				'mode'          => 'live',
+				'url'           => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'product_url'   => \__( 'https://www.ideal.nl/en/', 'pronamic_ideal' ),
+				'manual_url'    => null,
+				'dashboard_url' => null,
+				'provider'      => null,
+				'acquirer_url'  => null,
+				'supports'      => [
 					'payment_status_request',
-				),
-			)
+				],
+			]
 		);
 
 		parent::__construct( $args );
@@ -56,8 +56,8 @@ class Integration extends AbstractIntegration {
 		$this->mode = $args['mode'];
 
 		// Actions.
-		add_action( 'current_screen', array( $this, 'maybe_download_certificate' ) );
-		add_action( 'current_screen', array( $this, 'maybe_download_secret_key' ) );
+		add_action( 'current_screen', [ $this, 'maybe_download_certificate' ] );
+		add_action( 'current_screen', [ $this, 'maybe_download_secret_key' ] );
 	}
 
 	/**
@@ -73,15 +73,15 @@ class Integration extends AbstractIntegration {
 		 */
 
 		// Secret key and certificate information.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'title'    => __( 'Secret key and certificate', 'pronamic_ideal' ),
 			'type'     => 'description',
-			'callback' => array( $this, 'field_security' ),
-		);
+			'callback' => [ $this, 'field_security' ],
+		];
 
 		// Organization.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
@@ -89,10 +89,10 @@ class Integration extends AbstractIntegration {
 			'title'    => __( 'Organization', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'tooltip'  => __( 'Organization name, e.g. Pronamic', 'pronamic_ideal' ),
-		);
+		];
 
 		// Organization Unit.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
@@ -100,10 +100,10 @@ class Integration extends AbstractIntegration {
 			'title'    => __( 'Organization Unit', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'tooltip'  => __( 'Organization unit, e.g. Administration', 'pronamic_ideal' ),
-		);
+		];
 
 		// Locality.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
@@ -111,10 +111,10 @@ class Integration extends AbstractIntegration {
 			'title'    => __( 'City', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'tooltip'  => __( 'City, e.g. Amsterdam', 'pronamic_ideal' ),
-		);
+		];
 
 		// State or Province.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
@@ -122,14 +122,14 @@ class Integration extends AbstractIntegration {
 			'title'    => __( 'State / province', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'tooltip'  => __( 'State or province, e.g. Friesland', 'pronamic_ideal' ),
-		);
+		];
 
 		// Country.
 		$locale = \explode( '_', \get_locale() );
 
 		$locale = count( $locale ) > 1 ? $locale[1] : $locale[0];
 
-		$fields[] = array(
+		$fields[] = [
 			'section'     => 'general',
 			'filter'      => FILTER_SANITIZE_STRING,
 			'group'       => 'pk-cert',
@@ -147,10 +147,10 @@ class Integration extends AbstractIntegration {
 				__( '2 letter country code, e.g.', 'pronamic_ideal' ),
 				strtoupper( $locale )
 			),
-		);
+		];
 
 		// Email Address.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
@@ -162,10 +162,10 @@ class Integration extends AbstractIntegration {
 				(string) get_option( 'admin_email' )
 			),
 			'type'     => 'text',
-		);
+		];
 
 		// Number Days Valid.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_NUMBER_INT,
 			'group'    => 'pk-cert',
@@ -174,46 +174,46 @@ class Integration extends AbstractIntegration {
 			'type'     => 'text',
 			'default'  => 1825,
 			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
-		);
+		];
 
 		// Secret Key Password.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key_password',
 			'title'    => __( 'Secret Key Password', 'pronamic_ideal' ),
 			'type'     => 'text',
-			'classes'  => array( 'regular-text', 'code' ),
+			'classes'  => [ 'regular-text', 'code' ],
 			'default'  => wp_generate_password(),
 			'tooltip'  => __( 'A random password which will be used for the generation of the secret key and certificate.', 'pronamic_ideal' ),
-		);
+		];
 
 		// Secret Key.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key',
 			'title'    => __( 'Secret Key', 'pronamic_ideal' ),
 			'type'     => 'textarea',
-			'callback' => array( $this, 'field_private_key' ),
-			'classes'  => array( 'code' ),
+			'callback' => [ $this, 'field_private_key' ],
+			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic_ideal' ),
-		);
+		];
 
 		// Certificate.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_certificate',
 			'title'    => __( 'Certificate', 'pronamic_ideal' ),
 			'type'     => 'textarea',
-			'callback' => array( $this, 'field_certificate' ),
-			'classes'  => array( 'code' ),
+			'callback' => [ $this, 'field_certificate' ],
+			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic_ideal' ),
-		);
+		];
 
 		// Return.
 		return $fields;
@@ -343,7 +343,7 @@ class Integration extends AbstractIntegration {
 		$filename_cer = __( 'ideal.cer', 'pronamic_ideal' );
 
 		// @link http://www.openssl.org/docs/apps/req.html
-		$subj_args = array(
+		$subj_args = [
 			'C'            => get_post_meta( $post_id, '_pronamic_gateway_country', true ),
 			'ST'           => get_post_meta( $post_id, '_pronamic_gateway_state_or_province', true ),
 			'L'            => get_post_meta( $post_id, '_pronamic_gateway_locality', true ),
@@ -351,7 +351,7 @@ class Integration extends AbstractIntegration {
 			'OU'           => get_post_meta( $post_id, '_pronamic_gateway_organization_unit', true ),
 			'CN'           => get_post_meta( $post_id, '_pronamic_gateway_organization', true ),
 			'emailAddress' => get_post_meta( $post_id, '_pronamic_gateway_email', true ),
-		);
+		];
 
 		$subj_args = array_filter( $subj_args );
 
@@ -497,10 +497,10 @@ class Integration extends AbstractIntegration {
 	 */
 	public function save_post( $post_id ) {
 		// Files.
-		$files = array(
+		$files = [
 			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
 			'_pronamic_gateway_ideal_certificate_file' => '_pronamic_gateway_ideal_private_certificate',
-		);
+		];
 
 		foreach ( $files as $name => $meta_key ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
@@ -526,7 +526,7 @@ class Integration extends AbstractIntegration {
 			return;
 		}
 
-		$args = array(
+		$args = [
 			'digest_alg'             => 'SHA256',
 			'private_key_bits'       => 2048,
 			'private_key_type'       => \OPENSSL_KEYTYPE_RSA,
@@ -534,7 +534,7 @@ class Integration extends AbstractIntegration {
 			'subjectKeyIdentifier'   => 'hash',
 			'authorityKeyIdentifier' => 'keyid:always,issuer:always',
 			'basicConstraints'       => 'CA:true',
-		);
+		];
 
 		// Private key.
 		$pkey = openssl_pkey_get_private( $private_key, $private_key_password );
@@ -575,16 +575,16 @@ class Integration extends AbstractIntegration {
 		$number_days_valid = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
 
 		if ( empty( $certificate ) ) {
-			$required_keys = array(
+			$required_keys = [
 				'countryName',
 				'stateOrProvinceName',
 				'localityName',
 				'organizationName',
 				'commonName',
 				'emailAddress',
-			);
+			];
 
-			$distinguished_name = array(
+			$distinguished_name = [
 				'countryName'            => get_post_meta( $post_id, '_pronamic_gateway_country', true ),
 				'stateOrProvinceName'    => get_post_meta( $post_id, '_pronamic_gateway_state_or_province', true ),
 				'localityName'           => get_post_meta( $post_id, '_pronamic_gateway_locality', true ),
@@ -592,7 +592,7 @@ class Integration extends AbstractIntegration {
 				'organizationalUnitName' => get_post_meta( $post_id, '_pronamic_gateway_organization_unit', true ),
 				'commonName'             => get_post_meta( $post_id, '_pronamic_gateway_organization', true ),
 				'emailAddress'           => get_post_meta( $post_id, '_pronamic_gateway_email', true ),
-			);
+			];
 
 			$distinguished_name = array_filter( $distinguished_name );
 

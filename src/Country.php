@@ -38,7 +38,7 @@ class Country {
 	 * Constructs and initializes an country
 	 */
 	public function __construct() {
-		$this->issuers = array();
+		$this->issuers = [];
 	}
 
 	/**

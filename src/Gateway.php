@@ -65,9 +65,9 @@ class Gateway extends Core_Gateway {
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Supported features.
-		$this->supports = array(
+		$this->supports = [
 			'payment_status_request',
-		);
+		];
 
 		// Methods.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
@@ -77,12 +77,14 @@ class Gateway extends Core_Gateway {
 
 		$ideal_issuer_field->set_required( true );
 
-		$ideal_issuer_field->set_options( new CachedCallbackOptions(
-			function() {
-				return $this->get_ideal_issuers();
-			},
-			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
-		) );
+		$ideal_issuer_field->set_options(
+			new CachedCallbackOptions(
+				function() {
+					return $this->get_ideal_issuers();
+				},
+				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+			) 
+		);
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
@@ -108,7 +110,7 @@ class Gateway extends Core_Gateway {
 	 * @return array<int, array<string, array<string, string>|string>>
 	 */
 	private function get_ideal_issuers() {
-		$groups = array();
+		$groups = [];
 
 		$directory = $this->client->get_directory();
 

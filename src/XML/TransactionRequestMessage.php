@@ -74,9 +74,9 @@ class TransactionRequestMessage extends RequestMessage {
 			self::add_elements(
 				$document,
 				$element,
-				array(
+				[
 					'issuerID' => $issuer->get_id(),
-				)
+				]
 			);
 
 			// Merchant.
@@ -87,11 +87,11 @@ class TransactionRequestMessage extends RequestMessage {
 			self::add_elements(
 				$document,
 				$element,
-				array(
+				[
 					'merchantID'        => $merchant->get_id(),
 					'subID'             => $merchant->get_sub_id(),
 					'merchantReturnURL' => $merchant->get_return_url(),
-				)
+				]
 			);
 
 			// Transaction.
@@ -108,7 +108,7 @@ class TransactionRequestMessage extends RequestMessage {
 			self::add_elements(
 				$document,
 				$element,
-				array(
+				[
 					'purchaseID'       => $transaction->get_purchase_id(),
 					'amount'           => $amount,
 					'currency'         => $transaction->get_currency(),
@@ -116,7 +116,7 @@ class TransactionRequestMessage extends RequestMessage {
 					'language'         => $transaction->get_language(),
 					'description'      => $transaction->get_description(),
 					'entranceCode'     => $transaction->get_entrance_code(),
-				)
+				]
 			);
 		}
 

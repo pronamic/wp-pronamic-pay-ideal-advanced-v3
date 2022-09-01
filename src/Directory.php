@@ -42,7 +42,7 @@ class Directory {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->countries = array();
+		$this->countries = [];
 	}
 
 	/**
