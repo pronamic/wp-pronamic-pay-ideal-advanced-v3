@@ -144,6 +144,7 @@ class Gateway extends Core_Gateway {
 	 * @see Core_Gateway::start()
 	 *
 	 * @param Payment $payment Payment.
+	 * @throws \Exception Throws exception on unsupported payment method.
 	 */
 	public function start( Payment $payment ) {
 		/**
