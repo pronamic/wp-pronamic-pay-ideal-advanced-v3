@@ -138,7 +138,7 @@ class Message {
 	 * @param array<string, string|null> $elements Elements to add.
 	 * @return void
 	 */
-	public static function add_elements( DOMDocument $document, DOMNode $parent, array $elements = array() ) {
+	public static function add_elements( DOMDocument $document, DOMNode $parent, array $elements = [] ) {
 		foreach ( $elements as $name => $value ) {
 			self::add_element( $document, $parent, $name, $value );
 		}

@@ -80,11 +80,11 @@ class Client {
 	public $sub_id;
 
 	/**
-	 * Private certificate
+	 * Certificate
 	 *
 	 * @var string
 	 */
-	public $private_certificate;
+	public $certificate;
 
 	/**
 	 * Private key
@@ -142,13 +142,13 @@ class Client {
 		// Remote post.
 		$response = wp_remote_post(
 			$url,
-			array(
+			[
 				'method'  => 'POST',
-				'headers' => array(
+				'headers' => [
 					'Content-Type' => 'text/xml; charset=' . Message::XML_ENCODING,
-				),
+				],
 				'body'    => $data,
-			)
+			]
 		);
 
 		// Handle response.
@@ -317,10 +317,10 @@ class Client {
 		$dsig->addReference(
 			$document,
 			XMLSecurityDSig::SHA256,
-			array( 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' ),
-			array(
+			[ 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' ],
+			[
 				'force_uri' => true,
-			)
+			]
 		);
 
 		/*
@@ -330,9 +330,9 @@ class Client {
 		 */
 		$key = new XMLSecurityKey(
 			XMLSecurityKey::RSA_SHA256,
-			array(
+			[
 				'type' => 'private',
-			)
+			]
 		);
 
 		$key->passphrase = $this->private_key_password;
@@ -358,10 +358,10 @@ class Client {
 		 *
 		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
 		 */
-		$fingerprint = Security::get_sha_fingerprint( $this->private_certificate );
+		$fingerprint = Security::get_sha_fingerprint( $this->certificate );
 
 		if ( null === $fingerprint ) {
-			throw new \Exception( 'Unable to calculate fingerprint of private certificate.' );
+			throw new \Exception( 'Unable to calculate fingerprint of certificate.' );
 		}
 
 		$dsig->addKeyInfoAndName( $fingerprint );

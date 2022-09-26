@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
+use JsonSerializable;
 use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
@@ -22,7 +23,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @version 2.0.0
  * @since   1.0.0
  */
-class Config extends GatewayConfig {
+class Config extends GatewayConfig implements JsonSerializable {
 	/**
 	 * Merchant ID.
 	 *
@@ -59,11 +60,11 @@ class Config extends GatewayConfig {
 	public $private_key;
 
 	/**
-	 * Private certificate.
+	 * Certificate.
 	 *
 	 * @var string|null
 	 */
-	public $private_certificate;
+	public $certificate;
 
 	/**
 	 * Purchase ID.
@@ -168,22 +169,22 @@ class Config extends GatewayConfig {
 	}
 
 	/**
-	 * Get private certificate.
+	 * Get certificate.
 	 *
 	 * @return string|null
 	 */
-	public function get_private_certificate() {
-		return $this->private_certificate;
+	public function get_certificate() {
+		return $this->certificate;
 	}
 
 	/**
-	 * Set private certificate.
+	 * Set certificate.
 	 *
-	 * @param string|null $private_certificate Private certificate.
+	 * @param string|null $certificate Certificate.
 	 * @return void
 	 */
-	public function set_private_certificate( $private_certificate ) {
-		$this->private_certificate = $private_certificate;
+	public function set_certificate( $certificate ) {
+		$this->certificate = $certificate;
 	}
 
 	/**
@@ -203,5 +204,22 @@ class Config extends GatewayConfig {
 	 */
 	public function set_purchase_id( $purchase_id ) {
 		$this->purchase_id = $purchase_id;
+	}
+
+	/**
+	 * Serialize to JSON.
+	 *
+	 * @link https://www.w3.org/TR/json-ld11/#specifying-the-type
+	 * @return mixed|void
+	 */
+	public function jsonSerialize() {
+		return [
+			'@type'                => __CLASS__,
+			'merchant_id'          => (string) $this->merchant_id,
+			'sub_id'               => (string) $this->sub_id,
+			'private_key'          => (string) $this->private_key,
+			'private_key_password' => (string) $this->private_key_password,
+			'certificate'          => (string) $this->certificate,
+		];
 	}
 }

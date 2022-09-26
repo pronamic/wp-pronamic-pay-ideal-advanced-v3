@@ -53,10 +53,10 @@ class DirectoryRequestMessage extends RequestMessage {
 			self::add_elements(
 				$document,
 				$element,
-				array(
+				[
 					'merchantID' => $merchant->get_id(),
 					'subID'      => $merchant->get_sub_id(),
-				)
+				]
 			);
 		}
 
