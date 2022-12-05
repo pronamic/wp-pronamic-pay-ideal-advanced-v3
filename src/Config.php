@@ -210,10 +210,10 @@ class Config extends GatewayConfig implements JsonSerializable {
 	 * Serialize to JSON.
 	 *
 	 * @link https://www.w3.org/TR/json-ld11/#specifying-the-type
-	 * @return mixed|void
+	 * @return object
 	 */
-	public function jsonSerialize() {
-		return [
+	public function jsonSerialize(): object {
+		return (object) [
 			'@type'                => __CLASS__,
 			'merchant_id'          => (string) $this->merchant_id,
 			'sub_id'               => (string) $this->sub_id,
