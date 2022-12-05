@@ -300,74 +300,13 @@ class Client {
 	 * @throws \Exception Can not load private key.
 	 */
 	private function sign_document( DOMDocument $document ) {
-		$dsig = new XMLSecurityDSig();
-
-		/*
-		 * For canonicalization purposes the exclusive (9) algorithm must be used.
-		 *
-		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
-		 */
-		$dsig->setCanonicalMethod( XMLSecurityDSig::EXC_C14N );
-
-		/*
-		 * For hashing purposes the SHA-256 (11) algorithm must be used.
-		 *
-		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 30
-		 */
-		$dsig->addReference(
-			$document,
-			XMLSecurityDSig::SHA256,
-			[ 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' ],
-			[
-				'force_uri' => true,
-			]
+		$xml_signer = new XmlSigner(
+			$this->certificate,
+			$this->private_key,
+			$this->private_key_password
 		);
 
-		/*
-		 * For signature purposes the RSAWithSHA 256 (12) algorithm must be used.
-		 *
-		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-		 */
-		$key = new XMLSecurityKey(
-			XMLSecurityKey::RSA_SHA256,
-			[
-				'type' => 'private',
-			]
-		);
-
-		$key->passphrase = $this->private_key_password;
-
-		$key->loadKey( $this->private_key );
-
-		/*
-		 * Test if we can get an private key object, to prevent the following error:
-		 * Warning: openssl_sign() [function.openssl-sign]: supplied key param cannot be coerced into a private key.
-		 */
-		$private_key = openssl_get_privatekey( $this->private_key, $this->private_key_password );
-
-		if ( false === $private_key ) {
-			throw new \Exception( 'Can not load private key' );
-		}
-
-		// Sign.
-		$dsig->sign( $key );
-
-		/*
-		 * The public key must be referenced using a fingerprint of an X.509 certificate. The
-		 * fingerprint must be calculated according to the following formula HEX(SHA-1(DER certificate)) (13).
-		 *
-		 * @link http://pronamic.nl/wp-content/uploads/2012/12/iDEAL-Merchant-Integration-Guide-ENG-v3.3.1.pdf #page 31
-		 */
-		$fingerprint = Security::get_sha_fingerprint( $this->certificate );
-
-		if ( null === $fingerprint ) {
-			throw new \Exception( 'Unable to calculate fingerprint of certificate.' );
-		}
-
-		$dsig->addKeyInfoAndName( $fingerprint );
-
-		// Add the signature.
-		$dsig->appendSignature( $document->documentElement );
+		$xml_signer->sign_document( $document );
 
 		return $document;
 	}
