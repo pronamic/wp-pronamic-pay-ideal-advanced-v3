@@ -11,42 +11,107 @@
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use DOMDocument;
+use DOMElement;
 
 /**
  * XML Signer class
  */
 class XmlSigner {
-	private $certificate;
+	/**
+	 * Key name.
+	 * 
+	 * @var string
+	 */
+	private $key_name;
 
+	/**
+	 * Private key.
+	 * 
+	 * @var resource
+	 */
 	private $private_key;
 
-	private $private_key_password;
+	/**
+	 * Construct XML signer.
+	 * 
+	 * @param string   $key_name    Key name.
+	 * @param resource $private_key Private key.
+	 */
+	public function __construct( $key_name, $private_key ) {
+		$this->key_name = $key_name;
 
-	public function __construct( $certificate, $private_key, $private_key_password ) {
-		$this->certificate = $certificate;
 		$this->private_key = $private_key;
-		$this->private_key_password = $private_key_password;
 	}
 
 	/**
-	 * PEM to DER.
+	 * Get element with signed info.
 	 * 
-	 * @link https://knowledge.digicert.com/solution/SO26449.html
-	 * @link https://www.openssl.org/docs/man1.0.2/man1/x509.html
-	 * @link https://stackoverflow.com/questions/36503814/why-are-pem2der-and-der2pem-not-inverses
+	 * @param DOMDocument $document Document.
+	 * @param string      $digest_value Digest value.
+	 * @return DOMElement
 	 */
-	private function pem_to_der( $certificate ) {
-		$value = $certificate;
+	private function get_element_signed_info( DOMDocument $document, string $digest_value ) : DOMElement {
+		$element_signed_info = $document->createElement( 'SignedInfo' );
 
-		$value = \str_replace( '-----BEGIN CERTIFICATE-----', '', $value );
-		$value = \str_replace( '-----END CERTIFICATE-----', '', $value );
-		$value = \trim( $value );
+		$element_canonicalization_method = $document->createElement( 'CanonicalizationMethod' );
+		$element_canonicalization_method->setAttribute( 'Algorithm', 'http://www.w3.org/2001/10/xml-exc-c14n#' );
 
-		$value = \base64_decode( $value );
+		$element_signed_info->appendChild( $element_canonicalization_method );
 
-		return $value;
+		$element_signature_method = $document->createElement( 'SignatureMethod' );
+		$element_signature_method->setAttribute( 'Algorithm', 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256' );
+
+		$element_signed_info->appendChild( $element_signature_method );
+
+		$element_reference = $document->createElement( 'Reference' );
+		$element_reference->setAttribute( 'URI', '' );
+
+		$element_signed_info->appendChild( $element_reference );
+
+		$element_transforms = $document->createElement( 'Transforms' );
+
+		$element_reference->appendChild( $element_transforms );
+
+		$element_transform = $document->createElement( 'Transform' );
+		$element_transform->setAttribute( 'Algorithm', 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' );
+
+		$element_transforms->appendChild( $element_transform );
+
+		$element_digest_method = $document->createElement( 'DigestMethod' );
+		$element_digest_method->setAttribute( 'Algorithm', 'http://www.w3.org/2001/04/xmlenc#sha256' );
+
+		$element_reference->appendChild( $element_digest_method );
+
+		$element_digest_value = $document->createElement( 'DigestValue', $digest_value );
+
+		$element_reference->appendChild( $element_digest_value );
+
+		return $element_signed_info;
 	}
 
+	/**
+	 * Get element with key info.
+	 * 
+	 * @param DOMDocument $document Document.
+	 * @param string      $digest_value Digest value.
+	 * @return DOMElement
+	 */
+	private function get_element_key_info( $document, $key_name ) {
+		$element_key_info = $document->createElement( 'KeyInfo' );
+
+		$element_key_name = $document->createElement( 'KeyName', $key_name );
+
+		$element_key_info->appendChild( $element_key_name );
+
+		return $element_key_info;
+	}
+
+	/**
+	 * Sign document.
+	 * 
+	 * @param DOMDocument $document Document to sign.
+	 * @return DOMDocument
+	 */
 	public function sign_document( DOMDocument $document ) {
 		$document_signature = new DOMDocument( '1.0', 'UTF-8' );
 
@@ -54,69 +119,32 @@ class XmlSigner {
 
 		$document_signature->appendChild( $element_signature );
 
-		$element_signed_info = $document_signature->createElement( 'SignedInfo' );
+		// Signed info.
+		$data = $document->C14N( false, false );
+
+		$digest_value = \base64_encode( \hash( 'sha256', $data, true ) );
+
+		$element_signed_info = $this->get_element_signed_info( $document_signature, $digest_value );
 
 		$element_signature->appendChild( $element_signed_info );
 
-		$element_canonicalization_method = $document_signature->createElement( 'CanonicalizationMethod' );
-		$element_canonicalization_method->setAttribute( 'Algorithm', 'http://www.w3.org/2001/10/xml-exc-c14n#' );
-
-		$element_signed_info->appendChild( $element_canonicalization_method );
-
-		$element_signature_method = $document_signature->createElement( 'SignatureMethod' );
-		$element_signature_method->setAttribute( 'Algorithm', 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256' );
-
-		$element_signed_info->appendChild( $element_signature_method );
-
-		$element_reference = $document_signature->createElement( 'Reference' );
-		$element_reference->setAttribute( 'URI', '' );
-
-		$element_signed_info->appendChild( $element_reference );
-
-		$element_transforms = $document_signature->createElement( 'Transforms' );
-
-		$element_reference->appendChild( $element_transforms );
-
-		$element_transform = $document_signature->createElement( 'Transform' );
-		$element_transform->setAttribute( 'Algorithm', 'http://www.w3.org/2000/09/xmldsig#enveloped-signature' );
-
-		$element_transforms->appendChild( $element_transform );
-
-		$element_digest_method = $document_signature->createElement( 'DigestMethod' );
-		$element_digest_method->setAttribute( 'Algorithm', 'http://www.w3.org/2001/04/xmlenc#sha256' );
-
-		$element_reference->appendChild( $element_digest_method );
-
-		$data = $document->C14N( false, false );
-
-		$digest_value = base64_encode( hash( 'sha256', $data, true ) );
-
-		$element_digest_value = $document_signature->createElement( 'DigestValue', $digest_value );
-
-		$element_reference->appendChild( $element_digest_value );
-
+		// Signature value.
 		$data = $element_signed_info->C14N( true, false );
 
-		$private_key = openssl_get_privatekey( $this->private_key, $this->private_key_password );
+		$result = \openssl_sign( $data, $signature, $this->private_key, 'sha256WithRSAEncryption' );
 
-		$result = openssl_sign( $data, $signature, $private_key, 'sha256WithRSAEncryption' );
-
-		$signature_value = base64_encode( $signature );
+		$signature_value = \base64_encode( $signature );
 
 		$element_signature_value = $document_signature->createElement( 'SignatureValue', $signature_value );
 
 		$element_signature->appendChild( $element_signature_value );
 
-		$element_key_info = $document_signature->createElement( 'KeyInfo' );
+		// Key info.
+		$element_key_info = $this->get_element_key_info( $document_signature, $this->key_name );
 
 		$element_signature->appendChild( $element_key_info );
 
-		$fingerprint = strtoupper( hash( 'sha1', $this->pem_to_der( $this->certificate ) ) );
-
-		$element_key_name = $document_signature->createElement( 'KeyName', $fingerprint );
-
-		$element_key_info->appendChild( $element_key_name );
-
+		// Sign.
 		$signature_element = $document->importNode( $element_signature, true );
 
 		$document->documentElement->appendChild( $signature_element );

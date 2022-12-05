@@ -300,10 +300,17 @@ class Client {
 	 * @throws \Exception Can not load private key.
 	 */
 	private function sign_document( DOMDocument $document ) {
+		$certificate = new Certificate( $this->certificate );
+
+		$private_key = \openssl_get_privatekey( $this->private_key, $this->private_key_password );
+
+		if ( false === $private_key ) {
+			throw new \Exception( 'Can not load private key' );
+		}
+
 		$xml_signer = new XmlSigner(
-			$this->certificate,
-			$this->private_key,
-			$this->private_key_password
+			$certificate->get_fingerprint(),
+			$private_key
 		);
 
 		$xml_signer->sign_document( $document );
