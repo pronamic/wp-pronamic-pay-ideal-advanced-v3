@@ -82,7 +82,7 @@ class Gateway extends Core_Gateway {
 				function() {
 					return $this->get_ideal_issuers();
 				},
-				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+				'pronamic_pay_ideal_issuers_' . \md5( (string) \wp_json_encode( $config ) )
 			) 
 		);
 
@@ -107,7 +107,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get iDEAL issuers.
 	 *
-	 * @return array<int, array<string, array<string, string>|string>>
+	 * @return SelectFieldOptionGroup[]
 	 */
 	private function get_ideal_issuers() {
 		$groups = [];

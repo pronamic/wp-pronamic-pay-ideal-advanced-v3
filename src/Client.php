@@ -302,7 +302,7 @@ class Client {
 	private function sign_document( DOMDocument $document ) {
 		$certificate = new Certificate( $this->certificate );
 
-		$private_key = \openssl_get_privatekey( $this->private_key, $this->private_key_password );
+		$private_key = \openssl_pkey_get_private( $this->private_key, $this->private_key_password );
 
 		if ( false === $private_key ) {
 			throw new \Exception( 'Can not load private key' );

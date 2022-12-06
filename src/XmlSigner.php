@@ -12,6 +12,7 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use DOMDocument;
 use DOMElement;
+use OpenSSLAsymmetricKey;
 
 /**
  * XML Signer class
@@ -27,17 +28,17 @@ class XmlSigner {
 	/**
 	 * Private key.
 	 * 
-	 * @var resource
+	 * @var OpenSSLAsymmetricKey
 	 */
 	private $private_key;
 
 	/**
 	 * Construct XML signer.
 	 * 
-	 * @param string   $key_name    Key name.
-	 * @param resource $private_key Private key.
+	 * @param string               $key_name    Key name.
+	 * @param OpenSSLAsymmetricKey $private_key Private key.
 	 */
-	public function __construct( $key_name, $private_key ) {
+	public function __construct( string $key_name, OpenSSLAsymmetricKey $private_key ) {
 		$this->key_name = $key_name;
 
 		$this->private_key = $private_key;
@@ -50,7 +51,7 @@ class XmlSigner {
 	 * @param string      $digest_value Digest value.
 	 * @return DOMElement
 	 */
-	private function get_element_signed_info( DOMDocument $document, string $digest_value ) : DOMElement {
+	private function get_element_signed_info( DOMDocument $document, string $digest_value ): DOMElement {
 		$element_signed_info = $document->createElement( 'SignedInfo' );
 
 		$element_canonicalization_method = $document->createElement( 'CanonicalizationMethod' );
@@ -96,7 +97,7 @@ class XmlSigner {
 	 * @param string      $key_name Key name.
 	 * @return DOMElement
 	 */
-	private function get_element_key_info( $document, $key_name ) {
+	private function get_element_key_info( $document, $key_name ): DOMElement {
 		$element_key_info = $document->createElement( 'KeyInfo' );
 
 		$element_key_name = $document->createElement( 'KeyName', $key_name );
@@ -111,8 +112,13 @@ class XmlSigner {
 	 * 
 	 * @param DOMDocument $document Document to sign.
 	 * @return DOMDocument
+	 * @throws \Exception Throws an exception if the document cannot be signed.
 	 */
-	public function sign_document( DOMDocument $document ) {
+	public function sign_document( DOMDocument $document ): DOMDocument {
+		if ( null === $document->documentElement ) {
+			throw new \Exception( 'Not possible to sign document without first document element.' );
+		}
+
 		$document_signature = new DOMDocument( '1.0', 'UTF-8' );
 
 		$element_signature = $document_signature->createElementNS( 'http://www.w3.org/2000/09/xmldsig#', 'Signature' );

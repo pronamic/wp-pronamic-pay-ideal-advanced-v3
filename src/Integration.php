@@ -387,7 +387,9 @@ class Integration extends AbstractIntegration {
 		}
 
 		if ( ! empty( $certificate ) ) {
-			$fingerprint = (string) Security::get_sha_fingerprint( $certificate );
+			$certificate_object = new Certificate( $certificate );
+
+			$fingerprint = $certificate_object->get_fingerprint();
 			$fingerprint = str_split( $fingerprint, 2 );
 			$fingerprint = implode( ':', $fingerprint );
 
