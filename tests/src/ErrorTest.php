@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
-use PHPUnit_Framework_TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Title: iDEAL Advanced v3 error test
@@ -21,7 +21,7 @@ use PHPUnit_Framework_TestCase;
  * @author Remco Tolsma
  * @version 1.0.0
  */
-class ErrorTest extends PHPUnit_Framework_TestCase {
+class ErrorTest extends TestCase {
 	/**
 	 * Test error to string.
 	 */

@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
-use PHPUnit_Framework_TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * Title: iDEAL Advanced v3 XML error parser test
@@ -21,7 +21,7 @@ use PHPUnit_Framework_TestCase;
  * @author Remco Tolsma
  * @version 1.0.0
  */
-class ErrorParserTest extends PHPUnit_Framework_TestCase {
+class ErrorParserTest extends TestCase {
 	/**
 	 * Test parser.
 	 *
