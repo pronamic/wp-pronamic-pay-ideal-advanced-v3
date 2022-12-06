@@ -93,7 +93,7 @@ class XmlSigner {
 	 * Get element with key info.
 	 * 
 	 * @param DOMDocument $document Document.
-	 * @param string      $digest_value Digest value.
+	 * @param string      $key_name Key name.
 	 * @return DOMElement
 	 */
 	private function get_element_key_info( $document, $key_name ) {
