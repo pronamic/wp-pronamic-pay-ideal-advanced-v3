@@ -11,6 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 
 use DOMDocument;
+use Pronamic\WordPress\Http\Facades\Http;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\AcquirerErrorResMessage;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML\AcquirerStatusReqMessage;
@@ -140,7 +141,7 @@ class Client {
 		}
 
 		// Remote post.
-		$response = wp_remote_post(
+		$response = Http::request(
 			$url,
 			[
 				'method'  => 'POST',
@@ -151,28 +152,7 @@ class Client {
 			]
 		);
 
-		// Handle response.
-		if ( $response instanceof WP_Error ) {
-			throw new \Exception( $response->get_error_message() );
-		}
-
-		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			throw new \Exception(
-				sprintf(
-					/* translators: %s: response code */
-					__( 'The response code (<code>%s<code>) from the iDEAL provider was incorrect.', 'pronamic_ideal' ),
-					wp_remote_retrieve_response_code( $response )
-				)
-			);
-		}
-
-		$body = wp_remote_retrieve_body( $response );
-
-		try {
-			$xml = Core_Util::simplexml_load_string( $body );
-		} catch ( \InvalidArgumentException $e ) {
-			throw new \Exception( $e->getMessage() );
-		}
+		$xml = $response->simplexml();
 
 		$result = $this->parse_document( $xml );
 

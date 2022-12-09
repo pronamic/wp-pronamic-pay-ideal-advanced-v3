@@ -41,6 +41,7 @@
 		"php": ">=8.0",
 		"ext-dom": "*",
 		"ext-openssl": "*",
+		"pronamic/wp-http": "^1.1",
 		"wp-pay-gateways/ideal": "dev-develop",
 		"wp-pay/core": "dev-develop"
 	},
