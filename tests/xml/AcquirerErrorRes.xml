@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<AcquirerErrorRes xmlns="http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" version="3.3.1">
+    <createDateTimestamp>2022-12-09T09:28:30.000Z</createDateTimestamp>
+    <Error>
+        <errorCode>AP9901</errorCode>
+        <errorMessage>merchantID not found in XML data. Please validate your XML.</errorMessage>
+        <errorDetail>merchantID not found in XML data. Please validate your XML.</errorDetail>
+        <suggestedAction>Please try again later or pay using another payment method.</suggestedAction>
+        <consumerMessage>Betalen met iDEAL is nu niet mogelijk. Probeer het later nogmaals of betaal op een andere manier.</consumerMessage>
+    </Error>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                <DigestValue>uX5jcDtFKUagAi76dljvf5Idzg133UpdFMnaKl3TQHk=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>JywbWERSRXL9izisHqdeJIA+Ayq+7xnH7R1zbEtkpveTKufgp3A+rRMCU/qmEh5iwR/Q0oX49eRXpg6Z5+K6IGUyR2UBwigNN0PcRk/32JTl/8NqegTczyICioA+ZawIfpqB5ywZw4YuDfAwGIwatiXnupxzTHu1hFpw/zhZ5NQAjoV1RRsYJiAc4W5ZKLGECwS3E9/HUejtn/ar7wmnxZfCGNqTbKbcqglSNNDPBcmZ57mzLXrea9kawuSUdlfhyCndgcffaH0b/c7pFaHCVqJh6PTLA8uApduvjRuKlAFTjGDvcYhs/lxR+eJrKyabDrd0pMA2MUqmYh2zSBNm4A==</SignatureValue>
+        <KeyInfo>
+            <KeyName>DCFD0574D70D346374FEE30B1A3F58D9FB63802A</KeyName>
+        </KeyInfo>
+    </Signature>
+</AcquirerErrorRes>
