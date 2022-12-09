@@ -1,0 +1,37 @@
+<AcquirerTrxReq xmlns="http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1" version="3.3.1">
+    <createDateTimestamp>2022-12-09T09:35:25.000Z</createDateTimestamp>
+    <Issuer>
+        <issuerID>NLSIMU001</issuerID>
+    </Issuer>
+    <Merchant>
+        <merchantID>123456789</merchantID>
+        <subID>0</subID>
+        <merchantReturnURL>http://pay.local/?payment=1653&key=pay_6393015d8f1bc</merchantReturnURL>
+    </Merchant>
+    <Transaction>
+        <purchaseID>1653</purchaseID>
+        <amount>1035.00</amount>
+        <currency>EUR</currency>
+        <expirationPeriod>PT30M</expirationPeriod>
+        <language>nl</language>
+        <description>Test 1670578525</description>
+        <entranceCode>ss2a2aweG9kqIDwR6ICl2CYmHsy6eDu8PdNtUmKI</entranceCode>
+    </Transaction>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></CanonicalizationMethod>
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+                <DigestValue>A/gKJx+fxxRv5r1htmqUCicaE/Be3ZGZraOEpABA4tc=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>5vYvG8vZXVQM3nWCVCLf9qt4n3TjVUKm3CaQD1+49qqBW28IV+yog6q9Tml82PePzBP0qj3nGMxbgCSinYHqtGIMKVJLyti7B9ORlV1oisN3ICj5v2eHEYBfnUjjsi4Id6WeCMevphM41jWy44SRpQRvntOkhiwyeeaqj/9H7UiXmXiuBLrcb9bfR5jcPuT94lBLel8Nt6H1Kfi6gUtdm+GSDSKovI9ScnozsP9f3VD7vIAUmfyqw7sXFyr3BqBhO0ed/lA+XF7O8OA9VkHzbyXdZ9gwlyj/W/nTX1fG06Eq6BKzR7yYc+BpLmIEnu5hiEV6BoPr631neX4bAi4T8A==</SignatureValue>
+        <KeyInfo>
+            <KeyName>DCFD0574D70D346374FEE30B1A3F58D9FB63802A</KeyName>
+        </KeyInfo>
+    </Signature>
+</AcquirerTrxReq>
