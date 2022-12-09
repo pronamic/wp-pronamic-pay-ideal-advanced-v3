@@ -241,6 +241,8 @@ class Integration extends AbstractIntegration {
 
 				<?php
 
+				\wp_nonce_field( 'pronamic_pay_download_certificate', 'pronamic_pay_download_certificate_nonce' );
+
 				submit_button(
 					__( 'Download certificate', 'pronamic_ideal' ),
 					'secondary',
@@ -295,6 +297,8 @@ class Integration extends AbstractIntegration {
 			<?php
 
 			if ( ! empty( $private_key ) ) {
+				\wp_nonce_field( 'pronamic_pay_download_secret_key', 'pronamic_pay_download_secret_key_nonce' );
+
 				submit_button(
 					__( 'Download', 'pronamic_ideal' ),
 					'secondary',
@@ -413,6 +417,8 @@ class Integration extends AbstractIntegration {
 			<?php
 
 			if ( ! empty( $certificate ) ) {
+				\wp_nonce_field( 'pronamic_pay_download_certificate', 'pronamic_pay_download_certificate_nonce' );
+
 				submit_button(
 					__( 'Download', 'pronamic_ideal' ),
 					'secondary',
@@ -440,11 +446,25 @@ class Integration extends AbstractIntegration {
 	 * @return void
 	 */
 	public function maybe_download_certificate() {
-		if ( ! filter_has_var( INPUT_POST, 'download_certificate' ) ) {
+		if ( ! \array_key_exists( 'download_certificate', $_POST ) ) {
 			return;
 		}
 
-		$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
+		if ( ! \array_key_exists( 'pronamic_pay_download_certificate_nonce', $_POST ) ) {
+			return;
+		}
+
+		$nonce = \sanitize_text_field( \wp_unslash( $_POST['pronamic_pay_download_certificate_nonce'] ) );
+
+		if ( ! \wp_verify_nonce( $nonce, 'pronamic_pay_download_certificate' ) ) {
+			return;
+		}
+
+		if ( ! \array_key_exists( 'post_ID', $_POST ) ) {
+			return;
+		}
+
+		$post_id = \sanitize_text_field( \wp_unslash( $_POST['post_ID'] ) );
 
 		$filename = sprintf( 'ideal-certificate-%s.cer', $post_id );
 
@@ -464,11 +484,25 @@ class Integration extends AbstractIntegration {
 	 * @return void
 	 */
 	public function maybe_download_secret_key() {
-		if ( ! \filter_has_var( INPUT_POST, 'download_secret_key' ) ) {
+		if ( ! \array_key_exists( 'download_secret_key', $_POST ) ) {
 			return;
 		}
 
-		$post_id = filter_input( INPUT_POST, 'post_ID', FILTER_SANITIZE_STRING );
+		if ( ! \array_key_exists( 'pronamic_pay_download_secret_key_nonce', $_POST ) ) {
+			return;
+		}
+
+		$nonce = \sanitize_text_field( \wp_unslash( $_POST['pronamic_pay_download_secret_key_nonce'] ) );
+
+		if ( ! \wp_verify_nonce( $nonce, 'pronamic_pay_download_secret_key' ) ) {
+			return;
+		}
+
+		if ( ! \array_key_exists( 'post_ID', $_POST ) ) {
+			return;
+		}
+
+		$post_id = \sanitize_text_field( \wp_unslash( $_POST['post_ID'] ) );
 
 		$filename = sprintf( 'ideal-secret-key-%s.key', $post_id );
 
