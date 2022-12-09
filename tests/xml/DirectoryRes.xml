@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DirectoryRes xmlns="http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" version="3.3.1">
+    <createDateTimestamp>2022-12-09T09:21:14.000Z</createDateTimestamp>
+    <Acquirer>
+        <acquirerID>0123</acquirerID>
+    </Acquirer>
+    <Directory>
+        <directoryDateTimestamp>2022-12-09T09:21:14.000Z</directoryDateTimestamp>
+        <Country>
+            <countryNames>Nederland</countryNames>
+            <Issuer>
+                <issuerID>NLSIMU001</issuerID>
+                <issuerName>iDEAL Simulator Bank 1</issuerName>
+            </Issuer>
+            <Issuer>
+                <issuerID>NLSIMU002</issuerID>
+                <issuerName>iDEAL Simulator Bank 2</issuerName>
+            </Issuer>
+            <Issuer>
+                <issuerID>NLSIMU003</issuerID>
+                <issuerName>iDEAL Simulator Bank 3</issuerName>
+            </Issuer>
+            <Issuer>
+                <issuerID>NLSIMU004</issuerID>
+                <issuerName>iDEAL Simulator Bank 4</issuerName>
+            </Issuer>
+            <Issuer>
+                <issuerID>NLSIMU005</issuerID>
+                <issuerName>iDEAL Simulator Bank 5</issuerName>
+            </Issuer>
+            <Issuer>
+                <issuerID>NLSIMU006</issuerID>
+                <issuerName>iDEAL Simulator Bank 6</issuerName>
+            </Issuer>
+        </Country>
+    </Directory>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                <DigestValue>1WDJymz4/idiAdxYLtCIGl1lC+Zw/Bm2PKBliwGcbgg=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>2VptGlFnnziRAemHIR2fWUrxOgjKDzg3Q2SAZNgvKwbeh5UxmKY1H98/jJD0JVoRWoKkIr2PDeUdht1Q1aQYaLYt56sNf+51LAoKVDHR9bj3hXTZ0qxm58wrjBeixbCcqoCbE2Cm0LGqpDeOnq9pn2Km49Im64sLu5gAz+e2FAp1yg17utwYDrxoRaK5Uw/sBp7+xo3tVJPNDPbnhtSXDB2+VkDNkp/+MFbN9cqiCtt2iHLmepkMHLou2Ejuv30VKfn61sCygPgMnNut5k7HTEHo8NO7ekK+9zPhwJ9upUDEPPVuK7XNoiuvq6reNLIRmNrZHPu2drOG2q2zS7s2hg==</SignatureValue>
+        <KeyInfo>
+            <KeyName>DCFD0574D70D346374FEE30B1A3F58D9FB63802A</KeyName>
+        </KeyInfo>
+    </Signature>
+</DirectoryRes>
