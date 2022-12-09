@@ -1,0 +1,27 @@
+<AcquirerStatusReq xmlns="http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1" version="3.3.1">
+    <createDateTimestamp>2022-12-09T09:38:42.000Z</createDateTimestamp>
+    <Merchant>
+        <merchantID>123456789</merchantID>
+        <subID>0</subID>
+    </Merchant>
+    <Transaction>
+        <transactionID>0000000000057926</transactionID>
+    </Transaction>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></CanonicalizationMethod>
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+                <DigestValue>lJFoDonwKvJGgiEJh5GKN9ezkcpTyWhV3DyArUBYqew=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>UhGgIDOVogoQe020qwUB1/IbZJTWiLMCplOfZdsmBLMsEj7dLGq7n46bnoLmtOkf/MnVbbp4yfS5aOeSVxDkOjzeMceoDETevxMdnRU2qUHLPJqSwjoi6SCN9dPUW1likuYUXnjd/5+4dXVjTKhS5KioO8mgUFORBol5yzAZOP/uL9unghtkXto12+k2s0pwbAcNH8D+LzK4KUmKql0rtCdjzgqLWAAstu2FPV2Stj6TyLy1cKIC17CfAOGNzJAHi8Nx5ZH9GEQaRJTYfsjkJh68AcrKcPG6NagXmQiyk+2w5lbi4EDaYXbtTtCeS7Zi9G4w/8BGkm26+W5YRiaVBw==</SignatureValue>
+        <KeyInfo>
+            <KeyName>DCFD0574D70D346374FEE30B1A3F58D9FB63802A</KeyName>
+        </KeyInfo>
+    </Signature>
+</AcquirerStatusReq>
