@@ -11,7 +11,6 @@
 namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XML;
 
 use Pronamic\WordPress\DateTime\DateTime;
-use Pronamic\WordPress\Pay\Core\XML\Security;
 use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Directory;
 use SimpleXMLElement;
 
