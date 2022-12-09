@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<AcquirerStatusRes xmlns="http://www.idealdesk.com/ideal/messages/mer-acq/3.3.1" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" version="3.3.1">
+    <createDateTimestamp>2022-12-09T09:38:42.000Z</createDateTimestamp>
+    <Acquirer>
+        <acquirerID>0123</acquirerID>
+    </Acquirer>
+    <Transaction>
+        <transactionID>0000000000057926</transactionID>
+        <status>Success</status>
+        <statusDateTimestamp>2022-12-09T09:38:42.000Z</statusDateTimestamp>
+        <consumerName>CodeBrain BV | iDEAL Checkout</consumerName>
+        <consumerIBAN>NL01RABO0123456789</consumerIBAN>
+        <consumerBIC>RABONL2U</consumerBIC>
+        <amount>1035.00</amount>
+        <currency>EUR</currency>
+    </Transaction>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                <DigestValue>wAWIEeBBiH5TPJ2GnZMXHBzM2DJhYMIxgowfp+KwJhY=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>CJbLS7sFqUo97bFE3Pn5s9ClQnRM+jjCwTD6JPPNBUyW7qeXg1gKD8E4oG7I3WYMtbTN8Ien5+5iDTWvxyYidQQaUtJWwjdv21naoBlreeCMbocUdBV8y4Uk0vjNIQhaVGGkS82rz91Wxi59MI+3pQr/Yv9YdULwvJR+ztnXXJpNYH3XzSPWx/XOl+sPNJGdbkW3L1pHldDODBT/NUgK14zWQEN+l1DyI1pMEMA8ImNEYRaNyuNLtnJ51L0recoX4cDNIIKKyflaYc7MoeW53JPDNZnzGigSq6rZwJoB+4MVqJxS8H2Pr42EquMqHHf2Ahrz6UK41UAeOidkMWwa4A==</SignatureValue>
+        <KeyInfo>
+            <KeyName>DCFD0574D70D346374FEE30B1A3F58D9FB63802A</KeyName>
+        </KeyInfo>
+    </Signature>
+</AcquirerStatusRes>
