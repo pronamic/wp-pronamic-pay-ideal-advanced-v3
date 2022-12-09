@@ -83,7 +83,6 @@ class Integration extends AbstractIntegration {
 		// Organization.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_organization',
 			'title'    => __( 'Organization', 'pronamic_ideal' ),
@@ -94,7 +93,6 @@ class Integration extends AbstractIntegration {
 		// Organization Unit.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_organization_unit',
 			'title'    => __( 'Organization Unit', 'pronamic_ideal' ),
@@ -105,7 +103,6 @@ class Integration extends AbstractIntegration {
 		// Locality.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_locality',
 			'title'    => __( 'City', 'pronamic_ideal' ),
@@ -116,7 +113,6 @@ class Integration extends AbstractIntegration {
 		// State or Province.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_state_or_province',
 			'title'    => __( 'State / province', 'pronamic_ideal' ),
@@ -131,7 +127,6 @@ class Integration extends AbstractIntegration {
 
 		$fields[] = [
 			'section'     => 'general',
-			'filter'      => FILTER_SANITIZE_STRING,
 			'group'       => 'pk-cert',
 			'meta_key'    => '_pronamic_gateway_country',
 			'title'       => __( 'Country', 'pronamic_ideal' ),
@@ -152,7 +147,6 @@ class Integration extends AbstractIntegration {
 		// Email Address.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_email',
 			'title'    => __( 'E-mail address', 'pronamic_ideal' ),
@@ -179,7 +173,6 @@ class Integration extends AbstractIntegration {
 		// Secret Key Password.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key_password',
 			'title'    => __( 'Secret Key Password', 'pronamic_ideal' ),
@@ -192,7 +185,6 @@ class Integration extends AbstractIntegration {
 		// Secret Key.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key',
 			'title'    => __( 'Secret Key', 'pronamic_ideal' ),
@@ -205,7 +197,6 @@ class Integration extends AbstractIntegration {
 		// Certificate.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_certificate',
 			'title'    => __( 'Certificate', 'pronamic_ideal' ),
