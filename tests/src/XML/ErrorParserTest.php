@@ -30,7 +30,7 @@ class ErrorParserTest extends TestCase {
 	public function testParser() {
 		$parser = new ErrorParser();
 
-		$xml = simplexml_load_file( dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/Error.xml' );
+		$xml = simplexml_load_file( dirname( dirname( __DIR__ ) ) . '/Mock/Error.xml' );
 
 		$error = $parser->parse( $xml );
 

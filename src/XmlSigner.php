@@ -20,21 +20,21 @@ use OpenSSLAsymmetricKey;
 class XmlSigner {
 	/**
 	 * Key name.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $key_name;
 
 	/**
 	 * Private key.
-	 * 
+	 *
 	 * @var OpenSSLAsymmetricKey
 	 */
 	private $private_key;
 
 	/**
 	 * Construct XML signer.
-	 * 
+	 *
 	 * @param string               $key_name    Key name.
 	 * @param OpenSSLAsymmetricKey $private_key Private key.
 	 */
@@ -46,7 +46,7 @@ class XmlSigner {
 
 	/**
 	 * Get element with signed info.
-	 * 
+	 *
 	 * @param DOMDocument $document Document.
 	 * @param string      $digest_value Digest value.
 	 * @return DOMElement
@@ -92,7 +92,7 @@ class XmlSigner {
 
 	/**
 	 * Get element with key info.
-	 * 
+	 *
 	 * @param DOMDocument $document Document.
 	 * @param string      $key_name Key name.
 	 * @return DOMElement
@@ -109,7 +109,7 @@ class XmlSigner {
 
 	/**
 	 * Sign document.
-	 * 
+	 *
 	 * @param DOMDocument $document Document to sign.
 	 * @return DOMDocument
 	 * @throws \Exception Throws an exception if the document cannot be signed.

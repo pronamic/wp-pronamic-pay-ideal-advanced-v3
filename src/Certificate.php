@@ -16,14 +16,14 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 class Certificate {
 	/**
 	 * Privacy Enhanced Mail (PEM).
-	 * 
+	 *
 	 * @var string
 	 */
 	private $pem;
 
 	/**
 	 * Construct certificate.
-	 * 
+	 *
 	 * @param string $pem PEM.
 	 */
 	public function __construct( $pem ) {
@@ -32,7 +32,7 @@ class Certificate {
 
 	/**
 	 * PEM to DER.
-	 * 
+	 *
 	 * @link https://knowledge.digicert.com/solution/SO26449.html
 	 * @link https://www.openssl.org/docs/man1.0.2/man1/x509.html
 	 * @link https://stackoverflow.com/questions/36503814/why-are-pem2der-and-der2pem-not-inverses
@@ -52,7 +52,7 @@ class Certificate {
 
 	/**
 	 * Get fingerprint.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_fingerprint() {
