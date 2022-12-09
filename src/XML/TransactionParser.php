@@ -37,12 +37,12 @@ class TransactionParser implements Parser {
 			$transaction = new Transaction();
 		}
 
-		$transaction->set_id( Security::filter( $xml->transactionID ) );
-		$transaction->set_purchase_id( Security::filter( $xml->purchaseID ) );
-		$transaction->set_status( Security::filter( $xml->status ) );
-		$transaction->set_consumer_name( Security::filter( $xml->consumerName ) );
-		$transaction->set_consumer_iban( Security::filter( $xml->consumerIBAN ) );
-		$transaction->set_consumer_bic( Security::filter( $xml->consumerBIC ) );
+		$transaction->set_id( (string) $xml->transactionID );
+		$transaction->set_purchase_id( (string) $xml->purchaseID );
+		$transaction->set_status( (string) $xml->status );
+		$transaction->set_consumer_name( (string) $xml->consumerName );
+		$transaction->set_consumer_iban( (string) $xml->consumerIBAN );
+		$transaction->set_consumer_bic( (string) $xml->consumerBIC );
 
 		return $transaction;
 	}
