@@ -36,11 +36,7 @@ class DirectoryParser implements Parser {
 		$directory = new Directory();
 
 		// Date.
-		$timestamp = Security::filter( $xml->directoryDateTimestamp );
-
-		if ( null !== $timestamp ) {
-			$directory->set_date( new DateTime( $timestamp ) );
-		}
+		$directory->set_date( new DateTime( (string) $xml->directoryDateTimestamp ) );
 
 		// Country.
 		foreach ( $xml->Country as $element ) {

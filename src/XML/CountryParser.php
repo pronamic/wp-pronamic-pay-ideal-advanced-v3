@@ -34,11 +34,7 @@ class CountryParser implements Parser {
 		$country = new Country();
 
 		// Name.
-		$name = Security::filter( $xml->countryNames );
-
-		if ( null !== $name ) {
-			$country->set_name( $name );
-		}
+		$country->set_name( (string) $xml->countryNames );
 
 		// Issuers.
 		foreach ( $xml->Issuer as $element ) {

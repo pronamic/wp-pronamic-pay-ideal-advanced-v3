@@ -37,40 +37,11 @@ class ErrorParser {
 
 		$error = new Error();
 
-		// Error code.
-		$code = Security::filter( $xml->errorCode );
-
-		if ( null !== $code ) {
-			$error->set_code( $code );
-		}
-
-		// Message.
-		$message = Security::filter( $xml->errorMessage );
-
-		if ( null !== $message ) {
-			$error->set_message( $message );
-		}
-
-		// Detail.
-		$detail = Security::filter( $xml->errorDetail );
-
-		if ( null !== $detail ) {
-			$error->set_detail( $detail );
-		}
-
-		// Suggested action.
-		$suggested_action = Security::filter( $xml->suggestedAction );
-
-		if ( null !== $suggested_action ) {
-			$error->set_suggested_action( $suggested_action );
-		}
-
-		// Consumer message.
-		$consumer_message = Security::filter( $xml->consumerMessage );
-
-		if ( null !== $consumer_message ) {
-			$error->set_consumer_message( $consumer_message );
-		}
+		$error->set_code( (string) $xml->errorCode );
+		$error->set_message( (string) $xml->errorMessage );
+		$error->set_detail( (string) $xml->errorDetail );
+		$error->set_suggested_action( (string) $xml->suggestedAction );
+		$error->set_consumer_message( (string) $xml->consumerMessage );
 
 		return $error;
 	}

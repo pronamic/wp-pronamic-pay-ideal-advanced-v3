@@ -36,9 +36,9 @@ class IssuerParser implements Parser {
 			$issuer = new Issuer();
 		}
 
-		$issuer->set_id( Security::filter( $xml->issuerID ) );
-		$issuer->set_name( Security::filter( $xml->issuerName ) );
-		$issuer->set_authentication_url( Security::filter( $xml->issuerAuthenticationURL ) );
+		$issuer->set_id( (string) $xml->issuerID );
+		$issuer->set_name( (string) $xml->issuerName );
+		$issuer->set_authentication_url( (string) $xml->issuerAuthenticationURL );
 
 		return $issuer;
 	}
