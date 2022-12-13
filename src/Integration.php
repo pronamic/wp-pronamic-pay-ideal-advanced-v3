@@ -270,21 +270,23 @@ class Integration extends AbstractIntegration {
 		$private_key_password = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key_password', true );
 		$number_days_valid    = get_post_meta( $post_id, '_pronamic_gateway_number_days_valid', true );
 
-		$filename = __( 'ideal.key', 'pronamic_ideal' );
-
 		if ( ! empty( $private_key_password ) && ! empty( $number_days_valid ) ) {
-			$command = sprintf(
-				'openssl genrsa -aes128 -out %s -passout pass:%s 2048',
-				escapeshellarg( $filename ),
-				escapeshellarg( $private_key_password )
-			);
+			if ( \function_exists( '\escapeshellarg' ) ) {
+				$filename = __( 'ideal.key', 'pronamic_ideal' );
 
-			?>
+				$command = sprintf(
+					'openssl genrsa -aes128 -out %s -passout pass:%s 2048',
+					\escapeshellarg( $filename ),
+					\escapeshellarg( $private_key_password )
+				);
 
-			<p><?php esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
-			<input id="pronamic_ideal_openssl_command_key" name="pronamic_ideal_openssl_command_key" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly"/>
+				?>
 
-			<?php
+				<p><?php esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
+				<input id="pronamic_ideal_openssl_command_key" name="pronamic_ideal_openssl_command_key" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly"/>
+
+				<?php
+			}
 		} else {
 			printf(
 				'<p class="pronamic-pay-description description">%s</p>',
@@ -357,23 +359,25 @@ class Integration extends AbstractIntegration {
 		}
 
 		if ( ! empty( $subj ) ) {
-			$command = trim(
-				sprintf(
-					'openssl req -x509 -sha256 -new -key %s -passin pass:%s -days %s -out %s %s',
-					escapeshellarg( $filename_key ),
-					escapeshellarg( $private_key_password ),
-					escapeshellarg( $number_days_valid ),
-					escapeshellarg( $filename_cer ),
-					sprintf( '-subj %s', escapeshellarg( $subj ) )
-				)
-			);
+			if ( \function_exists( '\escapeshellarg' ) ) {
+				$command = \trim(
+					\sprintf(
+						'openssl req -x509 -sha256 -new -key %s -passin pass:%s -days %s -out %s %s',
+						\escapeshellarg( $filename_key ),
+						\escapeshellarg( $private_key_password ),
+						\escapeshellarg( $number_days_valid ),
+						\escapeshellarg( $filename_cer ),
+						\sprintf( '-subj %s', \escapeshellarg( $subj ) )
+					)
+				);
 
-			?>
+				?>
 
-			<p><?php esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
-			<input id="pronamic_ideal_openssl_command_certificate" name="pronamic_ideal_openssl_command_certificate" value="<?php echo esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly"/>
+				<p><?php \esc_html_e( 'OpenSSL command', 'pronamic_ideal' ); ?></p>
+				<input id="pronamic_ideal_openssl_command_certificate" name="pronamic_ideal_openssl_command_certificate" value="<?php echo \esc_attr( $command ); ?>" type="text" class="large-text code" readonly="readonly"/>
 
-			<?php
+				<?php
+			}
 		} else {
 			printf(
 				'<p class="pronamic-pay-description description">%s</p>',
