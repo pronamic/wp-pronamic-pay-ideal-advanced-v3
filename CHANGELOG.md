@@ -7,6 +7,28 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.0] - 2022-12-22
+
+### Commits
+
+- Fixed fatal error in gateway settings if function `escapeshellarg()` is undefined. ([0b3d684](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/0b3d684daca1105941c38dba636bd1cf9934e40f))
+- Only print OpenSSL shell command if function `escapeshellarg()` is available. ([48a5318](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/48a5318bf32b219268500a2501f8b89184347f22))
+- Use `pronamic/wp-http` for requests and SimpleXML. ([e532326](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/e53232633eddecf952fed45389bb9281eb00a2cb))
+- Removed usage of deprecated `\FILTER_SANITIZE_STRING` in gateway settings fields. ([7c4d43c](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/7c4d43ce74f7ecfce6ca8cb90169815136e0ed72))
+- No longer use `XMLSecurityDSig` library. ([20bee7c](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/20bee7ccf1ada278e303464dc11d3175718edc66))
+
+### Composer
+
+- Added `pronamic/wp-http` `^1.1`.
+- Changed `php` from `>=5.6.20` to `>=8.0`.
+- Changed `wp-pay-gateways/ideal` from `^4.0` to `v4.1.0`.
+	Release notes: https://github.com/pronamic/wp-pronamic-pay-ideal/releases/tag/v4.2.0
+- Changed `wp-pay/core` from `^4.0` to `v4.6.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.2.0
+Full set of changes: [`4.2.0...4.3.0`][4.3.0]
+
+[4.3.0]: https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/compare/v4.2.0...v4.3.0
+
 ## [4.2.0] - 2022-09-26
 - Updated payment methods registration.
 - Rename 'Private Key' and 'Private Certificate' to 'Secret Key' and 'Certificate'.
