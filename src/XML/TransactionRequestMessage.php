@@ -3,7 +3,7 @@
  * Transaction request message.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2022 Pronamic
+ * @copyright 2005-2023 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay
  */
@@ -18,7 +18,7 @@ use Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\Transaction;
 /**
  * Title: iDEAL transaction request XML message
  * Description:
- * Copyright: 2005-2022 Pronamic
+ * Copyright: 2005-2023 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
