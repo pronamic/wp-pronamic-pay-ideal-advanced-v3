@@ -177,6 +177,7 @@ class Integration extends AbstractIntegration {
 			'meta_key' => '_pronamic_gateway_ideal_private_key_password',
 			'title'    => __( 'Secret Key Password', 'pronamic_ideal' ),
 			'type'     => 'text',
+			'filter'   => \FILTER_UNSAFE_RAW,
 			'classes'  => [ 'regular-text', 'code' ],
 			'default'  => wp_generate_password(),
 			'tooltip'  => __( 'A random password which will be used for the generation of the secret key and certificate.', 'pronamic_ideal' ),
@@ -189,6 +190,7 @@ class Integration extends AbstractIntegration {
 			'meta_key' => '_pronamic_gateway_ideal_private_key',
 			'title'    => __( 'Secret Key', 'pronamic_ideal' ),
 			'type'     => 'textarea',
+			'filter'   => \FILTER_UNSAFE_RAW,
 			'callback' => [ $this, 'field_private_key' ],
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic_ideal' ),
@@ -201,6 +203,7 @@ class Integration extends AbstractIntegration {
 			'meta_key' => '_pronamic_gateway_ideal_private_certificate',
 			'title'    => __( 'Certificate', 'pronamic_ideal' ),
 			'type'     => 'textarea',
+			'filter'   => \FILTER_UNSAFE_RAW,
 			'callback' => [ $this, 'field_certificate' ],
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic_ideal' ),
@@ -568,7 +571,7 @@ class Integration extends AbstractIntegration {
 		];
 
 		// Private key.
-		$pkey = openssl_pkey_get_private( $private_key, $private_key_password );
+		$pkey = \openssl_pkey_get_private( $private_key, $private_key_password );
 
 		if ( false === $pkey ) {
 			// If we can't open the private key we will create a new private key and certificate.
