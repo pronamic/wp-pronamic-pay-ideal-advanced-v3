@@ -76,32 +76,12 @@ class Error extends \Exception {
 	}
 
 	/**
-	 * Set error code.
-	 *
-	 * @param string $code Error code.
-	 * @return void
-	 */
-	public function set_code( $code ) {
-		$this->error_code = $code;
-	}
-
-	/**
 	 * Get error message.
 	 *
 	 * @return string
 	 */
 	public function get_message() {
 		return $this->message;
-	}
-
-	/**
-	 * Set error message.
-	 *
-	 * @param string $message Error message.
-	 * @return void
-	 */
-	public function set_message( $message ) {
-		$this->message = $message;
 	}
 
 	/**
@@ -114,16 +94,6 @@ class Error extends \Exception {
 	}
 
 	/**
-	 * Set error detail.
-	 *
-	 * @param string $detail Detail.
-	 * @return void
-	 */
-	public function set_detail( $detail ) {
-		$this->error_detail = $detail;
-	}
-
-	/**
 	 * Get suggested action.
 	 *
 	 * @return string
@@ -133,32 +103,12 @@ class Error extends \Exception {
 	}
 
 	/**
-	 * Set suggested action.
-	 *
-	 * @param string $suggested_action Suggested action.
-	 * @return void
-	 */
-	public function set_suggested_action( $suggested_action ) {
-		$this->suggested_action = $suggested_action;
-	}
-
-	/**
 	 * Get consumer message.
 	 *
 	 * @return string
 	 */
 	public function get_consumer_message() {
 		return $this->consumer_message;
-	}
-
-	/**
-	 * Set consumer message.
-	 *
-	 * @param string $consumer_message Consumer message.
-	 * @return void
-	 */
-	public function set_consumer_message( $consumer_message ) {
-		$this->consumer_message = $consumer_message;
 	}
 
 	/**
