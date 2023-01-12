@@ -110,13 +110,4 @@ class Error extends \Exception {
 	public function get_consumer_message() {
 		return $this->consumer_message;
 	}
-
-	/**
-	 * Create a string representation of this object.
-	 *
-	 * @return string
-	 */
-	public function __toString() {
-		return $this->code . ' ' . $this->message;
-	}
 }
