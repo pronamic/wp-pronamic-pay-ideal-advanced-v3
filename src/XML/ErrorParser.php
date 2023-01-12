@@ -34,14 +34,12 @@ class ErrorParser {
 			return null;
 		}
 
-		$error = new Error();
-
-		$error->set_code( (string) $xml->errorCode );
-		$error->set_message( (string) $xml->errorMessage );
-		$error->set_detail( (string) $xml->errorDetail );
-		$error->set_suggested_action( (string) $xml->suggestedAction );
-		$error->set_consumer_message( (string) $xml->consumerMessage );
-
-		return $error;
+		return new Error(
+			(string) $xml->errorCode,
+			(string) $xml->errorMessage,
+			(string) $xml->errorDetail,
+			(string) $xml->suggestedAction,
+			(string) $xml->consumerMessage
+		);
 	}
 }
