@@ -173,9 +173,7 @@ class Client {
 			case AcquirerErrorResMessage::NAME:
 				$message = AcquirerErrorResMessage::parse( $document );
 
-				throw new \Exception(
-					sprintf( '%s. %s', $message->error->get_message(), $message->error->get_detail() )
-				);
+				throw $message->error;
 			case DirectoryResponseMessage::NAME:
 				return DirectoryResponseMessage::parse( $document );
 			case TransactionResponseMessage::NAME:
