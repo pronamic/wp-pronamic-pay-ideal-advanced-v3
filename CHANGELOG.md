@@ -7,6 +7,19 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.1] - 2023-01-18
+
+### Commits
+
+- Error class now extends \Exception class. ([98a3e04](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/98a3e04482843603911a2ea102fdb063c0772b7d))
+- Don't filter all values with `sanitize_text_field()`, this function removes line breaks. ([b532090](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/b532090bf3c40dcf1b7a84123842463112bbf0d3))
+- Ignore `documentation` folder in archive files. ([9f4d75f](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/9f4d75f724c60e430c6013a56e3154fd8f5aa604))
+- Happy 2023. ([08fb979](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/08fb979cba9d6c7164148c49bc5ad535a6187d0a))
+
+Full set of changes: [`4.3.0...4.3.1`][4.3.1]
+
+[4.3.1]: https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/compare/v4.3.0...v4.3.1
+
 ## [4.3.0] - 2022-12-22
 
 ### Commits
