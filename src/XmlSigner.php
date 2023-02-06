@@ -28,17 +28,17 @@ class XmlSigner {
 	/**
 	 * Private key.
 	 *
-	 * @var OpenSSLAsymmetricKey
+	 * @var resource|OpenSSLAsymmetricKey
 	 */
 	private $private_key;
 
 	/**
 	 * Construct XML signer.
 	 *
-	 * @param string               $key_name    Key name.
-	 * @param OpenSSLAsymmetricKey $private_key Private key.
+	 * @param string                        $key_name    Key name.
+	 * @param resource|OpenSSLAsymmetricKey $private_key Private key.
 	 */
-	public function __construct( string $key_name, OpenSSLAsymmetricKey $private_key ) {
+	public function __construct( string $key_name, $private_key ) {
 		$this->key_name = $key_name;
 
 		$this->private_key = $private_key;
