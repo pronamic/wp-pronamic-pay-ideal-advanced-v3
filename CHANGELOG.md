@@ -7,6 +7,15 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.3] - 2023-02-07
+### Commits
+
+- Fixed "Uncaught TypeError: Argument 2 passed to Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3\XmlSigner::__construct() must be an instance of OpenSSLAsymmetricKey, resource given.". ([69512f6](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/69512f6624b80268754b24cd7d24e18bb834cdf1))
+
+Full set of changes: [`4.3.2...4.3.3`][4.3.3]
+
+[4.3.3]: https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/compare/v4.3.2...v4.3.3
+
 ## [4.3.2] - 2023-01-31
 ### Composer
 
