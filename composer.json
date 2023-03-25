@@ -4,6 +4,7 @@
 	"keywords": ["wordpress", "wp", "pay", "ideal", "advanced", "v3", "gateway", "pronamic"],
 	"homepage": "https://github.com/wp-pay-gateways/ideal-advanced-v3",
 	"license": "GPL-3.0-or-later",
+	"type": "wordpress-plugin",
 	"authors": [
 		{
 			"name": "Pronamic",
