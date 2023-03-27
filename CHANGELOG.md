@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.4] - 2023-03-27
+
+### Commits
+
+- Set Composer type to `wordpress-plugin`. ([70600bc](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/70600bcad91947d53c8dda10ce5fed22edfeafcf))
+- Updated .gitattributes ([4f68eda](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/4f68eda639aa7a96a253aa8f7b9f224d4b98afbe))
+
+Full set of changes: [`4.3.3...4.3.4`][4.3.4]
+
+[4.3.4]: https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/compare/v4.3.3...v4.3.4
+
 ## [4.3.3] - 2023-02-07
 ### Commits
 
