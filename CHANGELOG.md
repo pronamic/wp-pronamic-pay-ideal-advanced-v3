@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.5] - 2023-06-01
+
+### Commits
+
+- Switch from `pronamic/wp-deployer` to `pronamic/pronamic-cli`. ([e2151d7](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/e2151d71a56b5353a0d8902452dd545c7bb2ea3c))
+- Updated .gitattributes ([05c7c78](https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/commit/05c7c783b4330db77ac7241126ac594490644036))
+
+Full set of changes: [`4.3.4...4.3.5`][4.3.5]
+
+[4.3.5]: https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/compare/v4.3.4...v4.3.5
+
 ## [4.3.4] - 2023-03-27
 
 ### Commits
