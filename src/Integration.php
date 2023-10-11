@@ -161,13 +161,19 @@ class Integration extends AbstractIntegration {
 		// Number Days Valid.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_NUMBER_INT,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_number_days_valid',
 			'title'    => __( 'Number Days Valid', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'default'  => 1825,
 			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
+			'input'    => function( $name ) {
+				if ( ! \array_key_exists( $name, $_POST ) ) {
+					return '';
+				}
+
+				return \filter_var( \sanitize_text_field( \wp_unslash( $_POST[ $name ] ) ), \FILTER_SANITIZE_NUMBER_INT );
+			}
 		];
 
 		// Secret Key Password.
@@ -175,12 +181,19 @@ class Integration extends AbstractIntegration {
 			'section'  => 'general',
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key_password',
-			'title'    => __( 'Secret Key Password', 'pronamic_ideal' ),
+			'title'    => __( 'Secret Key Password', 'pronamic-ideal' ),
 			'type'     => 'text',
-			'filter'   => \FILTER_UNSAFE_RAW,
 			'classes'  => [ 'regular-text', 'code' ],
 			'default'  => wp_generate_password(),
-			'tooltip'  => __( 'A random password which will be used for the generation of the secret key and certificate.', 'pronamic_ideal' ),
+			'tooltip'  => __( 'A random password which will be used for the generation of the secret key and certificate.', 'pronamic-ideal' ),
+			'input'    => function( $name ) {
+				if ( ! \array_key_exists( $name, $_POST ) ) {
+					return '';
+				}
+
+				// phpcs:ignore Detected usage of a non-sanitized input variable -- Password can contain whitespace, HTML tags and percent-encoded characters.
+				return $_POST[ $name ];
+			}
 		];
 
 		// Secret Key.
@@ -188,12 +201,19 @@ class Integration extends AbstractIntegration {
 			'section'  => 'general',
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_key',
-			'title'    => __( 'Secret Key', 'pronamic_ideal' ),
+			'title'    => __( 'Secret Key', 'pronamic-ideal' ),
 			'type'     => 'textarea',
-			'filter'   => \FILTER_UNSAFE_RAW,
 			'callback' => [ $this, 'field_private_key' ],
 			'classes'  => [ 'code' ],
-			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic_ideal' ),
+			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic-ideal' ),
+			'input'    => function( $name ) {
+				if ( ! \array_key_exists( $name, $_POST ) ) {
+					return '';
+				}
+
+				// phpcs:ignore Detected usage of a non-sanitized input variable -- Private key can contain whitespace, HTML tags and percent-encoded characters.
+				return $_POST[ $name ];
+			}
 		];
 
 		// Certificate.
@@ -201,12 +221,19 @@ class Integration extends AbstractIntegration {
 			'section'  => 'general',
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_ideal_private_certificate',
-			'title'    => __( 'Certificate', 'pronamic_ideal' ),
+			'title'    => __( 'Certificate', 'pronamic-ideal' ),
 			'type'     => 'textarea',
-			'filter'   => \FILTER_UNSAFE_RAW,
 			'callback' => [ $this, 'field_certificate' ],
 			'classes'  => [ 'code' ],
-			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic_ideal' ),
+			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic-ideal' ),
+			'input'    => function( $name ) {
+				if ( ! \array_key_exists( $name, $_POST ) ) {
+					return '';
+				}
+
+				// phpcs:ignore Detected usage of a non-sanitized input variable -- Certificate can contain whitespace, HTML tags and percent-encoded characters.
+				return $_POST[ $name ];
+			}
 		];
 
 		// Return.
