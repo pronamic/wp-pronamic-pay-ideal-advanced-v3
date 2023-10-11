@@ -113,34 +113,34 @@ class Message {
 	 * Create and add an element with the specified name and value to the specified parent
 	 *
 	 * @param DOMDocument $document Document.
-	 * @param DOMNode     $parent   Parent.
+	 * @param DOMNode     $element  Parent.
 	 * @param string      $name     Element name.
 	 * @param string|null $value    Element text value.
 	 * @return \DOMElement
 	 */
-	public static function add_element( DOMDocument $document, DOMNode $parent, $name, $value = null ) {
-		$element = $document->createElement( $name );
+	public static function add_element( DOMDocument $document, DOMNode $element, $name, $value = null ) {
+		$child = $document->createElement( $name );
 
 		if ( null !== $value ) {
-			$element->appendChild( new DOMText( $value ) );
+			$child->appendChild( new DOMText( $value ) );
 		}
 
-		$parent->appendChild( $element );
+		$element->appendChild( $child );
 
-		return $element;
+		return $child;
 	}
 
 	/**
 	 * Add the specified elements to the parent node
 	 *
 	 * @param DOMDocument                $document Document.
-	 * @param DOMNode                    $parent   Parent.
-	 * @param array<string, string|null> $elements Elements to add.
+	 * @param DOMNode                    $element  Parent.
+	 * @param array<string, string|null> $children Elements to add.
 	 * @return void
 	 */
-	public static function add_elements( DOMDocument $document, DOMNode $parent, array $elements = [] ) {
-		foreach ( $elements as $name => $value ) {
-			self::add_element( $document, $parent, $name, $value );
+	public static function add_elements( DOMDocument $document, DOMNode $element, array $children = [] ) {
+		foreach ( $children as $name => $value ) {
+			self::add_element( $document, $element, $name, $value );
 		}
 	}
 }
