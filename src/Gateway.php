@@ -166,7 +166,7 @@ class Gateway extends Core_Gateway {
 			throw new \Exception(
 				\sprintf(
 					'The iDEAL Advanced gateway cannot process `%s` payments, only iDEAL payments.',
-					$payment_method
+					\esc_html( $payment_method )
 				)
 			);
 		}

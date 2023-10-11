@@ -182,8 +182,11 @@ class Client {
 				return AcquirerStatusResMessage::parse( $document );
 			default:
 				throw new \Exception(
-					/* translators: %s: XML document element name */
-					sprintf( __( 'Unknown iDEAL message (%s)', 'pronamic_ideal' ), $name )
+					\sprintf(
+						/* translators: %s: XML document element name */
+						\esc_html__( 'Unknown iDEAL message (%s)', 'pronamic_ideal' ),
+						\esc_html( $name )
+					)
 				);
 		}
 	}

@@ -168,10 +168,12 @@ class Integration extends AbstractIntegration {
 			'default'  => 1825,
 			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
 			'input'    => function ( $name ) {
+				// phpcs:disable WordPress.Security.NonceVerification.Missing
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing
 				return \filter_var( \sanitize_text_field( \wp_unslash( $_POST[ $name ] ) ), \FILTER_SANITIZE_NUMBER_INT );
 			},
 		];
@@ -187,12 +189,16 @@ class Integration extends AbstractIntegration {
 			'default'  => wp_generate_password(),
 			'tooltip'  => __( 'A random password which will be used for the generation of the secret key and certificate.', 'pronamic-ideal' ),
 			'input'    => function ( $name ) {
+				// phpcs:disable WordPress.Security.NonceVerification.Missing
+
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
-				// phpcs:ignore Detected usage of a non-sanitized input variable -- Password can contain whitespace, HTML tags and percent-encoded characters.
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Password can contain whitespace, HTML tags and percent-encoded characters.
 				return $_POST[ $name ];
+
+				// phpcs:enable WordPress.Security.NonceVerification.Missing
 			},
 		];
 
@@ -207,12 +213,16 @@ class Integration extends AbstractIntegration {
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic-ideal' ),
 			'input'    => function ( $name ) {
+				// phpcs:disable WordPress.Security.NonceVerification.Missing
+
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
-				// phpcs:ignore Detected usage of a non-sanitized input variable -- Private key can contain whitespace, HTML tags and percent-encoded characters.
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Private key can contain whitespace, HTML tags and percent-encoded characters.
 				return $_POST[ $name ];
+
+				// phpcs:enable WordPress.Security.NonceVerification.Missing
 			},
 		];
 
@@ -227,12 +237,16 @@ class Integration extends AbstractIntegration {
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic-ideal' ),
 			'input'    => function ( $name ) {
+				// phpcs:disable WordPress.Security.NonceVerification.Missing
+
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
-				// phpcs:ignore Detected usage of a non-sanitized input variable -- Certificate can contain whitespace, HTML tags and percent-encoded characters.
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Certificate can contain whitespace, HTML tags and percent-encoded characters.
 				return $_POST[ $name ];
+
+				// phpcs:enable WordPress.Security.NonceVerification.Missing
 			},
 		];
 
@@ -557,6 +571,8 @@ class Integration extends AbstractIntegration {
 	 * @return void
 	 */
 	public function save_post( $post_id ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
+
 		// Files.
 		$files = [
 			'_pronamic_gateway_ideal_private_key_file' => '_pronamic_gateway_ideal_private_key',
@@ -572,6 +588,8 @@ class Integration extends AbstractIntegration {
 				update_post_meta( $post_id, $meta_key, $value );
 			}
 		}
+
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		// Generate private key and certificate.
 		$private_key          = get_post_meta( $post_id, '_pronamic_gateway_ideal_private_key', true );
