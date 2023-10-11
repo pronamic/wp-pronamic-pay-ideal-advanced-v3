@@ -212,18 +212,6 @@ class Integration extends AbstractIntegration {
 			'callback' => [ $this, 'field_private_key' ],
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic-ideal' ),
-			'input'    => function ( $name ) {
-				// phpcs:disable WordPress.Security.NonceVerification.Missing
-
-				if ( ! \array_key_exists( $name, $_POST ) ) {
-					return '';
-				}
-
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Private key can contain whitespace, HTML tags and percent-encoded characters.
-				return $_POST[ $name ];
-
-				// phpcs:enable WordPress.Security.NonceVerification.Missing
-			},
 		];
 
 		// Certificate.
@@ -236,18 +224,6 @@ class Integration extends AbstractIntegration {
 			'callback' => [ $this, 'field_certificate' ],
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic-ideal' ),
-			'input'    => function ( $name ) {
-				// phpcs:disable WordPress.Security.NonceVerification.Missing
-
-				if ( ! \array_key_exists( $name, $_POST ) ) {
-					return '';
-				}
-
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Certificate can contain whitespace, HTML tags and percent-encoded characters.
-				return $_POST[ $name ];
-
-				// phpcs:enable WordPress.Security.NonceVerification.Missing
-			},
 		];
 
 		// Return.
