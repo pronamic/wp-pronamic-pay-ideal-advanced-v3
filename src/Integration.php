@@ -161,21 +161,13 @@ class Integration extends AbstractIntegration {
 		// Number Days Valid.
 		$fields[] = [
 			'section'  => 'general',
+			'filter'   => \FILTER_SANITIZE_NUMBER_INT,
 			'group'    => 'pk-cert',
 			'meta_key' => '_pronamic_gateway_number_days_valid',
 			'title'    => __( 'Number Days Valid', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'default'  => 1825,
 			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
-			'input'    => function ( $name ) {
-				// phpcs:disable WordPress.Security.NonceVerification.Missing
-				if ( ! \array_key_exists( $name, $_POST ) ) {
-					return '';
-				}
-
-				// phpcs:ignore WordPress.Security.NonceVerification.Missing
-				return \filter_var( \sanitize_text_field( \wp_unslash( $_POST[ $name ] ) ), \FILTER_SANITIZE_NUMBER_INT );
-			},
 		];
 
 		// Secret Key Password.
