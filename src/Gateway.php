@@ -79,7 +79,7 @@ class Gateway extends Core_Gateway {
 
 		$ideal_issuer_field->set_options(
 			new CachedCallbackOptions(
-				function() {
+				function () {
 					return $this->get_ideal_issuers();
 				},
 				'pronamic_pay_ideal_issuers_' . \md5( (string) \wp_json_encode( $config ) )

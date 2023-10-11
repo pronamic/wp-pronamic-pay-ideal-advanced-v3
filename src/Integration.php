@@ -167,13 +167,13 @@ class Integration extends AbstractIntegration {
 			'type'     => 'text',
 			'default'  => 1825,
 			'tooltip'  => __( 'Number of days the generated certificate will be valid for, e.g. 1825 days for the maximum duration of 5 years.', 'pronamic_ideal' ),
-			'input'    => function( $name ) {
+			'input'    => function ( $name ) {
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
 				return \filter_var( \sanitize_text_field( \wp_unslash( $_POST[ $name ] ) ), \FILTER_SANITIZE_NUMBER_INT );
-			}
+			},
 		];
 
 		// Secret Key Password.
@@ -186,14 +186,14 @@ class Integration extends AbstractIntegration {
 			'classes'  => [ 'regular-text', 'code' ],
 			'default'  => wp_generate_password(),
 			'tooltip'  => __( 'A random password which will be used for the generation of the secret key and certificate.', 'pronamic-ideal' ),
-			'input'    => function( $name ) {
+			'input'    => function ( $name ) {
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
 				// phpcs:ignore Detected usage of a non-sanitized input variable -- Password can contain whitespace, HTML tags and percent-encoded characters.
 				return $_POST[ $name ];
-			}
+			},
 		];
 
 		// Secret Key.
@@ -206,14 +206,14 @@ class Integration extends AbstractIntegration {
 			'callback' => [ $this, 'field_private_key' ],
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The secret key is used for secure communication with the payment provider. If left empty, the secret key will be generated using the given secret key password.', 'pronamic-ideal' ),
-			'input'    => function( $name ) {
+			'input'    => function ( $name ) {
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
 				// phpcs:ignore Detected usage of a non-sanitized input variable -- Private key can contain whitespace, HTML tags and percent-encoded characters.
 				return $_POST[ $name ];
-			}
+			},
 		];
 
 		// Certificate.
@@ -226,14 +226,14 @@ class Integration extends AbstractIntegration {
 			'callback' => [ $this, 'field_certificate' ],
 			'classes'  => [ 'code' ],
 			'tooltip'  => __( 'The certificate is used for secure communication with the payment provider. If left empty, the certificate will be generated using the secret key and given organization details.', 'pronamic-ideal' ),
-			'input'    => function( $name ) {
+			'input'    => function ( $name ) {
 				if ( ! \array_key_exists( $name, $_POST ) ) {
 					return '';
 				}
 
 				// phpcs:ignore Detected usage of a non-sanitized input variable -- Certificate can contain whitespace, HTML tags and percent-encoded characters.
 				return $_POST[ $name ];
-			}
+			},
 		];
 
 		// Return.
