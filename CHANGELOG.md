@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.7] - 2023-10-13
+
+### Changed
+
+- Improved filter and sanitzing of payment gateway integration settings fields.
+
+Full set of changes: [`4.3.6...4.3.7`][4.3.7]
+
+[4.3.7]: https://github.com/pronamic/wp-pronamic-pay-ideal-advanced-v3/compare/v4.3.6...v4.3.7
+
 ## [4.3.6] - 2023-07-12
 
 ### Commits
