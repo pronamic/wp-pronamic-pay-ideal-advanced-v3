@@ -3,7 +3,7 @@
  * Error.
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay
  */
@@ -13,7 +13,7 @@ namespace Pronamic\WordPress\Pay\Gateways\IDealAdvancedV3;
 /**
  * Title: iDEAL Advanced v3 error
  * Description:
- * Copyright: 2005-2023 Pronamic
+ * Copyright: 2005-2024 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -50,7 +50,7 @@ class Error extends \Exception {
 
 	/**
 	 * Construct error.
-	 * 
+	 *
 	 * @param string $code             Code.
 	 * @param string $message          Message.
 	 * @param string $detail           Detail.
